@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    // test
     // Variables
     let startingPercentage: Double = 50
     var percentage: Double = 50
