@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB95A04723D87E5F00CBDCE4 /* BoostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB95A04623D87E5F00CBDCE4 /* BoostTableViewCell.swift */; };
+		FB95A04923D87E7800CBDCE4 /* BoostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB95A04823D87E7800CBDCE4 /* BoostTableViewCell.xib */; };
+		FB95A04B23D8910800CBDCE4 /* BoostItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB95A04A23D8910800CBDCE4 /* BoostItem.swift */; };
 		FBFDDA1423C92B0400CF8573 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFDDA1323C92B0400CF8573 /* AppDelegate.swift */; };
 		FBFDDA1623C92B0400CF8573 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFDDA1523C92B0400CF8573 /* SceneDelegate.swift */; };
 		FBFDDA1823C92B0400CF8573 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFDDA1723C92B0400CF8573 /* ViewController.swift */; };
@@ -17,6 +20,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FB95A04623D87E5F00CBDCE4 /* BoostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoostTableViewCell.swift; sourceTree = "<group>"; };
+		FB95A04823D87E7800CBDCE4 /* BoostTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoostTableViewCell.xib; sourceTree = "<group>"; };
+		FB95A04A23D8910800CBDCE4 /* BoostItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoostItem.swift; sourceTree = "<group>"; };
 		FBFDDA1023C92B0400CF8573 /* BasketballShooter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasketballShooter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBFDDA1323C92B0400CF8573 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBFDDA1523C92B0400CF8573 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,8 +66,11 @@
 			children = (
 				FBFDDA1323C92B0400CF8573 /* AppDelegate.swift */,
 				FBFDDA1523C92B0400CF8573 /* SceneDelegate.swift */,
-				FBFDDA1723C92B0400CF8573 /* ViewController.swift */,
 				FBFDDA1923C92B0400CF8573 /* Main.storyboard */,
+				FB95A04823D87E7800CBDCE4 /* BoostTableViewCell.xib */,
+				FBFDDA1723C92B0400CF8573 /* ViewController.swift */,
+				FB95A04623D87E5F00CBDCE4 /* BoostTableViewCell.swift */,
+				FB95A04A23D8910800CBDCE4 /* BoostItem.swift */,
 				FBFDDA1F23C92B0A00CF8573 /* Assets.xcassets */,
 				FBFDDA2123C92B0A00CF8573 /* LaunchScreen.storyboard */,
 				FBFDDA2423C92B0A00CF8573 /* Info.plist */,
@@ -129,6 +138,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBFDDA2323C92B0A00CF8573 /* LaunchScreen.storyboard in Resources */,
+				FB95A04923D87E7800CBDCE4 /* BoostTableViewCell.xib in Resources */,
 				FBFDDA2023C92B0A00CF8573 /* Assets.xcassets in Resources */,
 				FBFDDA1B23C92B0400CF8573 /* Main.storyboard in Resources */,
 			);
@@ -141,6 +151,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB95A04B23D8910800CBDCE4 /* BoostItem.swift in Sources */,
+				FB95A04723D87E5F00CBDCE4 /* BoostTableViewCell.swift in Sources */,
 				FBFDDA1823C92B0400CF8573 /* ViewController.swift in Sources */,
 				FBFDDA1423C92B0400CF8573 /* AppDelegate.swift in Sources */,
 				FBFDDA1623C92B0400CF8573 /* SceneDelegate.swift in Sources */,
