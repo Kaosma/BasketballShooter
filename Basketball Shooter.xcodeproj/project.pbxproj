@@ -68,11 +68,11 @@
 				FBFDDA1523C92B0400CF8573 /* SceneDelegate.swift */,
 				FBFDDA1923C92B0400CF8573 /* Main.storyboard */,
 				FB95A04823D87E7800CBDCE4 /* BoostTableViewCell.xib */,
+				FBFDDA2123C92B0A00CF8573 /* LaunchScreen.storyboard */,
 				FBFDDA1723C92B0400CF8573 /* ViewController.swift */,
 				FB95A04623D87E5F00CBDCE4 /* BoostTableViewCell.swift */,
 				FB95A04A23D8910800CBDCE4 /* BoostItem.swift */,
 				FBFDDA1F23C92B0A00CF8573 /* Assets.xcassets */,
-				FBFDDA2123C92B0A00CF8573 /* LaunchScreen.storyboard */,
 				FBFDDA2423C92B0A00CF8573 /* Info.plist */,
 				FBFDDA1C23C92B0400CF8573 /* BasketballShooter.xcdatamodeld */,
 			);

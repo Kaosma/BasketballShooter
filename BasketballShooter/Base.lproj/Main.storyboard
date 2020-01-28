@@ -26,7 +26,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zEy-vu-NGx" userLabel="scoreLabel">
-                                        <rect key="frame" x="177" y="22.5" width="21" height="45"/>
+                                        <rect key="frame" x="177" y="17" width="21" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="79g-c5-ZAK"/>
                                         </constraints>
@@ -53,7 +53,7 @@
                                     <constraint firstItem="mXG-5c-zpd" firstAttribute="centerX" secondItem="etm-J2-5im" secondAttribute="centerX" id="d8O-hR-tHh"/>
                                     <constraint firstItem="mXG-5c-zpd" firstAttribute="centerY" secondItem="etm-J2-5im" secondAttribute="centerY" id="elK-op-e77"/>
                                     <constraint firstItem="HfM-rR-MeV" firstAttribute="centerY" secondItem="etm-J2-5im" secondAttribute="centerY" id="epZ-vN-Pq7"/>
-                                    <constraint firstItem="zEy-vu-NGx" firstAttribute="top" secondItem="etm-J2-5im" secondAttribute="top" constant="22.5" id="gaj-mo-Tdy"/>
+                                    <constraint firstItem="zEy-vu-NGx" firstAttribute="top" secondItem="etm-J2-5im" secondAttribute="top" constant="17" id="gaj-mo-Tdy"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A1W-s6-PdV" userLabel="baseLine">
@@ -127,23 +127,23 @@
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oro-yH-MRV" userLabel="boostView">
-                                <rect key="frame" x="42.5" y="69" width="290" height="535"/>
+                                <rect key="frame" x="42.5" y="75" width="290" height="535"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WMF-wZ-E6k" userLabel="boostLabel">
-                                        <rect key="frame" x="124" y="8" width="42" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xG7-BM-wda" userLabel="boostTableView">
-                                        <rect key="frame" x="0.0" y="37" width="282" height="498"/>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="50" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xG7-BM-wda" userLabel="boostTableView">
+                                        <rect key="frame" x="0.0" y="37" width="290" height="498"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     </tableView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Boosts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WMF-wZ-E6k" userLabel="boostLabel">
+                                        <rect key="frame" x="92" y="3" width="105" height="29"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

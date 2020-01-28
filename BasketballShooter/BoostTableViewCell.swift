@@ -15,7 +15,16 @@ class BoostTableViewCell: UITableViewCell {
     @IBOutlet weak var costLabel: UILabel!
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var purchasedLabel: UILabel!
-    @IBOutlet weak var itemImageView: UIImageView!
+    @IBOutlet weak var itemBuyButton: UIButton!
+    
+    // MARK: Actions
+    @IBAction func itemBuyButtonPressed(_ sender: UIButton) {
+        /*
+         if score >= cost {
+            score -= cost
+         }
+         */
+    }
     
     // MARK: Functions
     override func awakeFromNib() {

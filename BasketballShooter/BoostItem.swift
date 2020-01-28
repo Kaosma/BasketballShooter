@@ -10,13 +10,14 @@ import Foundation
 
 struct BoostItem {
     var category : String
-    var name : String
+    let name : String
     var cost : Int
+    var level : Int
     
-    
-    init(category: String, name: String, cost : Int) {
+    init(category: String, name: String, cost: Int, level: Int = 1) {
         self.category = category
         self.name = name
         self.cost = cost
+        self.level = level
     }
 }

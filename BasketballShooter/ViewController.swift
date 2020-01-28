@@ -31,6 +31,7 @@ class ViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var ball: UIImageView!
     @IBOutlet weak var boostView: UIView!
     @IBOutlet weak var boostTableViewOutlet: UITableView!
+
     
     // MARK: Actions
     // Boostbutton pressed
@@ -61,6 +62,8 @@ class ViewController: UIViewController, UITableViewDataSource{
         
         cell.itemLabel.text = itemList[indexPath.row].name
         cell.costLabel.text = String(itemList[indexPath.row].cost)
+        cell.levelLabel.text = "Lv. " + String(itemList[indexPath.row].level)
+        cell.purchasedLabel.text = ""
         
         return cell
     }
@@ -113,17 +116,14 @@ class ViewController: UIViewController, UITableViewDataSource{
     func makeBallVisible(finished: Bool) {
         UIView.animate(withDuration: 1.2, animations: {self.ball.alpha = 1.0})
     }
-    
     // Updates the score label
     func updateScoreLabel() {
         scoreLabel.text = String(scoreCounter)
     }
-    
     // Updates the percentage label
     func updatePercentageLabel(percentage: Double) {
         percentageLabel.text = String(percentage) + "%"
     }
-    
     // Saves the percentage updates with user default storage
     func savePercentage() -> Double {
         let newPercentage = UserDefaults.standard.object(forKey: percentageKey) as? Double
@@ -144,8 +144,50 @@ class ViewController: UIViewController, UITableViewDataSource{
     // MARK: Main Program
     override func viewDidLoad() {
         super.viewDidLoad()
-        itemList.append(BoostItem(category: "Drink", name: "Gatorade", cost: 10))
-        itemList.append(BoostItem(category: "Shoe", name: "Nike", cost: 50))
+        boostView.layer.cornerRadius = 10
+        boostTableViewOutlet.layer.cornerRadius = 10
+        itemList.append(BoostItem(category: "Drink", name: "Soda", cost: 10))
+        itemList.append(BoostItem(category: "Drink", name: "Powerade", cost: 100))
+        itemList.append(BoostItem(category: "Drink", name: "Red Bull", cost: 1000))
+        itemList.append(BoostItem(category: "Drink", name: "Gatorade", cost: 10000))
+        itemList.append(BoostItem(category: "Food", name: "Nachos", cost: 50))
+        itemList.append(BoostItem(category: "Food", name: "Protein bar", cost: 50))
+        itemList.append(BoostItem(category: "Food", name: "Hot dog", cost: 50))
+        itemList.append(BoostItem(category: "Food", name: "Taco", cost: 50))
+        itemList.append(BoostItem(category: "Sponsor", name: "Puma", cost: 25))
+        itemList.append(BoostItem(category: "Sponsor", name: "Adidas", cost: 250))
+        itemList.append(BoostItem(category: "Sponsor", name: "Under Armor", cost: 2500))
+        itemList.append(BoostItem(category: "Sponsor", name: "Nike", cost: 25000))
+        itemList.append(BoostItem(category: "Team", name: "Atlanta Clocks", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Boston Athletics", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Brooklyn Jets", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Charlotte Orbits", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Chicago Pulse", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Cleveland Raindeers", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Dallas ", cost: 50))//HEJHEJ
+        itemList.append(BoostItem(category: "Team", name: "Denver Luggage", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Detroit Christians", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Golden State Sorcerers", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Houston Sockets", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Indiana ", cost: 50))//HEJHEJ
+        itemList.append(BoostItem(category: "Team", name: "Los Angeles Slippers", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Los Angeles Bakers", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Memphis", cost: 50))//HEJHEJ
+        itemList.append(BoostItem(category: "Team", name: "Miami Feet", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Milwaukee Ducks", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Minnesota ", cost: 50))//HEJHEJ
+        itemList.append(BoostItem(category: "Team", name: "New Orleans ", cost: 50))//HEJHEJ
+        itemList.append(BoostItem(category: "Team", name: "New York Bricks", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Oklahoma City Wonder", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Orlando Automatic", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Philadelphia Cement Mixers", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Phoenix Buns", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Portland Sail Raisers", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Sacramento Rings", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "San Antonio Chauffeurs", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Toronto ", cost: 50))//HEJHEJ
+        itemList.append(BoostItem(category: "Team", name: "Utah Grass", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Washington Lizards", cost: 50))
         percentage = savePercentage()
         updateScoreLabel()
         updatePercentageLabel(percentage: percentage)
@@ -161,7 +203,3 @@ class ViewController: UIViewController, UITableViewDataSource{
         //alert dialogue
     }
 }
-
-/*
-
-*/
