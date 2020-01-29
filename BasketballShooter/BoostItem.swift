@@ -13,11 +13,13 @@ struct BoostItem {
     let name : String
     var cost : Int
     var level : Int
+    let boost : Double
     
-    init(category: String, name: String, cost: Int, level: Int = 1) {
+    init(category: String, name: String, cost: Int, level: Int = 1, boost: Double) {
         self.category = category
         self.name = name
         self.cost = cost
         self.level = level
+        self.boost = boost
     }
 }

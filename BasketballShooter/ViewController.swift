@@ -8,13 +8,13 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource{
-    
+class ViewController: UIViewController, UITableViewDataSource {
     
     // MARK: Variables
     var percentage : Double = 50
     var madeShot : Bool = false
     var scoreCounter : Int = 0
+    var totalScoreCounter: Int = 0
     var missCounter : Int = 0
     var navigationButtonPressed : Bool = false
     var itemList = [BoostItem]()
@@ -31,23 +31,42 @@ class ViewController: UIViewController, UITableViewDataSource{
     @IBOutlet weak var ball: UIImageView!
     @IBOutlet weak var boostView: UIView!
     @IBOutlet weak var boostTableViewOutlet: UITableView!
-
+    @IBOutlet weak var tableViewPercentageLabel: UILabel!
     
     // MARK: Actions
     // Boostbutton pressed
     @IBAction func boostButtonPressed(_ sender: UIButton) {
         navigationAnimation(button: sender, view: boostView)
     }
-    // Reset button to reset the percentage to starting value (50%)
+    // Reset button to reset the percentage to starting value (50%) | Alert message
     @IBAction func resetButtonTest(_ sender: UIButton) {
-        percentage = startingPercentage
-        saveSelected(percentage: percentage)
-        updatePercentageLabel(percentage: percentage)
+        let alert = UIAlertController(title: "ResetButton", message: "Are you sure you want to reset everything?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) {action in
+            self.percentage = self.startingPercentage
+            self.saveSelected(percentage: self.percentage)
+            self.updatePercentageLabel(percentage: self.percentage)
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(yesAction)
+        present(alert, animated: true)
     }
     // Tap for every shot
     @IBAction func tapped(_ sender: UITapGestureRecognizer) {
         print(shotTaken(percentage: percentage))
-        print(scoreCounter , "/", missCounter+scoreCounter)
+        print(totalScoreCounter , "/", missCounter+totalScoreCounter)
+    }
+    @objc func didPressBoostItemButton(notification:Notification) {
+        let data = notification.userInfo as? [String: Int]
+        let index = data!["row"]!
+        if Int(scoreLabel.text!)! >= itemList[index].cost {
+            scoreCounter = Int(scoreLabel.text!)! - itemList[index].cost
+            percentage += itemList[index].boost
+            updateScoreLabel()
+            updatePercentageLabel(percentage: percentage)
+            print("Purchase made " + itemList[index].name)
+        }
     }
     
     // MARK: Functions
@@ -61,12 +80,13 @@ class ViewController: UIViewController, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: itemCellId, for: indexPath) as! BoostTableViewCell
         
         cell.itemLabel.text = itemList[indexPath.row].name
-        cell.costLabel.text = String(itemList[indexPath.row].cost)
+        cell.costLabel.text = "Cost: " + String(itemList[indexPath.row].cost)
         cell.levelLabel.text = "Lv. " + String(itemList[indexPath.row].level)
-        cell.purchasedLabel.text = ""
+        cell.purchasedLabel.text = String(itemList[indexPath.row].boost) + "%"
         
         return cell
     }
+    
     // Navigation animation for the navigationbuttons
     func navigationAnimation(button : UIButton, view : UIView){
         if button.alpha == 1.0 {
@@ -87,6 +107,7 @@ class ViewController: UIViewController, UITableViewDataSource{
         if (randomNumber < Int(percentage * 100)) {
             makeAnimation()
             scoreCounter += 1
+            totalScoreCounter += 1
             updateScoreLabel()
             print("%: ",percentage)
             print("Make")
@@ -123,6 +144,7 @@ class ViewController: UIViewController, UITableViewDataSource{
     // Updates the percentage label
     func updatePercentageLabel(percentage: Double) {
         percentageLabel.text = String(percentage) + "%"
+        tableViewPercentageLabel.text = percentageLabel.text
     }
     // Saves the percentage updates with user default storage
     func savePercentage() -> Double {
@@ -146,10 +168,10 @@ class ViewController: UIViewController, UITableViewDataSource{
         super.viewDidLoad()
         boostView.layer.cornerRadius = 10
         boostTableViewOutlet.layer.cornerRadius = 10
-        itemList.append(BoostItem(category: "Drink", name: "Soda", cost: 10))
-        itemList.append(BoostItem(category: "Drink", name: "Powerade", cost: 100))
-        itemList.append(BoostItem(category: "Drink", name: "Red Bull", cost: 1000))
-        itemList.append(BoostItem(category: "Drink", name: "Gatorade", cost: 10000))
+        itemList.append(BoostItem(category: "Drink", name: "Soda", cost: 10, boost: 0.01))
+        itemList.append(BoostItem(category: "Drink", name: "Powerade", cost: 100, boost: 0.02))
+        itemList.append(BoostItem(category: "Drink", name: "Red Bull", cost: 1000, boost: 0.05))
+        /*itemList.append(BoostItem(category: "Drink", name: "Gatorade", cost: 10000))
         itemList.append(BoostItem(category: "Food", name: "Nachos", cost: 50))
         itemList.append(BoostItem(category: "Food", name: "Protein bar", cost: 50))
         itemList.append(BoostItem(category: "Food", name: "Hot dog", cost: 50))
@@ -187,7 +209,7 @@ class ViewController: UIViewController, UITableViewDataSource{
         itemList.append(BoostItem(category: "Team", name: "San Antonio Chauffeurs", cost: 50))
         itemList.append(BoostItem(category: "Team", name: "Toronto ", cost: 50))//HEJHEJ
         itemList.append(BoostItem(category: "Team", name: "Utah Grass", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Washington Lizards", cost: 50))
+        itemList.append(BoostItem(category: "Team", name: "Washington Lizards", cost: 50))*/
         percentage = savePercentage()
         updateScoreLabel()
         updatePercentageLabel(percentage: percentage)
@@ -199,6 +221,8 @@ class ViewController: UIViewController, UITableViewDataSource{
         boostTableViewOutlet.register(nib, forCellReuseIdentifier: itemCellId)
 
         boostTableViewOutlet.dataSource = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(didPressBoostItemButton(notification:)), name: NSNotification.Name.init(rawValue: "ButtonPressed"), object: nil)
         
         //alert dialogue
     }

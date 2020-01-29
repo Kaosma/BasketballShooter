@@ -34,20 +34,20 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mF8-pZ-5jk" userLabel="itemLabel">
-                        <rect key="frame" x="10" y="10" width="45" height="21"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <rect key="frame" x="10" y="10" width="42.5" height="19.5"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7C9-Sb-kW0" userLabel="itemBuyButton">
-                        <rect key="frame" x="212" y="1" width="70" height="67.5"/>
+                        <rect key="frame" x="212" y="0.0" width="70" height="70.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="FSl-qT-cby"/>
                             <constraint firstAttribute="height" constant="70" id="Fb7-yM-9Lo"/>
                         </constraints>
-                        <state key="normal" backgroundImage="hourglass" catalog="system"/>
+                        <state key="normal" backgroundImage="cube" catalog="system"/>
                         <connections>
-                            <action selector="itemBuyButtonPressed:" destination="rwd-EC-NY6" eventType="touchUpInside" id="5eT-gw-Pas"/>
+                            <action selector="itemBuyButtonPressed:" destination="rwd-EC-NY6" eventType="touchUpInside" id="XcW-qC-bgO"/>
                         </connections>
                     </button>
                 </subviews>
@@ -75,6 +75,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="hourglass" catalog="system" width="54" height="64"/>
+        <image name="cube" catalog="system" width="64" height="62"/>
     </resources>
 </document>

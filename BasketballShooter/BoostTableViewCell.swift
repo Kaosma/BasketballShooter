@@ -18,12 +18,14 @@ class BoostTableViewCell: UITableViewCell {
     @IBOutlet weak var itemBuyButton: UIButton!
     
     // MARK: Actions
+
     @IBAction func itemBuyButtonPressed(_ sender: UIButton) {
-        /*
-         if score >= cost {
-            score -= cost
-         }
-         */
+        let nc = NotificationCenter.default
+        let tableView = superview as? UITableView
+        let index = tableView?.indexPath(for: self)?[1]
+        
+        let dict = ["row": index]
+        nc.post(name: Notification.Name("ButtonPressed"), object: itemBuyButton, userInfo: dict as [AnyHashable : Any] )
     }
     
     // MARK: Functions
