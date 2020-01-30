@@ -18,6 +18,8 @@ class ViewController: UIViewController, UITableViewDataSource {
     var missCounter : Int = 0
     var navigationButtonPressed : Bool = false
     var itemList = [BoostItem]()
+    var boostCellList = [BoostTableViewCell]()
+    var currentBoostTableViewCell : BoostTableViewCell? = nil
     
     // MARK: Constants
     let startingPercentage : Double = 50
@@ -61,12 +63,27 @@ class ViewController: UIViewController, UITableViewDataSource {
         let data = notification.userInfo as? [String: Int]
         let index = data!["row"]!
         if Int(scoreLabel.text!)! >= itemList[index].cost {
+            currentBoostTableViewCell = boostCellList[index]
+            let cell = currentBoostTableViewCell
+            cell?.alphaView.isHidden = false
+            boostBuyAnimation(object: cell!.alphaView)
             scoreCounter = Int(scoreLabel.text!)! - itemList[index].cost
             percentage += itemList[index].boost
+            percentage = Double(round(percentage*100)/100)
             updateScoreLabel()
             updatePercentageLabel(percentage: percentage)
             print("Purchase made " + itemList[index].name)
         }
+    }
+    
+    func boostBuyAnimation(object: UIView) {
+        UIView.animate(withDuration: 3.0, animations: {
+            object.frame.size.height = 140
+        }, completion: hideAlphaView(finished:))
+    }
+    
+    func hideAlphaView(finished:Bool) {
+        currentBoostTableViewCell?.alphaView.isHidden = true
     }
     
     // MARK: Functions
@@ -82,8 +99,9 @@ class ViewController: UIViewController, UITableViewDataSource {
         cell.itemLabel.text = itemList[indexPath.row].name
         cell.costLabel.text = "Cost: " + String(itemList[indexPath.row].cost)
         cell.levelLabel.text = "Lv. " + String(itemList[indexPath.row].level)
-        cell.purchasedLabel.text = String(itemList[indexPath.row].boost) + "%"
+        cell.purchasedLabel.text = "+" + String(itemList[indexPath.row].boost) + "%"
         
+        boostCellList.append(cell)
         return cell
     }
     
@@ -124,13 +142,10 @@ class ViewController: UIViewController, UITableViewDataSource {
     // Animation for made shot
     func makeAnimation() {
         UIView.animate(withDuration: 1.0, animations: {
-            
             var frame = self.ball.frame
             frame.origin.y += 4.5*frame.size.height
             self.ball.frame = frame
-            
         })
-        
         UIView.animate(withDuration: 1.2, animations: {self.ball.alpha = 0.0}, completion: makeBallVisible(finished:))
     }
     // Ball transparency fade animation
@@ -168,9 +183,10 @@ class ViewController: UIViewController, UITableViewDataSource {
         super.viewDidLoad()
         boostView.layer.cornerRadius = 10
         boostTableViewOutlet.layer.cornerRadius = 10
-        itemList.append(BoostItem(category: "Drink", name: "Soda", cost: 10, boost: 0.01))
-        itemList.append(BoostItem(category: "Drink", name: "Powerade", cost: 100, boost: 0.02))
-        itemList.append(BoostItem(category: "Drink", name: "Red Bull", cost: 1000, boost: 0.05))
+        itemList.append(BoostItem(category: "Drink", name: "Cup", cost: 10, boost: 0.01))
+        itemList.append(BoostItem(category: "Drink", name: "Can", cost: 10, boost: 0.02))
+        itemList.append(BoostItem(category: "Drink", name: "Bottle", cost: 100, boost: 0.05))
+        itemList.append(BoostItem(category: "Drink", name: "Barrell", cost: 1000, boost: 0.05))
         /*itemList.append(BoostItem(category: "Drink", name: "Gatorade", cost: 10000))
         itemList.append(BoostItem(category: "Food", name: "Nachos", cost: 50))
         itemList.append(BoostItem(category: "Food", name: "Protein bar", cost: 50))

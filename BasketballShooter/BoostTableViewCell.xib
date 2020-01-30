@@ -43,19 +43,29 @@
                         <rect key="frame" x="212" y="0.0" width="70" height="70.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="FSl-qT-cby"/>
-                            <constraint firstAttribute="height" constant="70" id="Fb7-yM-9Lo"/>
+                            <constraint firstAttribute="height" constant="70" identifier="itemBuyButtonHeightConstraint" id="Fb7-yM-9Lo"/>
                         </constraints>
                         <state key="normal" backgroundImage="cube" catalog="system"/>
                         <connections>
                             <action selector="itemBuyButtonPressed:" destination="rwd-EC-NY6" eventType="touchUpInside" id="XcW-qC-bgO"/>
                         </connections>
                     </button>
+                    <view hidden="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cug-Nk-thE" userLabel="alphaView">
+                        <rect key="frame" x="212" y="0.0" width="70" height="70"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="70" id="PZY-lQ-xj7"/>
+                            <constraint firstAttribute="width" constant="70" id="axu-2a-mZE"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="0vb-V2-Ucy" firstAttribute="bottom" secondItem="NHb-1R-arc" secondAttribute="bottomMargin" constant="2" id="3Dr-yX-qpX"/>
                     <constraint firstItem="7C9-Sb-kW0" firstAttribute="leading" secondItem="0vb-V2-Ucy" secondAttribute="trailing" constant="15" id="3vL-zQ-Dfq"/>
                     <constraint firstItem="mF8-pZ-5jk" firstAttribute="top" secondItem="NHb-1R-arc" secondAttribute="top" constant="10" id="Bcy-ta-0Tn"/>
                     <constraint firstItem="mF8-pZ-5jk" firstAttribute="leading" secondItem="NHb-1R-arc" secondAttribute="leading" constant="10" id="GE2-DT-4TA"/>
+                    <constraint firstAttribute="bottom" secondItem="cug-Nk-thE" secondAttribute="bottom" id="Tw7-DL-Ekh"/>
+                    <constraint firstAttribute="trailing" secondItem="cug-Nk-thE" secondAttribute="trailing" id="cK1-eK-uei"/>
                     <constraint firstItem="7C9-Sb-kW0" firstAttribute="top" secondItem="NHb-1R-arc" secondAttribute="top" id="iTw-mq-3uh"/>
                     <constraint firstAttribute="bottom" secondItem="YCx-ud-gM5" secondAttribute="bottom" constant="10" id="lMB-Ga-nao"/>
                     <constraint firstAttribute="trailing" secondItem="7C9-Sb-kW0" secondAttribute="trailing" id="qLh-JS-MZ7"/>
@@ -65,6 +75,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="alphaView" destination="cug-Nk-thE" id="GcR-Qq-n0T"/>
                 <outlet property="costLabel" destination="YCx-ud-gM5" id="hOf-df-hne"/>
                 <outlet property="itemBuyButton" destination="7C9-Sb-kW0" id="lef-5F-U1Q"/>
                 <outlet property="itemLabel" destination="mF8-pZ-5jk" id="Muz-rJ-3tt"/>

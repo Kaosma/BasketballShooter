@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct BoostItem {
+class BoostItem {
     var category : String
     let name : String
     var cost : Int

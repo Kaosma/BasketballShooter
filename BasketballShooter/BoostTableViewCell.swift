@@ -16,6 +16,7 @@ class BoostTableViewCell: UITableViewCell {
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var purchasedLabel: UILabel!
     @IBOutlet weak var itemBuyButton: UIButton!
+    @IBOutlet weak var alphaView: UIView!
     
     // MARK: Actions
 
@@ -23,7 +24,6 @@ class BoostTableViewCell: UITableViewCell {
         let nc = NotificationCenter.default
         let tableView = superview as? UITableView
         let index = tableView?.indexPath(for: self)?[1]
-        
         let dict = ["row": index]
         nc.post(name: Notification.Name("ButtonPressed"), object: itemBuyButton, userInfo: dict as [AnyHashable : Any] )
     }
