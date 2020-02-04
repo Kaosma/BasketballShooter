@@ -40,12 +40,12 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7C9-Sb-kW0" userLabel="itemBuyButton">
-                        <rect key="frame" x="212" y="0.0" width="70" height="70.5"/>
+                        <rect key="frame" x="212" y="0.0" width="70" height="70"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="FSl-qT-cby"/>
                             <constraint firstAttribute="height" constant="70" identifier="itemBuyButtonHeightConstraint" id="Fb7-yM-9Lo"/>
                         </constraints>
-                        <state key="normal" backgroundImage="cube" catalog="system"/>
+                        <state key="normal" image="Jersey"/>
                         <connections>
                             <action selector="itemBuyButtonPressed:" destination="rwd-EC-NY6" eventType="touchUpInside" id="XcW-qC-bgO"/>
                         </connections>
@@ -86,6 +86,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="cube" catalog="system" width="64" height="62"/>
+        <image name="Jersey" width="166.5" height="166.5"/>
     </resources>
 </document>

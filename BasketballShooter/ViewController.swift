@@ -59,10 +59,11 @@ class ViewController: UIViewController, UITableViewDataSource {
         print(shotTaken(percentage: percentage))
         print(totalScoreCounter , "/", missCounter+totalScoreCounter)
     }
+    // Handles buying and buying animation
     @objc func didPressBoostItemButton(notification:Notification) {
         let data = notification.userInfo as? [String: Int]
         let index = data!["row"]!
-        if Int(scoreLabel.text!)! >= itemList[index].cost {
+        if (Int(scoreLabel.text!)! >= itemList[index].cost && itemList[index].level < 5) {
             currentBoostTableViewCell = boostCellList[index]
             let cell = currentBoostTableViewCell
             cell?.alphaView.isHidden = false
@@ -72,7 +73,9 @@ class ViewController: UIViewController, UITableViewDataSource {
             percentage = Double(round(percentage*100)/100)
             updateScoreLabel()
             updatePercentageLabel(percentage: percentage)
-            print("Purchase made " + itemList[index].name)
+            print("Purchase made " + itemList[index].name + " " + String(itemList[index].level))
+            itemList[index].level += 1
+            updateButtonImage(item: itemList[index])
         }
     }
     
@@ -102,6 +105,8 @@ class ViewController: UIViewController, UITableViewDataSource {
         cell.purchasedLabel.text = "+" + String(itemList[indexPath.row].boost) + "%"
         
         boostCellList.append(cell)
+        currentBoostTableViewCell = cell
+        updateButtonImage(item: itemList[indexPath.row])
         return cell
     }
     
@@ -177,16 +182,35 @@ class ViewController: UIViewController, UITableViewDataSource {
         defaults.set(percentage, forKey: percentageKey)
         defaults.synchronize()
     }
+
+    func updateButtonImage(item: BoostItem) {
+        let cell = currentBoostTableViewCell
+        let button = cell?.itemBuyButton
+        let level = String(item.level)
+        let name = item.name.lowercased()
+        let imageName = name+"Level"+level
+        print(imageName)
+        button?.setImage(UIImage(named: imageName), for: .normal)
+    }
+    
+    /*func userDisableCells(cell: BoostTableViewCell) {
+        let index = boostTableViewOutlet.index(ofAccessibilityElement: cell)
+        for boostCell in boostCellList {
+            if boostCellList.index(of: boostCell) != index {
+                
+            }
+        }
+    }*/
     
     // MARK: Main Program
     override func viewDidLoad() {
         super.viewDidLoad()
         boostView.layer.cornerRadius = 10
         boostTableViewOutlet.layer.cornerRadius = 10
-        itemList.append(BoostItem(category: "Drink", name: "Cup", cost: 10, boost: 0.01))
-        itemList.append(BoostItem(category: "Drink", name: "Can", cost: 10, boost: 0.02))
-        itemList.append(BoostItem(category: "Drink", name: "Bottle", cost: 100, boost: 0.05))
-        itemList.append(BoostItem(category: "Drink", name: "Barrell", cost: 1000, boost: 0.05))
+        itemList.append(BoostItem(category: "Drink", name: "Can", cost: 1, boost: 0.01))
+        itemList.append(BoostItem(category: "Drink", name: "Cup", cost: 1, boost: 0.02))
+        itemList.append(BoostItem(category: "Drink", name: "Bottle", cost: 1/*100*/, boost: 0.05))
+        itemList.append(BoostItem(category: "Drink", name: "Barrell", cost: 1/*1000*/, boost: 0.05))
         /*itemList.append(BoostItem(category: "Drink", name: "Gatorade", cost: 10000))
         itemList.append(BoostItem(category: "Food", name: "Nachos", cost: 50))
         itemList.append(BoostItem(category: "Food", name: "Protein bar", cost: 50))
