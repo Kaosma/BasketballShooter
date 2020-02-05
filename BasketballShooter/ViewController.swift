@@ -94,12 +94,14 @@ class ViewController: UIViewController, UITableViewDataSource {
     func boostBuyAnimation(object: UIView) {
         UIView.animate(withDuration: 3.0, animations: {
             object.frame.size.height = 140
+            self.userEnableCells(enable: false)
         }, completion: hideAlphaView(finished:))
     }
     
     func hideAlphaView(finished:Bool) {
         currentBoostTableViewCell?.alphaView.isHidden = true
         updateButtonImage(item: currentBoostItem!)
+        userEnableCells(enable: true)
     }
     
     // MARK: Functions
@@ -256,14 +258,11 @@ class ViewController: UIViewController, UITableViewDataSource {
         button?.setImage(UIImage(named: imageName), for: .normal)
     }
     
-    /*func userDisableCells(cell: BoostTableViewCell) {
-        let index = boostTableViewOutlet.index(ofAccessibilityElement: cell)
+    func userEnableCells(enable : Bool) {
         for boostCell in boostCellList {
-            if boostCellList.index(of: boostCell) != index {
-                
-            }
+            boostCell.itemBuyButton.isUserInteractionEnabled = enable
         }
-    }*/
+    }
     
     // MARK: Main Program
     override func viewDidLoad() {
