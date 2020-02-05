@@ -203,6 +203,7 @@ class ViewController: UIViewController, UITableViewDataSource {
         let newScore = UserDefaults.standard.object(forKey: scoreKey) as? Int
         
         if let score = newScore {
+            //H
             return score
         } else {
             return 0
