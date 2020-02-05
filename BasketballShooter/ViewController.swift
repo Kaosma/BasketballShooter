@@ -20,10 +20,14 @@ class ViewController: UIViewController, UITableViewDataSource {
     var itemList = [BoostItem]()
     var boostCellList = [BoostTableViewCell]()
     var currentBoostTableViewCell : BoostTableViewCell? = nil
+    var currentBoostItem : BoostItem? = nil
     
     // MARK: Constants
     let startingPercentage : Double = 50
     let percentageKey = "percentage"
+    let scoreKey = "score"
+    let totalScoreKey = "totalScore"
+    let totalMissesKey = "totalMisses"
     let itemCellId =  "ItemCellId"
     
     // MARK: Outlet Variables
@@ -47,8 +51,13 @@ class ViewController: UIViewController, UITableViewDataSource {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         let yesAction = UIAlertAction(title: "Yes", style: .default) {action in
             self.percentage = self.startingPercentage
-            self.saveSelected(percentage: self.percentage)
+            self.savePercentageSelected(percentage: self.percentage)
             self.updatePercentageLabel(percentage: self.percentage)
+            self.scoreCounter = 0
+            self.missCounter = 0
+            self.totalScoreCounter = 0
+            self.saveScoreSelected(score: self.scoreCounter)
+            self.updateScoreLabel()
         }
         alert.addAction(cancelAction)
         alert.addAction(yesAction)
@@ -65,17 +74,20 @@ class ViewController: UIViewController, UITableViewDataSource {
         let index = data!["row"]!
         if (Int(scoreLabel.text!)! >= itemList[index].cost && itemList[index].level < 5) {
             currentBoostTableViewCell = boostCellList[index]
+            currentBoostItem = itemList[index]
             let cell = currentBoostTableViewCell
-            cell?.alphaView.isHidden = false
-            boostBuyAnimation(object: cell!.alphaView)
+            itemList[index].level += 1
+            if itemList[index].level > 0 {
+                cell?.alphaView.isHidden = false
+                boostBuyAnimation(object: cell!.alphaView)
+            }
             scoreCounter = Int(scoreLabel.text!)! - itemList[index].cost
             percentage += itemList[index].boost
             percentage = Double(round(percentage*100)/100)
+            savePercentageSelected(percentage: percentage)
             updateScoreLabel()
             updatePercentageLabel(percentage: percentage)
             print("Purchase made " + itemList[index].name + " " + String(itemList[index].level))
-            itemList[index].level += 1
-            updateButtonImage(item: itemList[index])
         }
     }
     
@@ -87,6 +99,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     
     func hideAlphaView(finished:Bool) {
         currentBoostTableViewCell?.alphaView.isHidden = true
+        updateButtonImage(item: currentBoostItem!)
     }
     
     // MARK: Functions
@@ -130,7 +143,9 @@ class ViewController: UIViewController, UITableViewDataSource {
         if (randomNumber < Int(percentage * 100)) {
             makeAnimation()
             scoreCounter += 1
+            saveScoreSelected(score: scoreCounter)
             totalScoreCounter += 1
+            saveTotalScoreSelected(score: totalScoreCounter)
             updateScoreLabel()
             print("%: ",percentage)
             print("Make")
@@ -138,6 +153,7 @@ class ViewController: UIViewController, UITableViewDataSource {
             print("%: ",percentage)
             print("Miss")
             missCounter += 1
+            saveTotalMissesSelected(misses: missCounter)
         }
     }
     // Animation for missed shot
@@ -177,17 +193,64 @@ class ViewController: UIViewController, UITableViewDataSource {
         }
     }
     // Saving the updated percentage for the user
-    func saveSelected(percentage: Double) {
+    func savePercentageSelected(percentage: Double) {
         let defaults = UserDefaults.standard
         defaults.set(percentage, forKey: percentageKey)
         defaults.synchronize()
     }
-
+    // Saves the score updates with user default storage
+    func saveScore() -> Int {
+        let newScore = UserDefaults.standard.object(forKey: scoreKey) as? Int
+        
+        if let score = newScore {
+            return score
+        } else {
+            return 0
+        }
+    }
+    // Saving the updated score for the user
+    func saveScoreSelected(score: Int) {
+        let defaults = UserDefaults.standard
+        defaults.set(score, forKey: scoreKey)
+        defaults.synchronize()
+    }
+    // Saves the total score updates with user default storage
+    func saveTotalScore() -> Int {
+        let newScore = UserDefaults.standard.object(forKey: totalScoreKey) as? Int
+        
+        if let score = newScore {
+            return score
+        } else {
+            return 0
+        }
+    }
+    // Saving the updated total score for the user
+    func saveTotalScoreSelected(score: Int) {
+        let defaults = UserDefaults.standard
+        defaults.set(score, forKey: totalScoreKey)
+        defaults.synchronize()
+    }
+    func saveTotalMisses() -> Int {
+        let newMiss = UserDefaults.standard.object(forKey: totalMissesKey) as? Int
+        
+        if let miss = newMiss {
+            return miss
+        } else {
+            return 0
+        }
+    }
+    // Saving the updated total score for the user
+    func saveTotalMissesSelected(misses: Int) {
+        let defaults = UserDefaults.standard
+        defaults.set(misses, forKey: totalMissesKey)
+        defaults.synchronize()
+    }
+    // Updates button image in BoostItem cells
     func updateButtonImage(item: BoostItem) {
         let cell = currentBoostTableViewCell
         let button = cell?.itemBuyButton
         let level = String(item.level)
-        let name = item.name.lowercased()
+        let name = item.name.replacingOccurrences(of: " ", with: "").lowercased()
         let imageName = name+"Level"+level
         print(imageName)
         button?.setImage(UIImage(named: imageName), for: .normal)
@@ -209,13 +272,13 @@ class ViewController: UIViewController, UITableViewDataSource {
         boostTableViewOutlet.layer.cornerRadius = 10
         itemList.append(BoostItem(category: "Drink", name: "Can", cost: 1, boost: 0.01))
         itemList.append(BoostItem(category: "Drink", name: "Cup", cost: 1, boost: 0.02))
-        itemList.append(BoostItem(category: "Drink", name: "Bottle", cost: 1/*100*/, boost: 0.05))
-        itemList.append(BoostItem(category: "Drink", name: "Barrell", cost: 1/*1000*/, boost: 0.05))
-        /*itemList.append(BoostItem(category: "Drink", name: "Gatorade", cost: 10000))
-        itemList.append(BoostItem(category: "Food", name: "Nachos", cost: 50))
-        itemList.append(BoostItem(category: "Food", name: "Protein bar", cost: 50))
-        itemList.append(BoostItem(category: "Food", name: "Hot dog", cost: 50))
-        itemList.append(BoostItem(category: "Food", name: "Taco", cost: 50))
+        itemList.append(BoostItem(category: "Drink", name: "Bottle", cost: 1, boost: 0.05))
+        itemList.append(BoostItem(category: "Drink", name: "Barrell", cost: 1, boost: 0.05))
+        itemList.append(BoostItem(category: "Food", name: "Nachos", cost: 2, boost: 1))
+        itemList.append(BoostItem(category: "Food", name: "Protein Bar", cost: 2,boost: 10))
+        itemList.append(BoostItem(category: "Food", name: "Hot Dog", cost: 2, boost: 20))
+        itemList.append(BoostItem(category: "Food", name: "Taco", cost: 2, boost: 25))
+        /*
         itemList.append(BoostItem(category: "Sponsor", name: "Puma", cost: 25))
         itemList.append(BoostItem(category: "Sponsor", name: "Adidas", cost: 250))
         itemList.append(BoostItem(category: "Sponsor", name: "Under Armor", cost: 2500))
@@ -251,6 +314,9 @@ class ViewController: UIViewController, UITableViewDataSource {
         itemList.append(BoostItem(category: "Team", name: "Utah Grass", cost: 50))
         itemList.append(BoostItem(category: "Team", name: "Washington Lizards", cost: 50))*/
         percentage = savePercentage()
+        missCounter = saveTotalMisses()
+        scoreCounter = saveScore()
+        totalScoreCounter = saveTotalScore()
         updateScoreLabel()
         updatePercentageLabel(percentage: percentage)
         boostView.isHidden = true
