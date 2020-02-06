@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ViewController: UIViewController, UITableViewDataSource {
     
@@ -21,6 +22,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     var boostCellList = [BoostTableViewCell]()
     var currentBoostTableViewCell : BoostTableViewCell? = nil
     var currentBoostItem : BoostItem? = nil
+    var ballValue : Int = 1
     
     // MARK: Constants
     let startingPercentage : Double = 50
@@ -101,6 +103,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     func hideAlphaView(finished:Bool) {
         currentBoostTableViewCell?.alphaView.isHidden = true
         updateButtonImage(item: currentBoostItem!)
+        currentBoostTableViewCell?.levelLabel.text = "Lv. " + String(currentBoostItem!.level)
         userEnableCells(enable: true)
     }
     
@@ -117,7 +120,15 @@ class ViewController: UIViewController, UITableViewDataSource {
         cell.itemLabel.text = itemList[indexPath.row].name
         cell.costLabel.text = "Cost: " + String(itemList[indexPath.row].cost)
         cell.levelLabel.text = "Lv. " + String(itemList[indexPath.row].level)
-        cell.purchasedLabel.text = "+" + String(itemList[indexPath.row].boost) + "%"
+        switch itemList[indexPath.row].category {
+        case "Drink":
+            cell.purchasedLabel.text = "+" + String(itemList[indexPath.row].boost) + "%"
+        case "Food":
+            cell.purchasedLabel.text = "+" + String(itemList[indexPath.row].boost) + "🏀"
+        default:
+            cell.purchasedLabel.text = ""
+        }
+        
         
         boostCellList.append(cell)
         currentBoostTableViewCell = cell
@@ -144,7 +155,7 @@ class ViewController: UIViewController, UITableViewDataSource {
         let randomNumber = Int(arc4random_uniform(10000)) + 1
         if (randomNumber < Int(percentage * 100)) {
             makeAnimation()
-            scoreCounter += 1
+            scoreCounter += ballValue
             saveScoreSelected(score: scoreCounter)
             totalScoreCounter += 1
             saveTotalScoreSelected(score: totalScoreCounter)
@@ -267,6 +278,11 @@ class ViewController: UIViewController, UITableViewDataSource {
     // MARK: Main Program
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+       // Firestore.firestore().collection("test").addDocument(data: ["name" : "david"])
+        
+        
+        
         boostView.layer.cornerRadius = 10
         boostTableViewOutlet.layer.cornerRadius = 10
         itemList.append(BoostItem(category: "Drink", name: "Can", cost: 1, boost: 0.01))
@@ -274,9 +290,9 @@ class ViewController: UIViewController, UITableViewDataSource {
         itemList.append(BoostItem(category: "Drink", name: "Bottle", cost: 1, boost: 0.05))
         itemList.append(BoostItem(category: "Drink", name: "Barrell", cost: 1, boost: 0.05))
         itemList.append(BoostItem(category: "Food", name: "Nachos", cost: 2, boost: 1))
-        itemList.append(BoostItem(category: "Food", name: "Protein Bar", cost: 2,boost: 10))
-        itemList.append(BoostItem(category: "Food", name: "Hot Dog", cost: 2, boost: 20))
-        itemList.append(BoostItem(category: "Food", name: "Taco", cost: 2, boost: 25))
+        itemList.append(BoostItem(category: "Food", name: "Protein Bar", cost: 2,boost: 2))
+        itemList.append(BoostItem(category: "Food", name: "Hot Dog", cost: 2, boost: 10))
+        itemList.append(BoostItem(category: "Food", name: "Taco", cost: 2, boost: 20))
         /*
         itemList.append(BoostItem(category: "Sponsor", name: "Puma", cost: 25))
         itemList.append(BoostItem(category: "Sponsor", name: "Adidas", cost: 250))
@@ -328,7 +344,5 @@ class ViewController: UIViewController, UITableViewDataSource {
         boostTableViewOutlet.dataSource = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(didPressBoostItemButton(notification:)), name: NSNotification.Name.init(rawValue: "ButtonPressed"), object: nil)
-        
-        //alert dialogue
     }
 }

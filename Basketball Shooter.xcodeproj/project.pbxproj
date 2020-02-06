@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		30C4317E836C363122339AFE /* Pods_BasketballShooter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78360E44AFD8E01B80791AB3 /* Pods_BasketballShooter.framework */; };
+		FB67EDC423EB2A1B00112989 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB67EDC323EB2A1B00112989 /* GoogleService-Info.plist */; };
 		FB95A04723D87E5F00CBDCE4 /* BoostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB95A04623D87E5F00CBDCE4 /* BoostTableViewCell.swift */; };
 		FB95A04923D87E7800CBDCE4 /* BoostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB95A04823D87E7800CBDCE4 /* BoostTableViewCell.xib */; };
 		FB95A04B23D8910800CBDCE4 /* BoostItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB95A04A23D8910800CBDCE4 /* BoostItem.swift */; };
@@ -20,6 +22,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D2A366CB27AD990389DFD5D /* Pods-BasketballShooter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BasketballShooter.debug.xcconfig"; path = "Target Support Files/Pods-BasketballShooter/Pods-BasketballShooter.debug.xcconfig"; sourceTree = "<group>"; };
+		78360E44AFD8E01B80791AB3 /* Pods_BasketballShooter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BasketballShooter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8F3F758C0FAFC3122256F92 /* Pods-BasketballShooter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BasketballShooter.release.xcconfig"; path = "Target Support Files/Pods-BasketballShooter/Pods-BasketballShooter.release.xcconfig"; sourceTree = "<group>"; };
+		FB67EDC323EB2A1B00112989 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FB95A04623D87E5F00CBDCE4 /* BoostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoostTableViewCell.swift; sourceTree = "<group>"; };
 		FB95A04823D87E7800CBDCE4 /* BoostTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoostTableViewCell.xib; sourceTree = "<group>"; };
 		FB95A04A23D8910800CBDCE4 /* BoostItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoostItem.swift; sourceTree = "<group>"; };
@@ -39,17 +45,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30C4317E836C363122339AFE /* Pods_BasketballShooter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1C85672AEACB74C98D16E012 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2D2A366CB27AD990389DFD5D /* Pods-BasketballShooter.debug.xcconfig */,
+				A8F3F758C0FAFC3122256F92 /* Pods-BasketballShooter.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		70438A5AF2BEC0C71E1D468C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				78360E44AFD8E01B80791AB3 /* Pods_BasketballShooter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		FBFDDA0723C92B0400CF8573 = {
 			isa = PBXGroup;
 			children = (
 				FBFDDA1223C92B0400CF8573 /* BasketballShooter */,
 				FBFDDA1123C92B0400CF8573 /* Products */,
+				1C85672AEACB74C98D16E012 /* Pods */,
+				70438A5AF2BEC0C71E1D468C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,6 +101,7 @@
 				FB95A04A23D8910800CBDCE4 /* BoostItem.swift */,
 				FBFDDA1F23C92B0A00CF8573 /* Assets.xcassets */,
 				FBFDDA2423C92B0A00CF8573 /* Info.plist */,
+				FB67EDC323EB2A1B00112989 /* GoogleService-Info.plist */,
 				FBFDDA1C23C92B0400CF8573 /* BasketballShooter.xcdatamodeld */,
 			);
 			path = BasketballShooter;
@@ -86,9 +114,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FBFDDA2723C92B0A00CF8573 /* Build configuration list for PBXNativeTarget "BasketballShooter" */;
 			buildPhases = (
+				A3E38699570BF5682DB5EBF6 /* [CP] Check Pods Manifest.lock */,
 				FBFDDA0C23C92B0400CF8573 /* Sources */,
 				FBFDDA0D23C92B0400CF8573 /* Frameworks */,
 				FBFDDA0E23C92B0400CF8573 /* Resources */,
+				72CE1816E51F7647992548B4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -139,12 +169,55 @@
 			files = (
 				FBFDDA2323C92B0A00CF8573 /* LaunchScreen.storyboard in Resources */,
 				FB95A04923D87E7800CBDCE4 /* BoostTableViewCell.xib in Resources */,
+				FB67EDC423EB2A1B00112989 /* GoogleService-Info.plist in Resources */,
 				FBFDDA2023C92B0A00CF8573 /* Assets.xcassets in Resources */,
 				FBFDDA1B23C92B0400CF8573 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		72CE1816E51F7647992548B4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BasketballShooter/Pods-BasketballShooter-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BasketballShooter/Pods-BasketballShooter-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BasketballShooter/Pods-BasketballShooter-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A3E38699570BF5682DB5EBF6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BasketballShooter-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FBFDDA0C23C92B0400CF8573 /* Sources */ = {
@@ -298,6 +371,7 @@
 		};
 		FBFDDA2823C92B0A00CF8573 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2D2A366CB27AD990389DFD5D /* Pods-BasketballShooter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -316,6 +390,7 @@
 		};
 		FBFDDA2923C92B0A00CF8573 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A8F3F758C0FAFC3122256F92 /* Pods-BasketballShooter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
