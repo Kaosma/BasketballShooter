@@ -31,7 +31,7 @@
                                             <constraint firstAttribute="height" constant="45" id="79g-c5-ZAK"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Rockwell-Regular" family="Rockwell" pointSize="35"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" red="0.72941176470588232" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hoop" translatesAutoresizingMaskIntoConstraints="NO" id="HfM-rR-MeV">
@@ -45,7 +45,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.24705882370471954" green="0.38823530077934265" blue="0.54509806632995605" alpha="0.81030607876712324" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.24705882370000001" green="0.38823530080000002" blue="0.54509806630000002" alpha="0.81030607880000005" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="zEy-vu-NGx" firstAttribute="centerX" secondItem="etm-J2-5im" secondAttribute="centerX" id="5TJ-aD-8mB"/>
                                     <constraint firstItem="HfM-rR-MeV" firstAttribute="centerX" secondItem="etm-J2-5im" secondAttribute="centerX" id="IPg-Yw-35l"/>
@@ -126,7 +126,7 @@
                                     <outletCollection property="gestureRecognizers" destination="1El-K8-raL" appends="YES" id="hRK-zg-9E2"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oro-yH-MRV" userLabel="boostView">
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oro-yH-MRV" userLabel="boostView">
                                 <rect key="frame" x="42.5" y="75" width="290" height="535"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -150,8 +150,25 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="70" translatesAutoresizingMaskIntoConstraints="NO" id="X6K-my-2CV">
+                                <rect key="frame" x="88.5" y="647.5" width="198" height="14.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="velocity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d9a-19-kOd" userLabel="velocityLabel">
+                                        <rect key="frame" x="0.0" y="0.0" width="59" height="14.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ballValue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fnS-pq-TdL" userLabel="ballValueLabel">
+                                        <rect key="frame" x="129" y="0.0" width="69" height="14.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -159,9 +176,11 @@
                             <constraint firstItem="A1W-s6-PdV" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="3fJ-Ee-mNV"/>
                             <constraint firstItem="etm-J2-5im" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="8Ia-6M-rjH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ogI-QF-0Qn" secondAttribute="trailing" constant="26.5" id="CRZ-fc-Hud"/>
+                            <constraint firstItem="X6K-my-2CV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="DOs-6Q-GBd"/>
                             <constraint firstItem="PBF-WP-bpz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="5" id="Dre-QM-Qlu"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="PBF-WP-bpz" secondAttribute="bottom" constant="5" id="F4Q-Lt-Vh6"/>
                             <constraint firstItem="Jae-bY-S7F" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Gru-WU-DY1"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="X6K-my-2CV" secondAttribute="bottom" constant="5" id="T9O-0e-MsX"/>
                             <constraint firstItem="6KB-A5-maa" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TeF-iU-3Ve"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0Tb-mN-COO" secondAttribute="bottom" constant="5" id="VEN-28-H2g"/>
                             <constraint firstItem="etm-J2-5im" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="VeZ-xH-hcN"/>
@@ -169,6 +188,7 @@
                             <constraint firstItem="Jae-bY-S7F" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Wqs-Fh-ljy"/>
                             <constraint firstItem="iEg-Rr-ePS" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="15" id="Y0O-hc-9MZ"/>
                             <constraint firstItem="iEg-Rr-ePS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="Y5N-Px-Hih"/>
+                            <constraint firstItem="X6K-my-2CV" firstAttribute="top" secondItem="Jae-bY-S7F" secondAttribute="bottom" constant="8" symbolic="YES" id="dJn-Vy-yfK"/>
                             <constraint firstItem="SY8-Sp-OHh" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="dOO-sj-CQ1"/>
                             <constraint firstItem="etm-J2-5im" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="dra-UB-wZj"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Jae-bY-S7F" secondAttribute="bottom" constant="27.5" id="ewh-Gt-muu"/>
@@ -185,12 +205,14 @@
                     </view>
                     <connections>
                         <outlet property="ball" destination="6KB-A5-maa" id="HwX-8Z-CZq"/>
+                        <outlet property="ballValueLabel" destination="fnS-pq-TdL" id="qwr-t8-e9R"/>
                         <outlet property="boostButton" destination="SY8-Sp-OHh" id="ub6-Mc-QHn"/>
                         <outlet property="boostTableViewOutlet" destination="xG7-BM-wda" id="DaG-cj-jiz"/>
                         <outlet property="boostView" destination="oro-yH-MRV" id="Ncs-8d-9Ev"/>
                         <outlet property="percentageLabel" destination="nmg-LM-hBI" id="BFn-ne-p5S"/>
                         <outlet property="scoreLabel" destination="zEy-vu-NGx" id="fTa-3S-ZMv"/>
                         <outlet property="tableViewPercentageLabel" destination="bUw-lg-DMS" id="0Tm-tG-U4S"/>
+                        <outlet property="velocityLabel" destination="d9a-19-kOd" id="No0-r0-CS5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -200,7 +222,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="159" y="107"/>
+            <point key="canvasLocation" x="157.59999999999999" y="106.59670164917542"/>
         </scene>
     </scenes>
     <resources>

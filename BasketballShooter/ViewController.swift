@@ -19,6 +19,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     var missCounter : Int = 0
     var navigationButtonPressed : Bool = false
     var itemList = [BoostItem]()
+    var packageList = [PackageItem]()
     var boostCellList = [BoostTableViewCell]()
     var currentBoostTableViewCell : BoostTableViewCell? = nil
     var currentBoostItem : BoostItem? = nil
@@ -30,18 +31,22 @@ class ViewController: UIViewController, UITableViewDataSource {
     let scoreKey = "score"
     let totalScoreKey = "totalScore"
     let totalMissesKey = "totalMisses"
+    let ballValueKey = "ballValue"
     let itemCellId =  "ItemCellId"
+    let db = Firestore.firestore()
     
-    // MARK: Outlet Variables
+    // MARK: IB Outlet Variables
     @IBOutlet weak var percentageLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var velocityLabel: UILabel!
+    @IBOutlet weak var ballValueLabel: UILabel!
     @IBOutlet weak var boostButton: UIButton!
     @IBOutlet weak var ball: UIImageView!
     @IBOutlet weak var boostView: UIView!
     @IBOutlet weak var boostTableViewOutlet: UITableView!
     @IBOutlet weak var tableViewPercentageLabel: UILabel!
     
-    // MARK: Actions
+    // MARK: IB Actions
     // Boostbutton pressed
     @IBAction func boostButtonPressed(_ sender: UIButton) {
         navigationAnimation(button: sender, view: boostView)
@@ -53,12 +58,15 @@ class ViewController: UIViewController, UITableViewDataSource {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         let yesAction = UIAlertAction(title: "Yes", style: .default) {action in
             self.percentage = self.startingPercentage
-            self.savePercentageSelected(percentage: self.percentage)
-            self.updatePercentageLabel(percentage: self.percentage)
             self.scoreCounter = 0
             self.missCounter = 0
             self.totalScoreCounter = 0
+            self.ballValue = 0
+            self.savePercentageSelected(percentage: self.percentage)
+            self.saveBallValueSelected(ballValue: self.ballValue)
             self.saveScoreSelected(score: self.scoreCounter)
+            self.updatePercentageLabel()
+            self.updateBallValueLabel()
             self.updateScoreLabel()
         }
         alert.addAction(cancelAction)
@@ -84,30 +92,155 @@ class ViewController: UIViewController, UITableViewDataSource {
                 boostBuyAnimation(object: cell!.alphaView)
             }
             scoreCounter = Int(scoreLabel.text!)! - itemList[index].cost
-            percentage += itemList[index].boost
-            percentage = Double(round(percentage*100)/100)
-            savePercentageSelected(percentage: percentage)
+            
+            switch itemList[index].category {
+            case "Food":
+                ballValue += Int(itemList[index].boost)
+                saveBallValueSelected(ballValue: ballValue)
+            case "Drink":
+                percentage += itemList[index].boost
+                percentage = Double(round(percentage*100)/100)
+                savePercentageSelected(percentage: percentage)
+            default:
+                break
+            }
             updateScoreLabel()
-            updatePercentageLabel(percentage: percentage)
             print("Purchase made " + itemList[index].name + " " + String(itemList[index].level))
         }
     }
     
+    // MARK: Animation Functions
+    // Navigation animation for the navigationbuttons
+    func navigationAnimation(button : UIButton, view : UIView){
+        if button.alpha == 1.0 {
+            navigationButtonPressed = true
+            view.isHidden = false
+            view.isUserInteractionEnabled = true
+            button.alpha = 0.5
+        } else {
+            navigationButtonPressed = false
+            view.isHidden = true
+            view.isUserInteractionEnabled = false
+            button.alpha = 1.0
+        }
+    }
+    // Animation for made shot
+    func makeAnimation() {
+        UIView.animate(withDuration: 1.0, animations: {
+            var frame = self.ball.frame
+            frame.origin.y += 4.5*frame.size.height
+            self.ball.frame = frame
+        })
+        UIView.animate(withDuration: 1.2, animations: {self.ball.alpha = 0.0}, completion: makeBallVisible(finished:))
+    }
+    // Ball transparency fade animation
+    func makeBallVisible(finished: Bool) {
+        UIView.animate(withDuration: 1.2, animations: {self.ball.alpha = 1.0})
+    }
+    // Animation for missed shot
+    func missAnimation() {
+        
+    }
+    // Animation for buying a boostItem
     func boostBuyAnimation(object: UIView) {
         UIView.animate(withDuration: 3.0, animations: {
             object.frame.size.height = 140
             self.userEnableCells(enable: false)
         }, completion: hideAlphaView(finished:))
     }
-    
+    // Hides the alphaView after the buying animation
     func hideAlphaView(finished:Bool) {
+        updatePercentageLabel()
+        updateBallValueLabel()
         currentBoostTableViewCell?.alphaView.isHidden = true
         updateButtonImage(item: currentBoostItem!)
         currentBoostTableViewCell?.levelLabel.text = "Lv. " + String(currentBoostItem!.level)
         userEnableCells(enable: true)
     }
     
-    // MARK: Functions
+    // MARK: Storage Functions
+    // Saving the percentage updates with user default storage
+    func savePercentage() -> Double {
+        let newPercentage = UserDefaults.standard.object(forKey: percentageKey) as? Double
+        
+        if let percentage = newPercentage {
+            return percentage
+        } else {
+            return startingPercentage
+        }
+    }
+    // Saving the updated percentage for the user
+    func savePercentageSelected(percentage: Double) {
+        let defaults = UserDefaults.standard
+        defaults.set(percentage, forKey: percentageKey)
+        defaults.synchronize()
+    }
+    // Saving the ball value with user default storage
+    func saveBallValue() -> Int {
+        let newBallValue = UserDefaults.standard.object(forKey: ballValueKey) as? Int
+        
+        if let ballValue = newBallValue {
+            return ballValue
+        } else {
+            return 1
+        }
+    }
+    // Saving the updated ball value for the user
+    func saveBallValueSelected(ballValue: Int) {
+        let defaults = UserDefaults.standard
+        defaults.set(ballValue, forKey: ballValueKey)
+        defaults.synchronize()
+    }
+    // Saving the score updates with user default storage
+    func saveScore() -> Int {
+        let newScore = UserDefaults.standard.object(forKey: scoreKey) as? Int
+        
+        if let score = newScore {
+            return score
+        } else {
+            return 0
+        }
+    }
+    // Saving the updated score for the user
+    func saveScoreSelected(score: Int) {
+        let defaults = UserDefaults.standard
+        defaults.set(score, forKey: scoreKey)
+        defaults.synchronize()
+    }
+    // Saving the total score updates with user default storage
+    func saveTotalScore() -> Int {
+        let newScore = UserDefaults.standard.object(forKey: totalScoreKey) as? Int
+        
+        if let score = newScore {
+            return score
+        } else {
+            return 0
+        }
+    }
+    // Saving the updated total score for the user
+    func saveTotalScoreSelected(score: Int) {
+        let defaults = UserDefaults.standard
+        defaults.set(score, forKey: totalScoreKey)
+        defaults.synchronize()
+    }
+    // Saving the total misses with user default storage
+    func saveTotalMisses() -> Int {
+        let newMiss = UserDefaults.standard.object(forKey: totalMissesKey) as? Int
+        
+        if let miss = newMiss {
+            return miss
+        } else {
+            return 0
+        }
+    }
+    // Saving the updated total misses for the user
+    func saveTotalMissesSelected(misses: Int) {
+        let defaults = UserDefaults.standard
+        defaults.set(misses, forKey: totalMissesKey)
+        defaults.synchronize()
+    }
+    
+    // MARK: Other Functions
     // Returns how many cells for the tableview
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return itemList.count
@@ -128,27 +261,11 @@ class ViewController: UIViewController, UITableViewDataSource {
         default:
             cell.purchasedLabel.text = ""
         }
-        
-        
+
         boostCellList.append(cell)
         currentBoostTableViewCell = cell
         updateButtonImage(item: itemList[indexPath.row])
         return cell
-    }
-    
-    // Navigation animation for the navigationbuttons
-    func navigationAnimation(button : UIButton, view : UIView){
-        if button.alpha == 1.0 {
-            navigationButtonPressed = true
-            view.isHidden = false
-            view.isUserInteractionEnabled = true
-            button.alpha = 0.5
-        } else {
-            navigationButtonPressed = false
-            view.isHidden = true
-            view.isUserInteractionEnabled = false
-            button.alpha = 1.0
-        }
     }
     // Randomizes number between 0-10000 and is checked by the percentage
     func shotTaken(percentage: Double) {
@@ -169,94 +286,18 @@ class ViewController: UIViewController, UITableViewDataSource {
             saveTotalMissesSelected(misses: missCounter)
         }
     }
-    // Animation for missed shot
-    func missAnimation() {
-        
-    }
-    // Animation for made shot
-    func makeAnimation() {
-        UIView.animate(withDuration: 1.0, animations: {
-            var frame = self.ball.frame
-            frame.origin.y += 4.5*frame.size.height
-            self.ball.frame = frame
-        })
-        UIView.animate(withDuration: 1.2, animations: {self.ball.alpha = 0.0}, completion: makeBallVisible(finished:))
-    }
-    // Ball transparency fade animation
-    func makeBallVisible(finished: Bool) {
-        UIView.animate(withDuration: 1.2, animations: {self.ball.alpha = 1.0})
-    }
     // Updates the score label
     func updateScoreLabel() {
         scoreLabel.text = String(scoreCounter)
     }
     // Updates the percentage label
-    func updatePercentageLabel(percentage: Double) {
+    func updatePercentageLabel() {
         percentageLabel.text = String(percentage) + "%"
         tableViewPercentageLabel.text = percentageLabel.text
     }
-    // Saves the percentage updates with user default storage
-    func savePercentage() -> Double {
-        let newPercentage = UserDefaults.standard.object(forKey: percentageKey) as? Double
-        
-        if let percentage = newPercentage {
-            return percentage
-        } else {
-            return startingPercentage
-        }
-    }
-    // Saving the updated percentage for the user
-    func savePercentageSelected(percentage: Double) {
-        let defaults = UserDefaults.standard
-        defaults.set(percentage, forKey: percentageKey)
-        defaults.synchronize()
-    }
-    // Saves the score updates with user default storage
-    func saveScore() -> Int {
-        let newScore = UserDefaults.standard.object(forKey: scoreKey) as? Int
-        
-        if let score = newScore {
-            return score
-        } else {
-            return 0
-        }
-    }
-    // Saving the updated score for the user
-    func saveScoreSelected(score: Int) {
-        let defaults = UserDefaults.standard
-        defaults.set(score, forKey: scoreKey)
-        defaults.synchronize()
-    }
-    // Saves the total score updates with user default storage
-    func saveTotalScore() -> Int {
-        let newScore = UserDefaults.standard.object(forKey: totalScoreKey) as? Int
-        
-        if let score = newScore {
-            return score
-        } else {
-            return 0
-        }
-    }
-    // Saving the updated total score for the user
-    func saveTotalScoreSelected(score: Int) {
-        let defaults = UserDefaults.standard
-        defaults.set(score, forKey: totalScoreKey)
-        defaults.synchronize()
-    }
-    func saveTotalMisses() -> Int {
-        let newMiss = UserDefaults.standard.object(forKey: totalMissesKey) as? Int
-        
-        if let miss = newMiss {
-            return miss
-        } else {
-            return 0
-        }
-    }
-    // Saving the updated total score for the user
-    func saveTotalMissesSelected(misses: Int) {
-        let defaults = UserDefaults.standard
-        defaults.set(misses, forKey: totalMissesKey)
-        defaults.synchronize()
+    // Updates the ball value label
+    func updateBallValueLabel() {
+        ballValueLabel.text = "Ball value: " + String(ballValue)
     }
     // Updates button image in BoostItem cells
     func updateButtonImage(item: BoostItem) {
@@ -265,24 +306,41 @@ class ViewController: UIViewController, UITableViewDataSource {
         let level = String(item.level)
         let name = item.name.replacingOccurrences(of: " ", with: "").lowercased()
         let imageName = name+"Level"+level
-        print(imageName)
         button?.setImage(UIImage(named: imageName), for: .normal)
     }
-    
+    // Enables or disables all interaction with Boostcells
     func userEnableCells(enable : Bool) {
         for boostCell in boostCellList {
             boostCell.itemBuyButton.isUserInteractionEnabled = enable
         }
     }
+    // Loads the packages from the database and appends them to the packagelist
+    func loadPackages(){
+        db.collection("packages").getDocuments { (querySnapshot, error) in
+            if let e = error {
+                print("There was an Issue retrieving data from Firestore. \(e)")
+            } else {
+                if let snapShotDocuments = querySnapshot?.documents {
+                    for doc in snapShotDocuments {
+                        let data = doc.data()
+                        if let type = data["type"] as? String, let name = data["name"] as? String, let cost = data["cost"] as? Int, let boost = data["boost"] as? Double {
+                            let newObject = PackageItem(type: type, name: name, cost: cost, boost: boost)
+                            self.packageList.append(newObject)
+                        }
+                    }
+                }
+            }
+        }
+    }
     
     // MARK: Main Program
+    
+    override func loadView() {
+        super.loadView()
+        loadPackages()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       // Firestore.firestore().collection("test").addDocument(data: ["name" : "david"])
-        
-        
-        
         boostView.layer.cornerRadius = 10
         boostTableViewOutlet.layer.cornerRadius = 10
         itemList.append(BoostItem(category: "Drink", name: "Can", cost: 1, boost: 0.01))
@@ -293,49 +351,28 @@ class ViewController: UIViewController, UITableViewDataSource {
         itemList.append(BoostItem(category: "Food", name: "Protein Bar", cost: 2,boost: 2))
         itemList.append(BoostItem(category: "Food", name: "Hot Dog", cost: 2, boost: 10))
         itemList.append(BoostItem(category: "Food", name: "Taco", cost: 2, boost: 20))
+
+        //let team = PackageItem(type: "Team", name: "Washington Lizards", cost: 50, boost: 0)
+        //db.collection("packages").addDocument(data: team.toDict())
         /*
         itemList.append(BoostItem(category: "Sponsor", name: "Puma", cost: 25))
         itemList.append(BoostItem(category: "Sponsor", name: "Adidas", cost: 250))
         itemList.append(BoostItem(category: "Sponsor", name: "Under Armor", cost: 2500))
-        itemList.append(BoostItem(category: "Sponsor", name: "Nike", cost: 25000))
-        itemList.append(BoostItem(category: "Team", name: "Atlanta Clocks", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Boston Athletics", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Brooklyn Jets", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Charlotte Orbits", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Chicago Pulse", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Cleveland Raindeers", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Dallas ", cost: 50))//HEJHEJ
-        itemList.append(BoostItem(category: "Team", name: "Denver Luggage", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Detroit Christians", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Golden State Sorcerers", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Houston Sockets", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Indiana ", cost: 50))//HEJHEJ
-        itemList.append(BoostItem(category: "Team", name: "Los Angeles Slippers", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Los Angeles Bakers", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Memphis", cost: 50))//HEJHEJ
-        itemList.append(BoostItem(category: "Team", name: "Miami Feet", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Milwaukee Ducks", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Minnesota ", cost: 50))//HEJHEJ
-        itemList.append(BoostItem(category: "Team", name: "New Orleans ", cost: 50))//HEJHEJ
-        itemList.append(BoostItem(category: "Team", name: "New York Bricks", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Oklahoma City Wonder", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Orlando Automatic", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Philadelphia Cement Mixers", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Phoenix Buns", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Portland Sail Raisers", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Sacramento Rings", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "San Antonio Chauffeurs", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Toronto ", cost: 50))//HEJHEJ
-        itemList.append(BoostItem(category: "Team", name: "Utah Grass", cost: 50))
-        itemList.append(BoostItem(category: "Team", name: "Washington Lizards", cost: 50))*/
+        itemList.append(BoostItem(category: "Sponsor", name: "Nike", cost: 25000))*/
         percentage = savePercentage()
+        ballValue = saveBallValue()
         missCounter = saveTotalMisses()
         scoreCounter = saveScore()
         totalScoreCounter = saveTotalScore()
         updateScoreLabel()
-        updatePercentageLabel(percentage: percentage)
+        updatePercentageLabel()
+        updateBallValueLabel()
         boostView.isHidden = true
         boostView.isUserInteractionEnabled = false
+        
+        for object in packageList{
+            print(object.name)
+        }
         
         let nib = UINib(nibName: "BoostTableViewCell", bundle: nil)
         
