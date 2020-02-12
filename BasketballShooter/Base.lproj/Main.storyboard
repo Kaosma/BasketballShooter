@@ -91,6 +91,9 @@
                                     <constraint firstAttribute="height" constant="50" id="nqh-d2-F71"/>
                                 </constraints>
                                 <state key="normal" image="settingsBlack"/>
+                                <connections>
+                                    <action selector="settingsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OCQ-8u-UnP"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Tb-mN-COO" userLabel="packageButton">
                                 <rect key="frame" x="325" y="612" width="50" height="50"/>
@@ -126,8 +129,8 @@
                                     <outletCollection property="gestureRecognizers" destination="1El-K8-raL" appends="YES" id="hRK-zg-9E2"/>
                                 </connections>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oro-yH-MRV" userLabel="boostView">
-                                <rect key="frame" x="42.5" y="75" width="290" height="535"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oro-yH-MRV" userLabel="boostView">
+                                <rect key="frame" x="42" y="75" width="290" height="535"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="50" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xG7-BM-wda" userLabel="boostTableView">
@@ -152,17 +155,108 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="70" translatesAutoresizingMaskIntoConstraints="NO" id="X6K-my-2CV">
-                                <rect key="frame" x="88.5" y="647.5" width="198" height="14.5"/>
+                            <view contentMode="scaleToFill" id="d9c-7n-Zeh" userLabel="settingsView">
+                                <rect key="frame" x="42" y="75" width="290" height="535"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="velocity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d9a-19-kOd" userLabel="velocityLabel">
-                                        <rect key="frame" x="0.0" y="0.0" width="59" height="14.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="unQ-hG-3rL" userLabel="boostLabel">
+                                        <rect key="frame" x="93" y="3" width="105" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="kL2-7t-LT8" userLabel="settingsStackView">
+                                        <rect key="frame" x="0.0" y="43" width="290" height="250"/>
+                                        <subviews>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="8ob-tz-jgo" userLabel="showPercentageCell">
+                                                <rect key="frame" x="0.0" y="0.0" width="290" height="50"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8ob-tz-jgo" id="YZ9-T0-st7">
+                                                    <rect key="frame" x="0.0" y="0.0" width="290" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show Shooting Percentage" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tb5-y3-rC4" userLabel="showPercentageLabel">
+                                                            <rect key="frame" x="13" y="15" width="207" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AOw-Gy-Fh8" userLabel="showPercentageSwitch">
+                                                            <rect key="frame" x="236" y="9.5" width="51" height="31"/>
+                                                        </switch>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="Tb5-y3-rC4" firstAttribute="centerY" secondItem="YZ9-T0-st7" secondAttribute="centerY" id="JIu-Hk-ITQ"/>
+                                                        <constraint firstItem="AOw-Gy-Fh8" firstAttribute="centerY" secondItem="YZ9-T0-st7" secondAttribute="centerY" id="Nnv-BM-vAY"/>
+                                                        <constraint firstItem="Tb5-y3-rC4" firstAttribute="leading" secondItem="YZ9-T0-st7" secondAttribute="leadingMargin" constant="5" id="lT9-gu-TOm"/>
+                                                        <constraint firstAttribute="trailing" secondItem="AOw-Gy-Fh8" secondAttribute="trailing" constant="5" id="r9X-DC-zaG"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                            </tableViewCell>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="X1C-J4-u76" userLabel="showPPSCell">
+                                                <rect key="frame" x="0.0" y="100" width="290" height="50"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="X1C-J4-u76" id="IE3-3n-9pq">
+                                                    <rect key="frame" x="0.0" y="0.0" width="290" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show Points per Second" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65T-l9-Btn" userLabel="showPPSLabel">
+                                                            <rect key="frame" x="13" y="15" width="186.5" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rHp-yQ-wsj" userLabel="showPPSSwitch">
+                                                            <rect key="frame" x="236" y="9.5" width="51" height="31"/>
+                                                        </switch>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="rHp-yQ-wsj" firstAttribute="centerY" secondItem="IE3-3n-9pq" secondAttribute="centerY" id="FzR-tv-FVD"/>
+                                                        <constraint firstItem="65T-l9-Btn" firstAttribute="leading" secondItem="IE3-3n-9pq" secondAttribute="leadingMargin" constant="5" id="RpQ-RH-ZJK"/>
+                                                        <constraint firstAttribute="trailing" secondItem="rHp-yQ-wsj" secondAttribute="trailing" constant="5" id="f87-nz-Mfv"/>
+                                                        <constraint firstItem="65T-l9-Btn" firstAttribute="centerY" secondItem="IE3-3n-9pq" secondAttribute="centerY" id="x3h-zK-hgb"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                            </tableViewCell>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="u07-EE-2mg" userLabel="showPPBCell">
+                                                <rect key="frame" x="0.0" y="200" width="290" height="50"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="u07-EE-2mg" id="uNa-y2-ISx">
+                                                    <rect key="frame" x="0.0" y="0.0" width="290" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show Points per Ball" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NGi-tl-nX6" userLabel="showPPBLabel">
+                                                            <rect key="frame" x="13" y="15" width="156" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="urs-NG-oyg" userLabel="showPPBSwitch">
+                                                            <rect key="frame" x="236" y="9.5" width="51" height="31"/>
+                                                        </switch>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="urs-NG-oyg" secondAttribute="trailing" constant="5" id="6hq-Cu-6k1"/>
+                                                        <constraint firstItem="NGi-tl-nX6" firstAttribute="centerY" secondItem="uNa-y2-ISx" secondAttribute="centerY" id="OGh-Xr-6Jr"/>
+                                                        <constraint firstItem="urs-NG-oyg" firstAttribute="centerY" secondItem="uNa-y2-ISx" secondAttribute="centerY" id="Xm8-Ev-veN"/>
+                                                        <constraint firstItem="NGi-tl-nX6" firstAttribute="leading" secondItem="uNa-y2-ISx" secondAttribute="leadingMargin" constant="5" id="fAa-hm-LLN"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                            </tableViewCell>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="70" translatesAutoresizingMaskIntoConstraints="NO" id="X6K-my-2CV" userLabel="bottomLabelStackView">
+                                <rect key="frame" x="102.5" y="647.5" width="170.5" height="14.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PPS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d9a-19-kOd" userLabel="velocityLabel">
+                                        <rect key="frame" x="0.0" y="0.0" width="31.5" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ballValue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fnS-pq-TdL" userLabel="ballValueLabel">
-                                        <rect key="frame" x="129" y="0.0" width="69" height="14.5"/>
+                                        <rect key="frame" x="101.5" y="0.0" width="69" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -209,8 +303,11 @@
                         <outlet property="boostButton" destination="SY8-Sp-OHh" id="ub6-Mc-QHn"/>
                         <outlet property="boostTableViewOutlet" destination="xG7-BM-wda" id="DaG-cj-jiz"/>
                         <outlet property="boostView" destination="oro-yH-MRV" id="Ncs-8d-9Ev"/>
+                        <outlet property="packageButton" destination="0Tb-mN-COO" id="iWA-2I-v61"/>
                         <outlet property="percentageLabel" destination="nmg-LM-hBI" id="BFn-ne-p5S"/>
                         <outlet property="scoreLabel" destination="zEy-vu-NGx" id="fTa-3S-ZMv"/>
+                        <outlet property="settingsButton" destination="PBF-WP-bpz" id="35L-NW-m7W"/>
+                        <outlet property="settingsView" destination="d9c-7n-Zeh" id="Zsj-M5-Xi4"/>
                         <outlet property="tableViewPercentageLabel" destination="bUw-lg-DMS" id="0Tm-tG-U4S"/>
                         <outlet property="velocityLabel" destination="d9a-19-kOd" id="No0-r0-CS5"/>
                     </connections>

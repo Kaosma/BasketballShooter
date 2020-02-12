@@ -17,13 +17,14 @@ class ViewController: UIViewController, UITableViewDataSource {
     var scoreCounter : Int = 0
     var totalScoreCounter: Int = 0
     var missCounter : Int = 0
-    var navigationButtonPressed : Bool = false
     var itemList = [BoostItem]()
     var packageList = [PackageItem]()
     var boostCellList = [BoostTableViewCell]()
     var currentBoostTableViewCell : BoostTableViewCell? = nil
     var currentBoostItem : BoostItem? = nil
     var ballValue : Int = 1
+    var navigationViewList = [UIView]()
+    var navigationButtonList = [UIButton]()
     
     // MARK: Constants
     let startingPercentage : Double = 50
@@ -41,8 +42,11 @@ class ViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var velocityLabel: UILabel!
     @IBOutlet weak var ballValueLabel: UILabel!
     @IBOutlet weak var boostButton: UIButton!
+    @IBOutlet weak var packageButton: UIButton!
+    @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var ball: UIImageView!
     @IBOutlet weak var boostView: UIView!
+    @IBOutlet weak var settingsView: UIView!
     @IBOutlet weak var boostTableViewOutlet: UITableView!
     @IBOutlet weak var tableViewPercentageLabel: UILabel!
     
@@ -50,6 +54,10 @@ class ViewController: UIViewController, UITableViewDataSource {
     // Boostbutton pressed
     @IBAction func boostButtonPressed(_ sender: UIButton) {
         navigationAnimation(button: sender, view: boostView)
+    }
+    // Settingsbutton pressed
+    @IBAction func settingsButtonPressed(_ sender: UIButton) {
+        navigationAnimation(button: sender, view: settingsView)
     }
     // Reset button to reset the percentage to starting value (50%) | Alert message
     @IBAction func resetButtonTest(_ sender: UIButton) {
@@ -61,7 +69,7 @@ class ViewController: UIViewController, UITableViewDataSource {
             self.scoreCounter = 0
             self.missCounter = 0
             self.totalScoreCounter = 0
-            self.ballValue = 0
+            self.ballValue = 1
             self.savePercentageSelected(percentage: self.percentage)
             self.saveBallValueSelected(ballValue: self.ballValue)
             self.saveScoreSelected(score: self.scoreCounter)
@@ -112,16 +120,26 @@ class ViewController: UIViewController, UITableViewDataSource {
     // MARK: Animation Functions
     // Navigation animation for the navigationbuttons
     func navigationAnimation(button : UIButton, view : UIView){
-        if button.alpha == 1.0 {
-            navigationButtonPressed = true
-            view.isHidden = false
-            view.isUserInteractionEnabled = true
-            button.alpha = 0.5
+        if button.alpha == 0.5 {
+            for anyView in navigationViewList {
+                anyView.isHidden = true
+                anyView.isUserInteractionEnabled = false
+                button.alpha = 1.0
+            }
         } else {
-            navigationButtonPressed = false
-            view.isHidden = true
-            view.isUserInteractionEnabled = false
-            button.alpha = 1.0
+            var index = 0
+            for anyView in navigationViewList {
+                if anyView != view {
+                    anyView.isHidden = true
+                    anyView.isUserInteractionEnabled = false
+                    navigationButtonList[index].alpha = 1.0
+                } else {
+                    anyView.isHidden = false
+                    anyView.isUserInteractionEnabled = true
+                    button.alpha = 0.5
+                }
+                index += 1
+            }
         }
     }
     // Animation for made shot
@@ -253,6 +271,7 @@ class ViewController: UIViewController, UITableViewDataSource {
         cell.itemLabel.text = itemList[indexPath.row].name
         cell.costLabel.text = "Cost: " + String(itemList[indexPath.row].cost)
         cell.levelLabel.text = "Lv. " + String(itemList[indexPath.row].level)
+        
         switch itemList[indexPath.row].category {
         case "Drink":
             cell.purchasedLabel.text = "+" + String(itemList[indexPath.row].boost) + "%"
@@ -337,10 +356,15 @@ class ViewController: UIViewController, UITableViewDataSource {
     
     override func loadView() {
         super.loadView()
+        navigationViewList.append(boostView)
+        navigationViewList.append(settingsView)
+        navigationButtonList.append(boostButton)
+        navigationButtonList.append(settingsButton)
         loadPackages()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        settingsView.layer.cornerRadius = 10
         boostView.layer.cornerRadius = 10
         boostTableViewOutlet.layer.cornerRadius = 10
         itemList.append(BoostItem(category: "Drink", name: "Can", cost: 1, boost: 0.01))
@@ -369,6 +393,8 @@ class ViewController: UIViewController, UITableViewDataSource {
         updateBallValueLabel()
         boostView.isHidden = true
         boostView.isUserInteractionEnabled = false
+        settingsView.isHidden = true
+        settingsView.isUserInteractionEnabled = false
         
         for object in packageList{
             print(object.name)
