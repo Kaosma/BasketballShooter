@@ -16,6 +16,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var madeShot : Bool = false
     var scoreCounter : Int = 0
     var totalScoreCounter: Int = 0
+    var inRowCounter : Int = 0
     var missCounter : Int = 0
     var itemList = [BoostItem]()
     var packageList = [PackageItem]()
@@ -98,19 +99,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // Tap for every shot
     @IBAction func tapped(_ sender: UITapGestureRecognizer) {
         
-        let newMade = shotTaken(percentage: percentage)
-        
-        if newMade {
+        let shotMade = shotTaken(percentage: percentage)
+        if shotMade {
+            makeAnimation()
+            scoreCounter += ballValue
+            saveScoreSelected(score: scoreCounter)
+            totalScoreCounter += 1
+            saveTotalScoreSelected(score: totalScoreCounter)
+            updateScoreLabel()
+            print("%: ",percentage)
+            print("Make")
+            pointsShowAnimation()
             ppsList.append(ballValue)
+        } else {
+            print("%: ",percentage)
+            print("Miss")
+            missCounter += 1
+            saveTotalMissesSelected(misses: missCounter)
         }
-        /*print(newMade)
-        print(totalScoreCounter , "/", missCounter+totalScoreCounter)
-        let newTap = getClickTime()
-        if lastTap != 0 {
-            print(calcPPS(lastTapTime: lastTap, newTapTime: newTap, lastMake: lastMade, newMake: newMade))
-        }
-        lastTap = newTap
-        lastMade = newMade*/
+        ballRotationAnimation()
     }
     // Handles buying and buying animation
     @objc func didPressBoostItemButton(notification:Notification) {
@@ -168,6 +175,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
         }
     }
+    // Ballrotation animation
+    func ballRotationAnimation() {
+        UIView.animate(withDuration: 1.0, animations: {
+            self.ball.transform = CGAffineTransform(rotationAngle: (CGFloat(Double.pi*0.5)))
+            self.ball.transform = CGAffineTransform(rotationAngle: (CGFloat(Double.pi)))
+            self.ball.transform = CGAffineTransform(rotationAngle: (CGFloat(Double.pi*1.5)))
+            self.ball.transform = CGAffineTransform(rotationAngle: (CGFloat(Double.pi*2)))
+        })
+    }
     // Animation for made shot
     func makeAnimation() {
         UIView.animate(withDuration: 1.0, animations: {
@@ -175,7 +191,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             frame.origin.y += 4.5*frame.size.height
             self.ball.frame = frame
         })
-        UIView.animate(withDuration: 0.5, delay: 0.8, animations: {
+        UIView.animate(withDuration: 0.7, delay: 0.8, animations: {
             self.ball.alpha = 0.0
         }, completion: makeBallVisible(finished:))
     }
@@ -203,9 +219,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         currentBoostTableViewCell?.levelLabel.text = "Lv. " + String(currentBoostItem!.level)
         userEnableCells(enable: true)
     }
-    
+    // Animation showing how many points made
     func pointsShowAnimation(){
-        
         var randomX = CGFloat(arc4random_uniform(285)+45)
         var randomY = CGFloat(arc4random_uniform(232)+50)
         while (Int(randomX) > 85 && Int(randomX) < 250) {
@@ -310,8 +325,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // MARK: Other Functions
     // Returns how many cells for the tableview
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return itemList.count
+        if section == 0 {
+            return 4 // antal drinks
+        } else{
+            return 4 // antal foods
         }
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
@@ -329,52 +348,38 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         let cell = tableView.dequeueReusableCell(withIdentifier: itemCellId, for: indexPath) as! BoostTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: itemCellId, for: indexPath) as! BoostTableViewCell
         
-        if indexPath.section == 0 && indexPath.row < 4 {
-            print(indexPath.row)
-            cell.itemLabel.text = itemList[indexPath.row].name
-            cell.costLabel.text = "Cost: " + String(itemList[indexPath.row].cost)
-            cell.levelLabel.text = "Lv. " + String(itemList[indexPath.row].level)
-        } else if indexPath.section == 1 && indexPath.row > 3 {
-            cell.itemLabel.text = itemList[indexPath.row].name
-            cell.costLabel.text = "Cost: " + String(itemList[indexPath.row].cost)
-            cell.levelLabel.text = "Lv. " + String(itemList[indexPath.row].level)
+        var offSection = 0
+        if indexPath.section == 1 {
+           offSection = 4
         }
         
-        switch itemList[indexPath.row].category {
+        let  item = itemList[indexPath.row + offSection]
+        cell.itemLabel.text = item.name
+        cell.costLabel.text = "Cost: " + String(item.cost)
+        cell.levelLabel.text = "Lv. " + String(item.level)
+        
+        switch item.category {
             case "Drink":
-                cell.purchasedLabel.text = "+" + String(itemList[indexPath.row].boost) + "%"
+                cell.purchasedLabel.text = "+" + String(item.boost) + "%"
             case "Food":
-                cell.purchasedLabel.text = "+" + String(itemList[indexPath.row].boost) + "🏀"
+                cell.purchasedLabel.text = "+" + String(item.boost) + "🏀"
             default:
                 cell.purchasedLabel.text = ""
         }
 
         boostCellList.append(cell)
         currentBoostTableViewCell = cell
-        updateButtonImage(item: itemList[indexPath.row])
+        updateButtonImage(item: item)
         return cell
     }
     // Randomizes number between 0-10000 and is checked by the percentage
     func shotTaken(percentage: Double) -> Bool {
         let randomNumber = Int(arc4random_uniform(10000)) + 1
         if (randomNumber < Int(percentage * 100)) {
-            makeAnimation()
-            scoreCounter += ballValue
-            saveScoreSelected(score: scoreCounter)
-            totalScoreCounter += 1
-            saveTotalScoreSelected(score: totalScoreCounter)
-            updateScoreLabel()
-            print("%: ",percentage)
-            print("Make")
-            pointsShowAnimation()
             return true
         } else {
-            print("%: ",percentage)
-            print("Miss")
-            missCounter += 1
-            saveTotalMissesSelected(misses: missCounter)
             return false
         }
     }
