@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="70" id="Jje-ZL-PrP" userLabel="Package Table View Cell" customClass="PackageTableViewCell" customModule="BasketballShooter" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="282" height="70"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Jje-ZL-PrP" id="neo-8h-9vf">
+                <rect key="frame" x="0.0" y="0.0" width="282" height="70"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hsm-jX-rXv" userLabel="costLabel">
+                        <rect key="frame" x="20" y="39" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czy-nd-F1W" userLabel="itemLabel">
+                        <rect key="frame" x="10" y="10" width="42.5" height="19.5"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CgU-OQ-zi2" userLabel="itemBuyButton">
+                        <rect key="frame" x="212" y="0.0" width="70" height="70"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="BFy-tk-kJn"/>
+                            <constraint firstAttribute="height" constant="70" identifier="itemBuyButtonHeightConstraint" id="mos-ZI-ouh"/>
+                        </constraints>
+                        <state key="normal" image="bottleLevel5"/>
+                        <connections>
+                            <action selector="itemBuyButtonPressed:" destination="Jje-ZL-PrP" eventType="touchUpInside" id="TGY-Il-feK"/>
+                        </connections>
+                    </button>
+                    <view hidden="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H8S-lD-aid" userLabel="alphaView">
+                        <rect key="frame" x="212" y="0.0" width="70" height="70"/>
+                        <color key="backgroundColor" red="0.89019607840000003" green="0.96470588239999999" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="Grc-zh-b3b"/>
+                            <constraint firstAttribute="height" constant="70" id="ObZ-aC-em4"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" red="0.89019607840000003" green="0.96470588239999999" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="czy-nd-F1W" firstAttribute="top" secondItem="neo-8h-9vf" secondAttribute="top" constant="10" id="4BD-HD-JwK"/>
+                    <constraint firstAttribute="trailing" secondItem="CgU-OQ-zi2" secondAttribute="trailing" id="Acc-Ar-QMX"/>
+                    <constraint firstItem="czy-nd-F1W" firstAttribute="leading" secondItem="neo-8h-9vf" secondAttribute="leading" constant="10" id="Coj-JP-EpX"/>
+                    <constraint firstItem="Hsm-jX-rXv" firstAttribute="leading" secondItem="neo-8h-9vf" secondAttribute="leading" constant="20" id="Iya-My-7Jr"/>
+                    <constraint firstAttribute="bottom" secondItem="Hsm-jX-rXv" secondAttribute="bottom" constant="10" id="S6p-tW-FFe"/>
+                    <constraint firstAttribute="bottom" secondItem="H8S-lD-aid" secondAttribute="bottom" id="ckV-By-Kh8"/>
+                    <constraint firstAttribute="trailing" secondItem="H8S-lD-aid" secondAttribute="trailing" id="nNt-7A-SHW"/>
+                    <constraint firstItem="CgU-OQ-zi2" firstAttribute="top" secondItem="neo-8h-9vf" secondAttribute="top" id="t5Z-Cu-YvN"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="alphaView" destination="H8S-lD-aid" id="90U-8c-sOy"/>
+                <outlet property="costLabel" destination="Hsm-jX-rXv" id="mWR-SL-3xm"/>
+                <outlet property="itemBuyButton" destination="CgU-OQ-zi2" id="ull-Ua-epT"/>
+                <outlet property="itemLabel" destination="czy-nd-F1W" id="Fvw-Kj-Mim"/>
+            </connections>
+            <point key="canvasLocation" x="388.80000000000001" y="-21.589205397301352"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="bottleLevel5" width="166.5" height="166.5"/>
+    </resources>
+</document>

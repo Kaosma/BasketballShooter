@@ -29,6 +29,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var lastTap : Double = 0
     var lastMade : Bool = false
     var ppsList = [Int]()
+    var turnOnSound = false
+    var ballArray = [UIImageView]()
+    var currentBall : UIImageView?
+    var alowTap = true
    
     // MARK: Constants
     let startingPercentage : Double = 50
@@ -37,8 +41,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let totalScoreKey = "totalScore"
     let totalMissesKey = "totalMisses"
     let ballValueKey = "ballValue"
-    let itemCellId =  "ItemCellId"
-    let sections : [String] = ["Thunder Drink", "Fire Food"]
+    let boostCellId =  "BoostCellId"
+    let packageCellId = "PackageCellId"
+    let sections : [String] = ["Thunder Drinks", "Fire Foods"]
     let sectionImages : [UIImage] = [UIImage.init(named: "thunderDrink")!, UIImage.init(named: "fireFood")!]
     let db = Firestore.firestore()
     
@@ -53,26 +58,68 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var soundButton: UIButton!
     @IBOutlet weak var ball: UIImageView!
+    @IBOutlet weak var ball2: UIImageView!
+    @IBOutlet weak var ball3: UIImageView!
+    @IBOutlet weak var ball4: UIImageView!
+    @IBOutlet weak var ball5: UIImageView!
     @IBOutlet weak var boostView: UIView!
+    @IBOutlet weak var packageView: UIView!
     @IBOutlet weak var settingsView: UIView!
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var hoopImageView: UIImageView!
     @IBOutlet weak var boostTableViewOutlet: UITableView!
+    @IBOutlet weak var packageTableViewOutlet: UITableView!
     @IBOutlet weak var tableViewPercentageLabel: UILabel!
+    
+    @IBOutlet weak var packageTableViewPrecentageLabel: UILabel!
     @IBOutlet weak var settingsTitelView: UIView!
     
     // MARK: IB Actions
-    
+    // Button to enable/disable the sound
     @IBAction func soundButtonPressed(_ sender: UIButton) {
-        
+        if turnOnSound {
+            soundButton.setBackgroundImage(UIImage(named: "soundButton"), for: .normal)
+            turnOnSound = false
+        } else {
+            soundButton.setBackgroundImage(UIImage(named: "soundButtonSlash"), for: .normal)
+            turnOnSound = true
+        }
     }
-    // Boostbutton pressed
+    // Boostbutton pressed to open the boostView
     @IBAction func boostButtonPressed(_ sender: UIButton) {
         navigationAnimation(button: sender, view: boostView)
     }
-    // Settingsbutton pressed
+    // Packagebutton pressed to open the packageView
+    @IBAction func packageButtonPressed(_ sender: UIButton) {
+        navigationAnimation(button: sender, view: packageView)
+    }
+    // Settingsbutton pressed to open the settingsView
     @IBAction func settingsButtonPressed(_ sender: UIButton) {
         navigationAnimation(button: sender, view: settingsView)
+    }
+    // Switch to show percentage
+    @IBAction func showPercentageSwitch(_ sender: UISwitch) {
+        if sender.isOn {
+            percentageLabel.isHidden = false
+        } else {
+            percentageLabel.isHidden = true
+        }
+    }
+    // Switch to show points/second
+    @IBAction func showPPSSwitch(_ sender: UISwitch) {
+        if sender.isOn {
+            velocityLabel.isHidden = false
+        } else {
+            velocityLabel.isHidden = true
+        }
+    }
+    // Switch to show ball value
+    @IBAction func showBallValueSwitch(_ sender: UISwitch) {
+        if sender.isOn {
+            ballValueLabel.isHidden = false
+        } else {
+            ballValueLabel.isHidden = true
+        }
     }
     // Reset button to reset the percentage to starting value (50%) | Alert message
     @IBAction func resetButtonPressed(_ sender: UIButton) {
@@ -98,26 +145,27 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     // Tap for every shot
     @IBAction func tapped(_ sender: UITapGestureRecognizer) {
-        
-        let shotMade = shotTaken(percentage: percentage)
-        if shotMade {
-            makeAnimation()
-            scoreCounter += ballValue
-            saveScoreSelected(score: scoreCounter)
-            totalScoreCounter += 1
-            saveTotalScoreSelected(score: totalScoreCounter)
-            updateScoreLabel()
-            print("%: ",percentage)
-            print("Make")
-            pointsShowAnimation()
-            ppsList.append(ballValue)
-        } else {
-            print("%: ",percentage)
-            print("Miss")
-            missCounter += 1
-            saveTotalMissesSelected(misses: missCounter)
+        if alowTap {
+            let shotMade = shotTaken(percentage: percentage)
+            if shotMade {
+                makeAnimation()
+                scoreCounter += ballValue
+                saveScoreSelected(score: scoreCounter)
+                totalScoreCounter += 1
+                saveTotalScoreSelected(score: totalScoreCounter)
+                updateScoreLabel()
+                print("%: ",percentage)
+                print("Make")
+                pointsShowAnimation()
+                ppsList.append(ballValue)
+            } else {
+                print("%: ",percentage)
+                print("Miss")
+                missCounter += 1
+                saveTotalMissesSelected(misses: missCounter)
+            }
+            ballRotationAnimation()
         }
-        ballRotationAnimation()
     }
     // Handles buying and buying animation
     @objc func didPressBoostItemButton(notification:Notification) {
@@ -178,26 +226,37 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // Ballrotation animation
     func ballRotationAnimation() {
         UIView.animate(withDuration: 1.0, animations: {
-            self.ball.transform = CGAffineTransform(rotationAngle: (CGFloat(Double.pi*0.5)))
-            self.ball.transform = CGAffineTransform(rotationAngle: (CGFloat(Double.pi)))
-            self.ball.transform = CGAffineTransform(rotationAngle: (CGFloat(Double.pi*1.5)))
-            self.ball.transform = CGAffineTransform(rotationAngle: (CGFloat(Double.pi*2)))
+//            let pi = CGFloat(Double.pi)
+//            self.ball.transform = CGAffineTransform(rotationAngle: pi/2)
+//            self.ball.transform = CGAffineTransform(rotationAngle: pi)
+//            self.ball.transform = CGAffineTransform(rotationAngle: 3*pi/2)
+//            self.ball.transform = CGAffineTransform(rotationAngle: 2*pi)
         })
     }
     // Animation for made shot
     func makeAnimation() {
-        UIView.animate(withDuration: 1.0, animations: {
-            var frame = self.ball.frame
-            frame.origin.y += 4.5*frame.size.height
-            self.ball.frame = frame
-        })
+        alowTap = false
+        UIView.animate(withDuration: 0.6, animations: {
+            self.currentBall!.transform = CGAffineTransform(translationX: 0, y: -180)
+        }, completion: ballBounce(finished:))
         UIView.animate(withDuration: 0.7, delay: 0.8, animations: {
-            self.ball.alpha = 0.0
-        }, completion: makeBallVisible(finished:))
+            self.currentBall!.alpha = 0.0
+        }, completion: returnBall(finished:))
     }
     // Ball transparency fade animation
-    func makeBallVisible(finished: Bool) {
-        self.ball.alpha = 1.0
+    func returnBall(finished: Bool) {
+        self.ballArray.append(self.currentBall!)
+        self.currentBall?.isHidden = true
+        self.currentBall?.alpha = 1.0
+        self.currentBall = self.ballArray[0]
+        self.ballArray.removeFirst(1)
+        self.currentBall?.isHidden = false
+        alowTap = true
+    }
+    func ballBounce (finished: Bool) {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.currentBall!.transform = .identity
+        })
     }
     // Animation for missed shot
     func missAnimation() {
@@ -323,7 +382,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     // MARK: Other Functions
-    // Returns how many cells for the tableview
+    // Returns how many cells for each section in the tableviews
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 4 // antal drinks
@@ -331,24 +390,21 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return 4 // antal foods
         }
     }
-    
+    // Returns the number of sections the boostTableView will have
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
-    
-    
+    // Creates headercell for boostTableView
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headercell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! HeaderCell
+        let headercell = tableView.dequeueReusableCell(withIdentifier: "boostHeaderCell") as! HeaderCell
         headercell.headerImage.image = sectionImages[section]
         headercell.headerLabel.text = sections[section]
         return headercell
     }
     
-    // Creating the cells for the tableview
-    
-    
+    // Creating the cells for the boostTableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: itemCellId, for: indexPath) as! BoostTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: boostCellId, for: indexPath) as! BoostTableViewCell
         
         var offSection = 0
         if indexPath.section == 1 {
@@ -391,6 +447,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func updatePercentageLabel() {
         percentageLabel.text = String(percentage) + "%"
         tableViewPercentageLabel.text = percentageLabel.text
+        packageTableViewPrecentageLabel.text = percentageLabel.text
     }
     // Updates the ball value label
     func updateBallValueLabel() {
@@ -430,27 +487,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
         }
     }
-    
-    /*
-    func calcPPS() {
-        let time = getClickTime()
-        let timeSinceLastHit = (time - timeOfLastMade )
-
-        let pps = Double(ballValue) / timeSinceLastHit
-
-        timeOfLastMade = time
-
-        // print(pps)
-        velocityLabel.text = "PPS: " + String(Double(round(10*pps)/10))
-         
-         
-    }
-     
-    func getClickTime() -> Double {
-        let timestamp = NSDate().timeIntervalSince1970
-        return timestamp
-    }
-    */
     @objc func updatePPS() {
         var pps : Int = 0
         for points in ppsList {
@@ -470,10 +506,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         missCounter = saveTotalMisses()
         scoreCounter = saveScore()
         totalScoreCounter = saveTotalScore()
+        currentBall = ball
+        ballArray.append(ball2)
+        ballArray.append(ball3)
+        ballArray.append(ball4)
+        ballArray.append(ball5)
         navigationViewList.append(boostView)
         navigationViewList.append(settingsView)
+        navigationViewList.append(packageView)
         navigationButtonList.append(boostButton)
         navigationButtonList.append(settingsButton)
+        navigationButtonList.append(packageButton)
         itemList.append(BoostItem(category: "Drink", name: "Can", cost: 1, boost: 0.01))
         itemList.append(BoostItem(category: "Drink", name: "Cup", cost: 1, boost: 0.02))
         itemList.append(BoostItem(category: "Drink", name: "Bottle", cost: 1, boost: 0.05))
@@ -485,11 +528,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        boostView.layer.cornerRadius = 10
+        boostTableViewOutlet.layer.cornerRadius = 10
+        packageView.layer.cornerRadius = 10
         settingsView.layer.cornerRadius = 10
         settingsTitelView.layer.cornerRadius = 10
         settingsTitelView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        boostView.layer.cornerRadius = 10
-        boostTableViewOutlet.layer.cornerRadius = 10
 
         //let team = PackageItem(type: "Team", name: "Washington Lizards", cost: 50, boost: 0)
         //db.collection("packages").addDocument(data: team.toDict())
@@ -503,15 +547,21 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         updateBallValueLabel()
         boostView.isHidden = true
         boostView.isUserInteractionEnabled = false
+        packageView.isHidden = true
+        packageView.isUserInteractionEnabled = false
         settingsView.isHidden = true
         settingsView.isUserInteractionEnabled = false
         
         Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(ViewController.updatePPS)), userInfo: nil, repeats: true)
         
-        let nib = UINib(nibName: "BoostTableViewCell", bundle: nil)
-        boostTableViewOutlet.register(nib, forCellReuseIdentifier: itemCellId)
+        let boostNib = UINib(nibName: "BoostTableViewCell", bundle: nil)
+        boostTableViewOutlet.register(boostNib, forCellReuseIdentifier: boostCellId)
         boostTableViewOutlet.dataSource = self
         boostTableViewOutlet.delegate = self
+//        let packageNib = UINib(nibName: "PackageTableViewCell", bundle: nil)
+//        packageTableViewOutlet.register(packageNib, forCellReuseIdentifier: packageCellId)
+//        packageTableViewOutlet.dataSource = self
+//        packageTableViewOutlet.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(didPressBoostItemButton(notification:)), name: NSNotification.Name.init(rawValue: "ButtonPressed"), object: nil)
     }

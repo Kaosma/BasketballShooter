@@ -11,6 +11,8 @@
 		FB67EDC423EB2A1B00112989 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB67EDC323EB2A1B00112989 /* GoogleService-Info.plist */; };
 		FB7F4FFC23ED8CC200AE47DF /* PackageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7F4FFB23ED8CC200AE47DF /* PackageItem.swift */; };
 		FB7F4FFE23F6B00600AE47DF /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7F4FFD23F6B00600AE47DF /* HeaderCell.swift */; };
+		FB7F500123FBFCFF00AE47DF /* PackageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7F4FFF23FBFCFF00AE47DF /* PackageTableViewCell.swift */; };
+		FB7F500223FBFCFF00AE47DF /* PackageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB7F500023FBFCFF00AE47DF /* PackageTableViewCell.xib */; };
 		FB95A04723D87E5F00CBDCE4 /* BoostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB95A04623D87E5F00CBDCE4 /* BoostTableViewCell.swift */; };
 		FB95A04923D87E7800CBDCE4 /* BoostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB95A04823D87E7800CBDCE4 /* BoostTableViewCell.xib */; };
 		FB95A04B23D8910800CBDCE4 /* BoostItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB95A04A23D8910800CBDCE4 /* BoostItem.swift */; };
@@ -30,6 +32,8 @@
 		FB67EDC323EB2A1B00112989 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FB7F4FFB23ED8CC200AE47DF /* PackageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageItem.swift; sourceTree = "<group>"; };
 		FB7F4FFD23F6B00600AE47DF /* HeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
+		FB7F4FFF23FBFCFF00AE47DF /* PackageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageTableViewCell.swift; sourceTree = "<group>"; };
+		FB7F500023FBFCFF00AE47DF /* PackageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PackageTableViewCell.xib; sourceTree = "<group>"; };
 		FB95A04623D87E5F00CBDCE4 /* BoostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoostTableViewCell.swift; sourceTree = "<group>"; };
 		FB95A04823D87E7800CBDCE4 /* BoostTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoostTableViewCell.xib; sourceTree = "<group>"; };
 		FB95A04A23D8910800CBDCE4 /* BoostItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoostItem.swift; sourceTree = "<group>"; };
@@ -73,6 +77,37 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FB7F500323FBFD2300AE47DF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FB7F4FFD23F6B00600AE47DF /* HeaderCell.swift */,
+				FB95A04623D87E5F00CBDCE4 /* BoostTableViewCell.swift */,
+				FB95A04A23D8910800CBDCE4 /* BoostItem.swift */,
+				FB7F4FFF23FBFCFF00AE47DF /* PackageTableViewCell.swift */,
+				FB7F4FFB23ED8CC200AE47DF /* PackageItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		FB7F500423FBFE0400AE47DF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FBFDDA1923C92B0400CF8573 /* Main.storyboard */,
+				FB95A04823D87E7800CBDCE4 /* BoostTableViewCell.xib */,
+				FB7F500023FBFCFF00AE47DF /* PackageTableViewCell.xib */,
+				FBFDDA2123C92B0A00CF8573 /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FB7F500523FC006200AE47DF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FBFDDA1723C92B0400CF8573 /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		FBFDDA0723C92B0400CF8573 = {
 			isa = PBXGroup;
 			children = (
@@ -96,14 +131,9 @@
 			children = (
 				FBFDDA1323C92B0400CF8573 /* AppDelegate.swift */,
 				FBFDDA1523C92B0400CF8573 /* SceneDelegate.swift */,
-				FBFDDA1923C92B0400CF8573 /* Main.storyboard */,
-				FB95A04823D87E7800CBDCE4 /* BoostTableViewCell.xib */,
-				FBFDDA2123C92B0A00CF8573 /* LaunchScreen.storyboard */,
-				FBFDDA1723C92B0400CF8573 /* ViewController.swift */,
-				FB7F4FFD23F6B00600AE47DF /* HeaderCell.swift */,
-				FB95A04623D87E5F00CBDCE4 /* BoostTableViewCell.swift */,
-				FB95A04A23D8910800CBDCE4 /* BoostItem.swift */,
-				FB7F4FFB23ED8CC200AE47DF /* PackageItem.swift */,
+				FB7F500323FBFD2300AE47DF /* Model */,
+				FB7F500423FBFE0400AE47DF /* View */,
+				FB7F500523FC006200AE47DF /* Controller */,
 				FBFDDA1F23C92B0A00CF8573 /* Assets.xcassets */,
 				FBFDDA2423C92B0A00CF8573 /* Info.plist */,
 				FB67EDC323EB2A1B00112989 /* GoogleService-Info.plist */,
@@ -174,6 +204,7 @@
 			files = (
 				FBFDDA2323C92B0A00CF8573 /* LaunchScreen.storyboard in Resources */,
 				FB95A04923D87E7800CBDCE4 /* BoostTableViewCell.xib in Resources */,
+				FB7F500223FBFCFF00AE47DF /* PackageTableViewCell.xib in Resources */,
 				FB67EDC423EB2A1B00112989 /* GoogleService-Info.plist in Resources */,
 				FBFDDA2023C92B0A00CF8573 /* Assets.xcassets in Resources */,
 				FBFDDA1B23C92B0400CF8573 /* Main.storyboard in Resources */,
@@ -230,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB95A04B23D8910800CBDCE4 /* BoostItem.swift in Sources */,
+				FB7F500123FBFCFF00AE47DF /* PackageTableViewCell.swift in Sources */,
 				FB95A04723D87E5F00CBDCE4 /* BoostTableViewCell.swift in Sources */,
 				FBFDDA1823C92B0400CF8573 /* ViewController.swift in Sources */,
 				FBFDDA1423C92B0400CF8573 /* AppDelegate.swift in Sources */,

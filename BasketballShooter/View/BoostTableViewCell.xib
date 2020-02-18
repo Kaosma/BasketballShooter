@@ -45,7 +45,7 @@
                             <constraint firstAttribute="width" constant="70" id="FSl-qT-cby"/>
                             <constraint firstAttribute="height" constant="70" identifier="itemBuyButtonHeightConstraint" id="Fb7-yM-9Lo"/>
                         </constraints>
-                        <state key="normal" image="Jersey"/>
+                        <state key="normal" image="bottleLevel5"/>
                         <connections>
                             <action selector="itemBuyButtonPressed:" destination="rwd-EC-NY6" eventType="touchUpInside" id="XcW-qC-bgO"/>
                         </connections>
@@ -87,6 +87,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Jersey" width="166.5" height="166.5"/>
+        <image name="bottleLevel5" width="166.5" height="166.5"/>
     </resources>
 </document>
