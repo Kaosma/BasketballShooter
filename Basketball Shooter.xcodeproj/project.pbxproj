@@ -13,6 +13,10 @@
 		FB7F4FFE23F6B00600AE47DF /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7F4FFD23F6B00600AE47DF /* HeaderCell.swift */; };
 		FB7F500123FBFCFF00AE47DF /* PackageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7F4FFF23FBFCFF00AE47DF /* PackageTableViewCell.swift */; };
 		FB7F500223FBFCFF00AE47DF /* PackageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB7F500023FBFCFF00AE47DF /* PackageTableViewCell.xib */; };
+		FB7F501723FD634300AE47DF /* AnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7F501623FD634200AE47DF /* AnimationViewController.swift */; };
+		FB7F501923FD642600AE47DF /* StorageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7F501823FD642600AE47DF /* StorageViewController.swift */; };
+		FB7F501B23FD64CE00AE47DF /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7F501A23FD64CE00AE47DF /* TableViewController.swift */; };
+		FB7F501D23FD658000AE47DF /* UpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7F501C23FD658000AE47DF /* UpdateViewController.swift */; };
 		FB95A04723D87E5F00CBDCE4 /* BoostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB95A04623D87E5F00CBDCE4 /* BoostTableViewCell.swift */; };
 		FB95A04923D87E7800CBDCE4 /* BoostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB95A04823D87E7800CBDCE4 /* BoostTableViewCell.xib */; };
 		FB95A04B23D8910800CBDCE4 /* BoostItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB95A04A23D8910800CBDCE4 /* BoostItem.swift */; };
@@ -34,6 +38,10 @@
 		FB7F4FFD23F6B00600AE47DF /* HeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
 		FB7F4FFF23FBFCFF00AE47DF /* PackageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageTableViewCell.swift; sourceTree = "<group>"; };
 		FB7F500023FBFCFF00AE47DF /* PackageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PackageTableViewCell.xib; sourceTree = "<group>"; };
+		FB7F501623FD634200AE47DF /* AnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationViewController.swift; sourceTree = "<group>"; };
+		FB7F501823FD642600AE47DF /* StorageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageViewController.swift; sourceTree = "<group>"; };
+		FB7F501A23FD64CE00AE47DF /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		FB7F501C23FD658000AE47DF /* UpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateViewController.swift; sourceTree = "<group>"; };
 		FB95A04623D87E5F00CBDCE4 /* BoostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoostTableViewCell.swift; sourceTree = "<group>"; };
 		FB95A04823D87E7800CBDCE4 /* BoostTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoostTableViewCell.xib; sourceTree = "<group>"; };
 		FB95A04A23D8910800CBDCE4 /* BoostItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoostItem.swift; sourceTree = "<group>"; };
@@ -104,6 +112,10 @@
 			isa = PBXGroup;
 			children = (
 				FBFDDA1723C92B0400CF8573 /* ViewController.swift */,
+				FB7F501823FD642600AE47DF /* StorageViewController.swift */,
+				FB7F501623FD634200AE47DF /* AnimationViewController.swift */,
+				FB7F501A23FD64CE00AE47DF /* TableViewController.swift */,
+				FB7F501C23FD658000AE47DF /* UpdateViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -263,10 +275,14 @@
 				FB95A04B23D8910800CBDCE4 /* BoostItem.swift in Sources */,
 				FB7F500123FBFCFF00AE47DF /* PackageTableViewCell.swift in Sources */,
 				FB95A04723D87E5F00CBDCE4 /* BoostTableViewCell.swift in Sources */,
+				FB7F501923FD642600AE47DF /* StorageViewController.swift in Sources */,
 				FBFDDA1823C92B0400CF8573 /* ViewController.swift in Sources */,
 				FBFDDA1423C92B0400CF8573 /* AppDelegate.swift in Sources */,
 				FB7F4FFE23F6B00600AE47DF /* HeaderCell.swift in Sources */,
+				FB7F501B23FD64CE00AE47DF /* TableViewController.swift in Sources */,
 				FBFDDA1623C92B0400CF8573 /* SceneDelegate.swift in Sources */,
+				FB7F501D23FD658000AE47DF /* UpdateViewController.swift in Sources */,
+				FB7F501723FD634300AE47DF /* AnimationViewController.swift in Sources */,
 				FBFDDA1E23C92B0400CF8573 /* BasketballShooter.xcdatamodeld in Sources */,
 				FB7F4FFC23ED8CC200AE47DF /* PackageItem.swift in Sources */,
 			);
