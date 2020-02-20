@@ -33,6 +33,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var ballArray = [UIImageView]()
     var currentBall : UIImageView?
     var alowTap = true
+//    var ballImages : [UIImage] = [UIImage(named: "basketBallIcon")!, UIImage(named: "basketBallIcon2")!, UIImage(named: "basketBallIcon3")!, UIImage(named: "basketBallIcon4")!, UIImage(named: "basketBallIcon5")!, UIImage(named: "basketBallIcon6")!, UIImage(named: "basketBallIcon7")!, UIImage(named: "basketBallIcon8")!, UIImage(named: "basketBallIcon9")!, UIImage(named: "basketBallIcon10")!]
    
     // MARK: Constants
     let startingPercentage : Double = 50
@@ -241,7 +242,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
         }
     }
-    
+    // Hides the statusbar in the app
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -279,13 +280,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         boostView.layer.cornerRadius = 10
         boostTableViewOutlet.layer.cornerRadius = 10
         boostTitelView.layer.cornerRadius = 10
+        boostTableViewOutlet.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         packageView.layer.cornerRadius = 10
         packageTableViewOutlet.layer.cornerRadius = 10
         packageTitelView.layer.cornerRadius = 10
-        packageTitelView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        packageTableViewOutlet.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         settingsView.layer.cornerRadius = 10
         settingsTitelView.layer.cornerRadius = 10
-        settingsTitelView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        settingsTitelView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
 
         //let team = PackageItem(type: "Team", name: "Washington Lizards", cost: 50, boost: 0)
         //db.collection("packages").addDocument(data: team.toDict())

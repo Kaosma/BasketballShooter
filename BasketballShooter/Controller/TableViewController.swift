@@ -38,29 +38,24 @@ extension ViewController {
     }
     // Creates headercell for boostTableView
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-         print("11111111")
         switch tableView {
             case boostTableViewOutlet:
-                print("22222")
                 let boostHeadercell = tableView.dequeueReusableCell(withIdentifier: "boostHeaderCell") as! HeaderCell
                 boostHeadercell.headerImage.image = sectionImages[section]
                 boostHeadercell.headerLabel.text = sections[section]
                 return boostHeadercell
             case packageTableViewOutlet:
-                 print("3333")
                 let packageHeadercell = tableView.dequeueReusableCell(withIdentifier: "packageHeaderCell") as! HeaderCell
                 packageHeadercell.headerImage.image = UIImage(named: "nbaLogo")
                 packageHeadercell.headerLabel.text = "Team Sponsors"
                 return packageHeadercell
             default:
-                 print("44444")
                 return UITableViewCell()
             }
     }
     
     // Creating the cells for the boostTableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         switch tableView {
             case boostTableViewOutlet:
                 let cell = tableView.dequeueReusableCell(withIdentifier: boostCellId, for: indexPath) as! BoostTableViewCell
@@ -91,6 +86,7 @@ extension ViewController {
             case packageTableViewOutlet:
                 let cell = tableView.dequeueReusableCell(withIdentifier: packageCellId) as! PackageTableViewCell
                 cell.itemLabel.text = packageList[indexPath.row].name
+                cell.costLabel.text = "Cost: \(packageList[indexPath.row].cost)"
                 return cell
         default:
             return UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cell")

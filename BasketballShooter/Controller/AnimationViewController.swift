@@ -38,13 +38,9 @@ extension ViewController {
     }
     // Ballrotation animation
     func ballRotationAnimation() {
-        UIView.animate(withDuration: 1.0, animations: {
-            let pi = CGFloat(Double.pi)
-            self.currentBall!.transform = CGAffineTransform(rotationAngle: pi/2)
-            self.currentBall!.transform = CGAffineTransform(rotationAngle: pi)
-            self.currentBall!.transform = CGAffineTransform(rotationAngle: 3*pi/2)
-            self.currentBall!.transform = CGAffineTransform(rotationAngle: 2*pi)
-        })
+//        self.currentBall!.animationImages = ballImages
+//        self.currentBall!.animationDuration = 1.2
+//        self.currentBall!.startAnimating()
     }
     // Animation for made shot
     func makeAnimation() {
