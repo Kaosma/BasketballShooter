@@ -32,7 +32,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var turnOnSound = false
     var ballArray = [UIImageView]()
     var currentBall : UIImageView?
-    var alowTap = true
+    var alowTap : Bool = true
+    var skinToneLevel : Int = 0
+    
     // MARK: Constants
     let startingPercentage : Double = 50
     let percentageKey = "percentage"
@@ -43,6 +45,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let boostCellId =  "BoostCellId"
     let packageCellId = "PackageCellId"
     let sections : [String] = ["Thunder Drinks", "Fire Foods"]
+    let skinTones : [String] = ["#ffdbac","#e0ac69","#c68642","#8d5524","#3d0c02","#260701"]
     let sectionImages : [UIImage] = [UIImage(named: "thunderDrink")!, UIImage(named: "fireFood")!]
     let shooterImages : [UIImage] = [UIImage(named: "shooting1")!, UIImage(named: "shooting2")!, UIImage(named: "shooting3")!, UIImage(named: "shooting4")!, UIImage(named: "shooting5")!, UIImage(named: "shooting5")!, UIImage(named: "shooting4")!, UIImage(named: "shooting1")!]
     let ballImages : [UIImage] = [UIImage(named: "basketBallIcon")!, UIImage(named: "basketBallIcon2")!, UIImage(named: "basketBallIcon3")!, UIImage(named: "basketBallIcon4")!, UIImage(named: "basketBallIcon5")!, UIImage(named: "basketBallIcon6")!, UIImage(named: "basketBallIcon7")!, UIImage(named: "basketBallIcon8")!, UIImage(named: "basketBallIcon9")!, UIImage(named: "basketBallIcon10")!]
@@ -106,6 +109,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         navigationAnimation(button: sender, view: settingsView)
     }
     
+    @IBAction func skinToneButtonPressed(_ sender: UIButton) {
+        let color = UIColor(hex: skinTones[skinToneLevel])
+        sender.backgroundColor = color
+        skinToneLevel += 1
+        skinToneLevel %= 6
+    }
     @IBAction func redJerseyButtonPressed(_ sender: UIButton) {
         if sender.alpha == 1.0 {
             sender.alpha = 0.5
@@ -345,5 +354,31 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         packageTableViewOutlet.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(didPressBoostItemButton(notification:)), name: NSNotification.Name.init(rawValue: "ButtonPressed"), object: nil)
+    }
+}
+extension UIColor {
+    public convenience init?(hex: String) {
+        let r, g, b: CGFloat
+
+        if hex.hasPrefix("#") {
+            let start = hex.index(hex.startIndex, offsetBy: 1)
+            let hexColor = String(hex[start...])
+
+            if hexColor.count == 6 {
+                let scanner = Scanner(string: hexColor)
+                var hexNumber: UInt64 = 0
+
+                if scanner.scanHexInt64(&hexNumber) {
+                    r = CGFloat((hexNumber & 0xff0000) >> 16) / 255
+                    g = CGFloat((hexNumber & 0x00ff00) >> 8) / 255
+                    b = CGFloat(hexNumber & 0x0000ff) / 255
+
+                    self.init(red: r, green: g, blue: b, alpha: 1.0)
+                    return
+                }
+            }
+        }
+
+        return nil
     }
 }
