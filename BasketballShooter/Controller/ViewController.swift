@@ -33,8 +33,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var ballArray = [UIImageView]()
     var currentBall : UIImageView?
     var alowTap = true
-//    var ballImages : [UIImage] = [UIImage(named: "basketBallIcon")!, UIImage(named: "basketBallIcon2")!, UIImage(named: "basketBallIcon3")!, UIImage(named: "basketBallIcon4")!, UIImage(named: "basketBallIcon5")!, UIImage(named: "basketBallIcon6")!, UIImage(named: "basketBallIcon7")!, UIImage(named: "basketBallIcon8")!, UIImage(named: "basketBallIcon9")!, UIImage(named: "basketBallIcon10")!]
-   
     // MARK: Constants
     let startingPercentage : Double = 50
     let percentageKey = "percentage"
@@ -45,7 +43,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let boostCellId =  "BoostCellId"
     let packageCellId = "PackageCellId"
     let sections : [String] = ["Thunder Drinks", "Fire Foods"]
-    let sectionImages : [UIImage] = [UIImage.init(named: "thunderDrink")!, UIImage.init(named: "fireFood")!]
+    let sectionImages : [UIImage] = [UIImage(named: "thunderDrink")!, UIImage(named: "fireFood")!]
+    let shooterImages : [UIImage] = [UIImage(named: "shooting1")!, UIImage(named: "shooting2")!, UIImage(named: "shooting3")!, UIImage(named: "shooting4")!, UIImage(named: "shooting5")!, UIImage(named: "shooting5")!, UIImage(named: "shooting4")!, UIImage(named: "shooting1")!]
+    let ballImages : [UIImage] = [UIImage(named: "basketBallIcon")!, UIImage(named: "basketBallIcon2")!, UIImage(named: "basketBallIcon3")!, UIImage(named: "basketBallIcon4")!, UIImage(named: "basketBallIcon5")!, UIImage(named: "basketBallIcon6")!, UIImage(named: "basketBallIcon7")!, UIImage(named: "basketBallIcon8")!, UIImage(named: "basketBallIcon9")!, UIImage(named: "basketBallIcon10")!]
     let db = Firestore.firestore()
     
     // MARK: IB Outlet Variables
@@ -63,6 +63,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var ball3: UIImageView!
     @IBOutlet weak var ball4: UIImageView!
     @IBOutlet weak var ball5: UIImageView!
+    @IBOutlet weak var shooterImage: UIImageView!
+    @IBOutlet weak var jerseyImageView: UIImageView!
+    @IBOutlet weak var redJerseyButton: UIButton!
+    @IBOutlet weak var blueJerseyButton: UIButton!
+    @IBOutlet weak var greenJerseyButton: UIButton!
     @IBOutlet weak var boostView: UIView!
     @IBOutlet weak var packageView: UIView!
     @IBOutlet weak var settingsView: UIView!
@@ -71,9 +76,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var boostTableViewOutlet: UITableView!
     @IBOutlet weak var packageTableViewOutlet: UITableView!
     @IBOutlet weak var tableViewPercentageLabel: UILabel!
-    
     @IBOutlet weak var packageTableViewPrecentageLabel: UILabel!
-    
     @IBOutlet weak var boostTitelView: UIView!
     @IBOutlet weak var packageTitelView: UIView!
     @IBOutlet weak var settingsTitelView: UIView!
@@ -101,6 +104,33 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // Settingsbutton pressed to open the settingsView
     @IBAction func settingsButtonPressed(_ sender: UIButton) {
         navigationAnimation(button: sender, view: settingsView)
+    }
+    
+    @IBAction func redJerseyButtonPressed(_ sender: UIButton) {
+        if sender.alpha == 1.0 {
+            sender.alpha = 0.5
+            jerseyImageView.image = UIImage(named: "jerseyRed")
+            blueJerseyButton.alpha = 1.0
+            greenJerseyButton.alpha = 1.0
+        }
+    }
+    
+    @IBAction func blueJerseyButtonPressed(_ sender: UIButton) {
+        if sender.alpha == 1.0 {
+            sender.alpha = 0.5
+            jerseyImageView.image = UIImage(named: "jerseyBlue")
+            redJerseyButton.alpha = 1.0
+            greenJerseyButton.alpha = 1.0
+        }
+    }
+    
+    @IBAction func greenJerseyButtonPressed(_ sender: UIButton) {
+        if sender.alpha == 1.0 {
+            sender.alpha = 0.5
+            jerseyImageView.image = UIImage(named: "jerseyGreen")
+            blueJerseyButton.alpha = 1.0
+            redJerseyButton.alpha = 1.0
+        }
     }
     // Switch to show percentage
     @IBAction func showPercentageSwitch(_ sender: UISwitch) {
@@ -169,6 +199,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 missCounter += 1
                 saveTotalMissesSelected(misses: missCounter)
             }
+            shootingAnimation()
             ballRotationAnimation()
         }
     }
@@ -291,11 +322,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
         //let team = PackageItem(type: "Team", name: "Washington Lizards", cost: 50, boost: 0)
         //db.collection("packages").addDocument(data: team.toDict())
-        /*
-        itemList.append(BoostItem(category: "Sponsor", name: "Puma", cost: 25))
-        itemList.append(BoostItem(category: "Sponsor", name: "Adidas", cost: 250))
-        itemList.append(BoostItem(category: "Sponsor", name: "Under Armor", cost: 2500))
-        itemList.append(BoostItem(category: "Sponsor", name: "Nike", cost: 25000))*/
         updateScoreLabel()
         updatePercentageLabel()
         updateBallValueLabel()

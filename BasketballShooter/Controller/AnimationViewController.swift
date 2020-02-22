@@ -36,24 +36,31 @@ extension ViewController {
             }
         }
     }
+    func shootingAnimation() {
+        shooterImage.animationImages = shooterImages
+        shooterImage.animationDuration = 1.0
+        shooterImage.animationRepeatCount = 1
+        shooterImage.startAnimating()
+    }
     // Ballrotation animation
     func ballRotationAnimation() {
-//        self.currentBall!.animationImages = ballImages
-//        self.currentBall!.animationDuration = 1.2
-//        self.currentBall!.startAnimating()
+        currentBall!.animationImages = ballImages
+        currentBall!.animationDuration = 0.8
+        currentBall!.startAnimating()
     }
     // Animation for made shot
     func makeAnimation() {
         alowTap = false
-        UIView.animate(withDuration: 0.6, animations: {
-            self.currentBall!.transform = CGAffineTransform(translationX: 0, y: -180)
+        UIView.animate(withDuration: 0.8, delay: 0.3, animations: {
+            self.currentBall!.transform = CGAffineTransform(translationX: 0, y: -190)
         }, completion: ballBounce(finished:))
-        UIView.animate(withDuration: 0.7, delay: 0.8, animations: {
+        UIView.animate(withDuration: 0.5, delay: 1.5, animations: {
             self.currentBall!.alpha = 0.0
         }, completion: switchBall(finished:))
     }
     // Ball transparency fade animation
     func switchBall(finished: Bool) {
+        self.currentBall!.stopAnimating()
         self.ballArray.append(self.currentBall!)
         self.currentBall?.isHidden = true
         self.currentBall?.alpha = 1.0
