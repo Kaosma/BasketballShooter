@@ -12,28 +12,32 @@ import Firebase
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: Variables
-    var percentage : Double = 50
-    var madeShot : Bool = false
     var scoreCounter : Int = 0
     var totalScoreCounter: Int = 0
     var inRowCounter : Int = 0
     var missCounter : Int = 0
+    var skinToneLevel : Int = 0
+    var ringBounces : Int = 0
+    var ballValue : Int = 1
+    var xFactorCoordinate : Int = 1
+    var lastTap : Double = 0
+    var percentage : Double = 50
+    var alowTap : Bool = true
+    var madeShot : Bool = false
+    var lastMade : Bool = false
+    var turnOnSound : Bool = false
+    var jerseyVectorUp : Bool = false
+    var currentBall : UIImageView?
+    var currentBoostTableViewCell : BoostTableViewCell? = nil
+    var currentBoostItem : BoostItem? = nil
     var itemList = [BoostItem]()
     var packageList = [PackageItem]()
     var boostCellList = [BoostTableViewCell]()
-    var currentBoostTableViewCell : BoostTableViewCell? = nil
-    var currentBoostItem : BoostItem? = nil
-    var ballValue : Int = 1
     var navigationViewList = [UIView]()
     var navigationButtonList = [UIButton]()
-    var lastTap : Double = 0
-    var lastMade : Bool = false
     var ppsList = [Int]()
-    var turnOnSound = false
     var ballArray = [UIImageView]()
-    var currentBall : UIImageView?
-    var alowTap : Bool = true
-    var skinToneLevel : Int = 0
+    var shooterImages : [UIImage] = []
     
     // MARK: Constants
     let startingPercentage : Double = 50
@@ -42,25 +46,32 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let totalScoreKey = "totalScore"
     let totalMissesKey = "totalMisses"
     let ballValueKey = "ballValue"
+    let skinToneKey = "skinTone"
     let boostCellId =  "BoostCellId"
     let packageCellId = "PackageCellId"
     let sections : [String] = ["Thunder Drinks", "Fire Foods"]
     let skinTones : [String] = ["#ffdbac","#e0ac69","#c68642","#8d5524","#3d0c02","#260701"]
     let sectionImages : [UIImage] = [UIImage(named: "thunderDrink")!, UIImage(named: "fireFood")!]
-    let shooterImages : [UIImage] = [UIImage(named: "shooting1")!, UIImage(named: "shooting2")!, UIImage(named: "shooting3")!, UIImage(named: "shooting4")!, UIImage(named: "shooting5")!, UIImage(named: "shooting5")!, UIImage(named: "shooting4")!, UIImage(named: "shooting1")!]
-    let ballImages : [UIImage] = [UIImage(named: "basketBallIcon")!, UIImage(named: "basketBallIcon2")!, UIImage(named: "basketBallIcon3")!, UIImage(named: "basketBallIcon4")!, UIImage(named: "basketBallIcon5")!, UIImage(named: "basketBallIcon6")!, UIImage(named: "basketBallIcon7")!, UIImage(named: "basketBallIcon8")!, UIImage(named: "basketBallIcon9")!, UIImage(named: "basketBallIcon10")!]
+    let ballImages : [UIImage] = [UIImage(named: "basketBallIcon")!, UIImage(named: "basketBallIcon")!, UIImage(named: "basketBallIcon")!, UIImage(named: "basketBallIcon")!, UIImage(named: "basketBallIcon")!, UIImage(named: "basketBallIcon")!, UIImage(named: "basketBallIcon")!, UIImage(named: "basketBallIcon")!, UIImage(named: "basketBallIcon2")!, UIImage(named: "basketBallIcon3")!, UIImage(named: "basketBallIcon4")!, UIImage(named: "basketBallIcon5")!, UIImage(named: "basketBallIcon6")!, UIImage(named: "basketBallIcon7")!, UIImage(named: "basketBallIcon8")!, UIImage(named: "basketBallIcon9")!, UIImage(named: "basketBallIcon10")!,UIImage(named: "basketBallIcon")!,UIImage(named: "basketBallIcon2")!, UIImage(named: "basketBallIcon3")!, UIImage(named: "basketBallIcon4")!, UIImage(named: "basketBallIcon5")!, UIImage(named: "basketBallIcon6")!, UIImage(named: "basketBallIcon7")!, UIImage(named: "basketBallIcon8")!, UIImage(named: "basketBallIcon9")!, UIImage(named: "basketBallIcon10")!]
     let db = Firestore.firestore()
     
-    // MARK: IB Outlet Variables
+    // MARK: IB Outlets
     @IBOutlet weak var percentageLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var velocityLabel: UILabel!
     @IBOutlet weak var ballValueLabel: UILabel!
     @IBOutlet weak var pointsLabel: UILabel!
+    @IBOutlet weak var jerseyNumberLabel: UILabel!
+    @IBOutlet weak var tableViewPercentageLabel: UILabel!
+    @IBOutlet weak var packageTableViewPrecentageLabel: UILabel!
     @IBOutlet weak var boostButton: UIButton!
     @IBOutlet weak var packageButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var soundButton: UIButton!
+    @IBOutlet weak var skinToneButton: UIButton!
+    @IBOutlet weak var redJerseyButton: UIButton!
+    @IBOutlet weak var blueJerseyButton: UIButton!
+    @IBOutlet weak var greenJerseyButton: UIButton!
     @IBOutlet weak var ball: UIImageView!
     @IBOutlet weak var ball2: UIImageView!
     @IBOutlet weak var ball3: UIImageView!
@@ -68,22 +79,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var ball5: UIImageView!
     @IBOutlet weak var shooterImage: UIImageView!
     @IBOutlet weak var jerseyImageView: UIImageView!
-    @IBOutlet weak var redJerseyButton: UIButton!
-    @IBOutlet weak var blueJerseyButton: UIButton!
-    @IBOutlet weak var greenJerseyButton: UIButton!
+    @IBOutlet weak var hoopImageView: UIImageView!
     @IBOutlet weak var boostView: UIView!
     @IBOutlet weak var packageView: UIView!
     @IBOutlet weak var settingsView: UIView!
     @IBOutlet weak var backgroundView: UIView!
-    @IBOutlet weak var hoopImageView: UIImageView!
-    @IBOutlet weak var boostTableViewOutlet: UITableView!
-    @IBOutlet weak var packageTableViewOutlet: UITableView!
-    @IBOutlet weak var tableViewPercentageLabel: UILabel!
-    @IBOutlet weak var packageTableViewPrecentageLabel: UILabel!
     @IBOutlet weak var boostTitelView: UIView!
     @IBOutlet weak var packageTitelView: UIView!
     @IBOutlet weak var settingsTitelView: UIView!
-    
+    @IBOutlet weak var boostTableViewOutlet: UITableView!
+    @IBOutlet weak var packageTableViewOutlet: UITableView!
     
     // MARK: IB Actions
     // Button to enable/disable the sound
@@ -108,13 +113,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBAction func settingsButtonPressed(_ sender: UIButton) {
         navigationAnimation(button: sender, view: settingsView)
     }
-    
+    // Skintonebutton pressed to change skintone
     @IBAction func skinToneButtonPressed(_ sender: UIButton) {
-        let color = UIColor(hex: skinTones[skinToneLevel])
-        sender.backgroundColor = color
+        saveSkinToneSelected(skinTone: skinToneLevel)
+        updateShooterAnimationImages()
         skinToneLevel += 1
         skinToneLevel %= 6
     }
+    // Redjerseybutton pressed to equip the red jersey
     @IBAction func redJerseyButtonPressed(_ sender: UIButton) {
         if sender.alpha == 1.0 {
             sender.alpha = 0.5
@@ -123,7 +129,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             greenJerseyButton.alpha = 1.0
         }
     }
-    
+    // Bluejerseybutton pressed to equip the blue jersey
     @IBAction func blueJerseyButtonPressed(_ sender: UIButton) {
         if sender.alpha == 1.0 {
             sender.alpha = 0.5
@@ -132,7 +138,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             greenJerseyButton.alpha = 1.0
         }
     }
-    
+    // Greenjerseybutton pressed to equip the green jersey
     @IBAction func greenJerseyButtonPressed(_ sender: UIButton) {
         if sender.alpha == 1.0 {
             sender.alpha = 0.5
@@ -203,6 +209,27 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 pointsShowAnimation()
                 ppsList.append(ballValue)
             } else {
+                let randomMiss = Int(arc4random_uniform(3))
+                switch randomMiss {
+                    case 0:
+                        print("Leftmiss Bounce")
+                        xFactorCoordinate = -1
+                        firstMissAnimation()
+                    case 1:
+                        print("Leftmiss Long")
+                        xFactorCoordinate = -1
+                        secondMissAnimation(duration: 0.8, delay: 0.5)
+                    case 2:
+                        print("Rightmiss Bounce")
+                        xFactorCoordinate = 1
+                        firstMissAnimation()
+                    case 3:
+                        print("Rightmiss Long")
+                        xFactorCoordinate = 1
+                        secondMissAnimation(duration: 0.8, delay: 0.5)
+                    default:
+                        firstMissAnimation()
+                }
                 print("%: ",percentage)
                 print("Miss")
                 missCounter += 1
@@ -294,6 +321,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         missCounter = saveTotalMisses()
         scoreCounter = saveScore()
         totalScoreCounter = saveTotalScore()
+        skinToneLevel = saveSkinTone()
         currentBall = ball
         ballArray.append(ball2)
         ballArray.append(ball3)
@@ -334,6 +362,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         updateScoreLabel()
         updatePercentageLabel()
         updateBallValueLabel()
+        updateShooterAnimationImages()
         boostView.isHidden = true
         boostView.isUserInteractionEnabled = false
         packageView.isHidden = true
@@ -354,31 +383,5 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         packageTableViewOutlet.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(didPressBoostItemButton(notification:)), name: NSNotification.Name.init(rawValue: "ButtonPressed"), object: nil)
-    }
-}
-extension UIColor {
-    public convenience init?(hex: String) {
-        let r, g, b: CGFloat
-
-        if hex.hasPrefix("#") {
-            let start = hex.index(hex.startIndex, offsetBy: 1)
-            let hexColor = String(hex[start...])
-
-            if hexColor.count == 6 {
-                let scanner = Scanner(string: hexColor)
-                var hexNumber: UInt64 = 0
-
-                if scanner.scanHexInt64(&hexNumber) {
-                    r = CGFloat((hexNumber & 0xff0000) >> 16) / 255
-                    g = CGFloat((hexNumber & 0x00ff00) >> 8) / 255
-                    b = CGFloat(hexNumber & 0x0000ff) / 255
-
-                    self.init(red: r, green: g, blue: b, alpha: 1.0)
-                    return
-                }
-            }
-        }
-
-        return nil
     }
 }

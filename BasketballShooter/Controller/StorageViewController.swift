@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 extension ViewController {
     // MARK: Storage Functions
-    // Saving the percentage updates with user default storage
+    // Saving the percentage update with user default storage
     func savePercentage() -> Double {
         let newPercentage = UserDefaults.standard.object(forKey: percentageKey) as? Double
         
@@ -26,7 +26,7 @@ extension ViewController {
         defaults.set(percentage, forKey: percentageKey)
         defaults.synchronize()
     }
-    // Saving the ball value with user default storage
+    // Saving the ball value update with user default storage
     func saveBallValue() -> Int {
         let newBallValue = UserDefaults.standard.object(forKey: ballValueKey) as? Int
         
@@ -42,7 +42,7 @@ extension ViewController {
         defaults.set(ballValue, forKey: ballValueKey)
         defaults.synchronize()
     }
-    // Saving the score updates with user default storage
+    // Saving the score update with user default storage
     func saveScore() -> Int {
         let newScore = UserDefaults.standard.object(forKey: scoreKey) as? Int
         
@@ -58,7 +58,7 @@ extension ViewController {
         defaults.set(score, forKey: scoreKey)
         defaults.synchronize()
     }
-    // Saving the total score updates with user default storage
+    // Saving the total score update with user default storage
     func saveTotalScore() -> Int {
         let newScore = UserDefaults.standard.object(forKey: totalScoreKey) as? Int
         
@@ -74,7 +74,7 @@ extension ViewController {
         defaults.set(score, forKey: totalScoreKey)
         defaults.synchronize()
     }
-    // Saving the total misses with user default storage
+    // Saving the total misses update with user default storage
     func saveTotalMisses() -> Int {
         let newMiss = UserDefaults.standard.object(forKey: totalMissesKey) as? Int
         
@@ -88,6 +88,22 @@ extension ViewController {
     func saveTotalMissesSelected(misses: Int) {
         let defaults = UserDefaults.standard
         defaults.set(misses, forKey: totalMissesKey)
+        defaults.synchronize()
+    }
+    // Saving the skintone update with user default storage
+    func saveSkinTone() -> Int {
+        let newSkinTone = UserDefaults.standard.object(forKey: skinToneKey) as? Int
+        
+        if let skinTone = newSkinTone {
+            return skinTone
+        } else {
+            return 0
+        }
+    }
+    // Saving the updated skintone for the user
+    func saveSkinToneSelected(skinTone: Int) {
+        let defaults = UserDefaults.standard
+        defaults.set(skinToneLevel, forKey: skinToneKey)
         defaults.synchronize()
     }
 }

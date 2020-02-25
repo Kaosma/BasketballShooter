@@ -36,6 +36,23 @@ extension ViewController {
         let imageName = name+"Level"+level
         button?.setImage(UIImage(named: imageName), for: .normal)
     }
+    // Updates the shooter skinTone
+    func updateShooterAnimationImages() {
+        updateButtonColor(button: skinToneButton)
+        shooterImage.image = UIImage(named: "shooting\(skinToneLevel+1)1")!
+        let shootOne : UIImage = UIImage(named: "shooting\(skinToneLevel+1)1")!
+        let shootTwo : UIImage = UIImage(named: "shooting\(skinToneLevel+1)2")!
+        let shootThree : UIImage = UIImage(named: "shooting\(skinToneLevel+1)3")!
+        let shootFour : UIImage = UIImage(named: "shooting\(skinToneLevel+1)4")!
+        let shootFive : UIImage = UIImage(named: "shooting\(skinToneLevel+1)5")!
+        let shootSix : UIImage = UIImage(named: "shooting\(skinToneLevel+1)6")!
+        shooterImages = [shootOne, shootTwo, shootThree, shootFour, shootThree, shootTwo, shootOne, shootFive, shootSix, shootSix, shootFive]
+    }
+    // Updates the skinToneButton color
+    func updateButtonColor(button: UIButton) {
+        let color = UIColor(hex: skinTones[skinToneLevel])
+        button.backgroundColor = color
+    }
     // Updates point per second
     @objc func updatePPS() {
         var pps : Int = 0
@@ -43,7 +60,6 @@ extension ViewController {
             pps += points
         }
         ppsList.removeAll()
-        
         velocityLabel.text = "PPS: \(pps)"
     }
 }

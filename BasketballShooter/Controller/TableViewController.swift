@@ -27,7 +27,7 @@ extension ViewController {
                 return 0
         }
     }
-    // Returns the number of sections the boostTableView will have
+    // Returns the number of sections the boostTableView and packageTableView will have
     func numberOfSections(in tableView: UITableView) -> Int {
         switch tableView {
             case boostTableViewOutlet:
@@ -36,7 +36,7 @@ extension ViewController {
                 return 1
         }
     }
-    // Creates headercell for boostTableView
+    // Creates headercell for boostTableView and packageTableView
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch tableView {
             case boostTableViewOutlet:
@@ -54,7 +54,7 @@ extension ViewController {
             }
     }
     
-    // Creating the cells for the boostTableView
+    // Creating the cells for the boostTableView and packageTableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch tableView {
             case boostTableViewOutlet:
@@ -69,6 +69,8 @@ extension ViewController {
                 cell.itemLabel.text = item.name
                 cell.costLabel.text = "Cost: " + String(item.cost)
                 cell.levelLabel.text = "Lv. " + String(item.level)
+                let name = item.name.replacingOccurrences(of: " ", with: "").lowercased()+"Level"+String(item.level)
+                cell.itemBuyButton.setImage(UIImage(named: name), for: .normal)
                 
                 switch item.category {
                     case "Drink":
@@ -79,14 +81,18 @@ extension ViewController {
                         cell.purchasedLabel.text = ""
                 }
 
-                boostCellList.append(cell)
+                if !boostCellList.contains(cell) {
+                    boostCellList.append(cell)
+                }
                 currentBoostTableViewCell = cell
-                updateButtonImage(item: item)
                 return cell
             case packageTableViewOutlet:
                 let cell = tableView.dequeueReusableCell(withIdentifier: packageCellId) as! PackageTableViewCell
-                cell.itemLabel.text = packageList[indexPath.row].name
-                cell.costLabel.text = "Cost: \(packageList[indexPath.row].cost)"
+                let package = packageList[indexPath.row]
+                cell.itemLabel.text = package.name
+                cell.costLabel.text = "Cost: \(package.cost)"
+                let name = package.name.replacingOccurrences(of: " ", with: "")
+                cell.itemBuyButton.setImage(UIImage(named: name), for: .normal)
                 return cell
         default:
             return UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cell")

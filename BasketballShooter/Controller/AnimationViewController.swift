@@ -36,25 +36,65 @@ extension ViewController {
             }
         }
     }
+    // Animating the shooter's movement
     func shootingAnimation() {
         shooterImage.animationImages = shooterImages
         shooterImage.animationDuration = 1.0
         shooterImage.animationRepeatCount = 1
+        UIView.animate(withDuration: 0.07, delay: 0.07, animations: {
+            self.jerseyImageView.transform = CGAffineTransform(translationX: 0, y: 13/3)
+            self.jerseyNumberLabel.transform = CGAffineTransform(translationX: 0, y: 13/3)
+        }, completion: thirdJerseyLevel(finished:))
         shooterImage.startAnimating()
+    }
+    // Animating the jersey in the shooter's movement
+    func secondJerseyLevel(finished: Bool) {
+        UIView.animate(withDuration: 0.07, animations: {
+            self.jerseyImageView.transform = CGAffineTransform(translationX: 0, y: 13/3)
+            self.jerseyNumberLabel.transform = CGAffineTransform(translationX: 0, y: 13/3)
+        }, completion: returnJerseyAnimation(finished:))
+    }
+    func thirdJerseyLevel(finished: Bool) {
+        if jerseyVectorUp {
+            UIView.animate(withDuration: 0.07, delay: 0.1, animations: {
+                self.jerseyImageView.transform = CGAffineTransform(translationX: 0, y: 26/3)
+                self.jerseyNumberLabel.transform = CGAffineTransform(translationX: 0, y: 26/3)
+            }, completion: secondJerseyLevel(finished:))
+        } else {
+            UIView.animate(withDuration: 0.07, animations: {
+                self.jerseyImageView.transform = CGAffineTransform(translationX: 0, y: 26/3)
+                self.jerseyNumberLabel.transform = CGAffineTransform(translationX: 0, y: 26/3)
+            }, completion: fourthJerseyLevel(finished:))
+        }
+    }
+    func fourthJerseyLevel(finished: Bool) {
+        jerseyVectorUp = true
+        UIView.animate(withDuration: 0.07, animations: {
+            self.jerseyImageView.transform = CGAffineTransform(translationX: 0, y: 13)
+            self.jerseyNumberLabel.transform = CGAffineTransform(translationX: 0, y: 13)
+        }, completion: thirdJerseyLevel(finished:))
+    }
+    // Getting the jersey back to it's original spot .identity after shooting animation
+    func returnJerseyAnimation(finished: Bool) {
+        jerseyVectorUp = false
+        UIView.animate(withDuration: 0.07, animations: {
+            self.jerseyImageView.transform = .identity
+            self.jerseyNumberLabel.transform = .identity
+        })
     }
     // Ballrotation animation
     func ballRotationAnimation() {
         currentBall!.animationImages = ballImages
-        currentBall!.animationDuration = 0.8
+        currentBall!.animationDuration = 1.8
         currentBall!.startAnimating()
     }
     // Animation for made shot
     func makeAnimation() {
         alowTap = false
-        UIView.animate(withDuration: 0.8, delay: 0.3, animations: {
-            self.currentBall!.transform = CGAffineTransform(translationX: 0, y: -190)
+        UIView.animate(withDuration: 0.8, delay: 0.5, animations: {
+            self.currentBall!.transform = CGAffineTransform(translationX: 0, y: -((self.currentBall?.frame.minY)!-self.hoopImageView.frame.minY)/1.3)
         }, completion: ballBounce(finished:))
-        UIView.animate(withDuration: 0.5, delay: 1.5, animations: {
+        UIView.animate(withDuration: 0.5, delay: 1.7, animations: {
             self.currentBall!.alpha = 0.0
         }, completion: switchBall(finished:))
     }
@@ -69,14 +109,46 @@ extension ViewController {
         self.currentBall?.isHidden = false
         alowTap = true
     }
+    // Getting the ball back to it's original spot .identity
     func ballBounce (finished: Bool) {
         UIView.animate(withDuration: 0.5, animations: {
             self.currentBall!.transform = .identity
         })
     }
     // Animation for missed shot
-    func missAnimation() {
-        
+    func leftMissAnimation() {
+        alowTap = false
+    }
+    // Animation for missed shot
+    func firstMissAnimation() {
+        alowTap = false
+        UIView.animate(withDuration: 0.8, delay: 0.5, animations: {
+            self.currentBall!.transform = CGAffineTransform(translationX: CGFloat(self.xFactorCoordinate)*(self.currentBall?.frame.size.width)!, y: -((self.currentBall?.frame.minY)! - self.hoopImageView.frame.minY)/1.3)
+        }, completion: rimBounceAnimation(finished:))
+    }
+    // Animation to bounce ball on the rim
+    func rimBounceAnimation(finished: Bool) {
+        UIView.animate(withDuration: 0.4, animations: {
+            self.currentBall!.transform = CGAffineTransform(translationX: CGFloat(self.xFactorCoordinate)*( self.currentBall?.frame.size.width)!, y: -self.hoopImageView.frame.maxY)
+        }, completion: rimBounceOff(finished:))
+    }
+    // Missanimation after a rimbounce or airball
+    func rimBounceOff(finished: Bool) {
+        secondMissAnimation(duration: 0.45, delay: 0.001)
+    }
+    func secondMissAnimation(duration: Double, delay: Double) {
+        UIView.animate(withDuration: duration, delay: delay, animations: {
+            self.currentBall!.transform = CGAffineTransform(translationX: CGFloat(2*self.xFactorCoordinate)*( self.currentBall?.frame.size.width)!, y: -self.hoopImageView.frame.maxY-(self.currentBall?.frame.size.height)!)
+        }, completion: ballDropMiss(finished:))
+        UIView.animate(withDuration: 0.5, delay: 0.6, animations: {
+            self.currentBall!.alpha = 0.0
+        }, completion: switchBall(finished:))
+    }
+    // Balldrop after missanimation
+    func ballDropMiss(finished: Bool) {
+        UIView.animate(withDuration: 0.4, animations: {
+            self.currentBall!.transform = CGAffineTransform(translationX: CGFloat(2*self.xFactorCoordinate)*( self.currentBall?.frame.size.width)!, y: -(self.currentBall?.frame.height)!)
+        }, completion: ballBounce(finished:))
     }
     // Animation for buying a boostItem
     func boostBuyAnimation(object: UIView) {
