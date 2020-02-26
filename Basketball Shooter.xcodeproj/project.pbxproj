@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		30C4317E836C363122339AFE /* Pods_BasketballShooter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78360E44AFD8E01B80791AB3 /* Pods_BasketballShooter.framework */; };
 		FB2F4883240556CB005C3996 /* ColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2F4882240556CB005C3996 /* ColorViewController.swift */; };
+		FB2F48852407297A005C3996 /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2F48842407297A005C3996 /* PickerViewController.swift */; };
 		FB67EDC423EB2A1B00112989 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB67EDC323EB2A1B00112989 /* GoogleService-Info.plist */; };
 		FB7F4FFC23ED8CC200AE47DF /* PackageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7F4FFB23ED8CC200AE47DF /* PackageItem.swift */; };
 		FB7F4FFE23F6B00600AE47DF /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7F4FFD23F6B00600AE47DF /* HeaderCell.swift */; };
@@ -35,6 +36,7 @@
 		78360E44AFD8E01B80791AB3 /* Pods_BasketballShooter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BasketballShooter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8F3F758C0FAFC3122256F92 /* Pods-BasketballShooter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BasketballShooter.release.xcconfig"; path = "Target Support Files/Pods-BasketballShooter/Pods-BasketballShooter.release.xcconfig"; sourceTree = "<group>"; };
 		FB2F4882240556CB005C3996 /* ColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorViewController.swift; sourceTree = "<group>"; };
+		FB2F48842407297A005C3996 /* PickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
 		FB67EDC323EB2A1B00112989 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FB7F4FFB23ED8CC200AE47DF /* PackageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageItem.swift; sourceTree = "<group>"; };
 		FB7F4FFD23F6B00600AE47DF /* HeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				FBFDDA1723C92B0400CF8573 /* ViewController.swift */,
 				FB7F501823FD642600AE47DF /* StorageViewController.swift */,
 				FB2F4882240556CB005C3996 /* ColorViewController.swift */,
+				FB2F48842407297A005C3996 /* PickerViewController.swift */,
 				FB7F501623FD634200AE47DF /* AnimationViewController.swift */,
 				FB7F501A23FD64CE00AE47DF /* TableViewController.swift */,
 				FB7F501C23FD658000AE47DF /* UpdateViewController.swift */,
@@ -275,6 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB2F48852407297A005C3996 /* PickerViewController.swift in Sources */,
 				FB95A04B23D8910800CBDCE4 /* BoostItem.swift in Sources */,
 				FB7F500123FBFCFF00AE47DF /* PackageTableViewCell.swift in Sources */,
 				FB95A04723D87E5F00CBDCE4 /* BoostTableViewCell.swift in Sources */,

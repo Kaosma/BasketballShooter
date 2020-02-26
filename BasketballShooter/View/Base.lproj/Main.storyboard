@@ -190,12 +190,12 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="77" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nbj-8Z-hZx" userLabel="jerseyNumberLabel">
-                                <rect key="frame" x="177.5" y="414" width="20" height="20"/>
+                                <rect key="frame" x="177.5" y="414" width="20" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="SSs-F0-89h"/>
-                                    <constraint firstAttribute="height" constant="20" id="qSr-d5-2Dg"/>
+                                    <constraint firstAttribute="height" constant="30" id="qSr-d5-2Dg"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="Rockwell-Regular" family="Rockwell" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -575,13 +575,18 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G5L-wp-j3d">
-                                                        <rect key="frame" x="192" y="0.0" width="60" height="60"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G5L-wp-j3d" userLabel="numberPickerView">
+                                                        <rect key="frame" x="180" y="8" width="90" height="46"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="46" id="63X-ij-JyY"/>
+                                                            <constraint firstAttribute="width" constant="90" id="xmN-xW-6ml"/>
+                                                        </constraints>
                                                     </pickerView>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.72941176470000002" green="0.90980392160000001" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
+                                                    <constraint firstItem="G5L-wp-j3d" firstAttribute="centerY" secondItem="CU2-NB-Czc" secondAttribute="centerY" id="CzH-SJ-Css"/>
+                                                    <constraint firstAttribute="trailing" secondItem="G5L-wp-j3d" secondAttribute="trailing" constant="20" id="GBY-bA-bT0"/>
                                                     <constraint firstItem="bg9-WS-7oL" firstAttribute="leading" secondItem="CU2-NB-Czc" secondAttribute="leading" constant="8" id="hTC-kU-Oer"/>
                                                     <constraint firstItem="bg9-WS-7oL" firstAttribute="centerY" secondItem="CU2-NB-Czc" secondAttribute="centerY" id="yKW-mn-Syb"/>
                                                 </constraints>
@@ -707,6 +712,7 @@
                         <outlet property="hoopImageView" destination="HfM-rR-MeV" id="CZf-ei-q0z"/>
                         <outlet property="jerseyImageView" destination="FeQ-h0-kmr" id="prI-nL-834"/>
                         <outlet property="jerseyNumberLabel" destination="nbj-8Z-hZx" id="frg-99-KZ0"/>
+                        <outlet property="numberPickerViewOutlet" destination="G5L-wp-j3d" id="xDP-Lu-aAh"/>
                         <outlet property="packageButton" destination="0Tb-mN-COO" id="iWA-2I-v61"/>
                         <outlet property="packageTableViewOutlet" destination="GjE-vS-Hyj" id="Zkf-U6-8hO"/>
                         <outlet property="packageTableViewPrecentageLabel" destination="oI7-eK-wfl" id="JoW-wZ-cfx"/>

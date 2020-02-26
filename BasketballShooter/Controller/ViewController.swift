@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
     // MARK: Variables
     var scoreCounter : Int = 0
@@ -37,8 +37,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var navigationViewList = [UIView]()
     var navigationButtonList = [UIButton]()
     var ppsList = [Int]()
+    var pickerNumbers = [String]()
     var ballArray = [UIImageView]()
-    var shooterImages : [UIImage] = []
+    var shooterImages = [UIImage]()
     
     // MARK: Constants
     let startingPercentage : Double = 50
@@ -90,6 +91,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var settingsTitelView: UIView!
     @IBOutlet weak var boostTableViewOutlet: UITableView!
     @IBOutlet weak var packageTableViewOutlet: UITableView!
+    @IBOutlet weak var numberPickerViewOutlet: UIPickerView!
     
     // MARK: IB Actions
     // Button to enable/disable the sound
@@ -353,6 +355,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         itemList.append(BoostItem(type: "Food", category: "Ballvalue", name: "Protein Bar", cost: 2,boost: 2))
         itemList.append(BoostItem(type: "Food", category: "Ballvalue", name: "Hot Dog", cost: 2, boost: 10))
         itemList.append(BoostItem(type: "Food", category: "Autoshoot", name: "Taco", cost: 2, boost: 20))
+        pickerNumbers.append("00")
+        for i in 0...99 {
+            pickerNumbers.append(String(i))
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -393,6 +399,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         packageTableViewOutlet.register(packageNib, forCellReuseIdentifier: packageCellId)
         packageTableViewOutlet.dataSource = self
         packageTableViewOutlet.delegate = self
+        
+        numberPickerViewOutlet.dataSource = self
+        numberPickerViewOutlet.delegate = self
         
     //    NotificationCenter.default.addObserver(self, selector: #selector(didPressBoostItemButton(notification:)), name: NSNotification.Name.init(rawValue: "ButtonPressed"), object: nil)
     }
