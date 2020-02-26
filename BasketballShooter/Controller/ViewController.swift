@@ -22,6 +22,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var xFactorCoordinate : Int = 1
     var lastTap : Double = 0
     var percentage : Double = 50
+    var speedFactor : Double = 1.0
     var alowTap : Bool = true
     var madeShot : Bool = false
     var lastMade : Bool = false
@@ -203,7 +204,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 saveScoreSelected(score: scoreCounter)
                 totalScoreCounter += 1
                 saveTotalScoreSelected(score: totalScoreCounter)
-                updateScoreLabel()
                 print("%: ",percentage)
                 print("Make")
                 pointsShowAnimation()
@@ -239,29 +239,41 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             ballRotationAnimation()
         }
     }
+    
+    
     // Handles buying and buying animation
-    @objc func didPressBoostItemButton(notification:Notification) {
-        let data = notification.userInfo as? [String: Int]
-        let index = data!["row"]!
+    public func didPressBoostItemButton(cell: BoostTableViewCell) {
+        let indexPath = boostTableViewOutlet.indexPath(for: cell)
+        
+        var offsection : Int = 0
+        if indexPath?.section == 1 {
+            offsection = 4
+        }
+        
+        guard var index = indexPath?.row else {return}
+        
+        index += offsection
+        
         if (Int(scoreLabel.text!)! >= itemList[index].cost && itemList[index].level < 5) {
-            currentBoostTableViewCell = boostCellList[index]
+            currentBoostTableViewCell = cell
             currentBoostItem = itemList[index]
-            let cell = currentBoostTableViewCell
             itemList[index].level += 1
             if itemList[index].level > 0 {
-                cell?.alphaView.isHidden = false
-                boostBuyAnimation(object: cell!.alphaView)
+                cell.alphaView.isHidden = false
+                boostBuyAnimation(object: cell.alphaView)
             }
             scoreCounter = Int(scoreLabel.text!)! - itemList[index].cost
             
             switch itemList[index].category {
-                case "Food":
+                case "Ballvalue":
                     ballValue += Int(itemList[index].boost)
                     saveBallValueSelected(ballValue: ballValue)
-                case "Drink":
+                case "Percentage":
                     percentage += itemList[index].boost
                     percentage = Double(round(percentage*100)/100)
                     savePercentageSelected(percentage: percentage)
+                case "Speed":
+                    speedFactor += itemList[index].boost
                 default:
                     break
             }
@@ -333,14 +345,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         navigationButtonList.append(boostButton)
         navigationButtonList.append(settingsButton)
         navigationButtonList.append(packageButton)
-        itemList.append(BoostItem(category: "Drink", name: "Can", cost: 1, boost: 0.01))
-        itemList.append(BoostItem(category: "Drink", name: "Cup", cost: 1, boost: 0.02))
-        itemList.append(BoostItem(category: "Drink", name: "Bottle", cost: 1, boost: 0.05))
-        itemList.append(BoostItem(category: "Drink", name: "Barrell", cost: 1, boost: 0.05))
-        itemList.append(BoostItem(category: "Food", name: "Nachos", cost: 2, boost: 1))
-        itemList.append(BoostItem(category: "Food", name: "Protein Bar", cost: 2,boost: 2))
-        itemList.append(BoostItem(category: "Food", name: "Hot Dog", cost: 2, boost: 10))
-        itemList.append(BoostItem(category: "Food", name: "Taco", cost: 2, boost: 20))
+        itemList.append(BoostItem(type: "Drink", category: "Percentage", name: "Can", cost: 1, boost: 0.01))
+        itemList.append(BoostItem(type: "Drink", category: "Percentage", name: "Cup", cost: 1, boost: 0.02))
+        itemList.append(BoostItem(type: "Drink", category: "Percentage", name: "Bottle", cost: 1, boost: 0.05))
+        itemList.append(BoostItem(type: "Drink", category: "Speed", name: "Barrell", cost: 1, boost: 0.4))
+        itemList.append(BoostItem(type: "Food", category: "Ballvalue", name: "Nachos", cost: 2, boost: 1))
+        itemList.append(BoostItem(type: "Food", category: "Ballvalue", name: "Protein Bar", cost: 2,boost: 2))
+        itemList.append(BoostItem(type: "Food", category: "Ballvalue", name: "Hot Dog", cost: 2, boost: 10))
+        itemList.append(BoostItem(type: "Food", category: "Autoshoot", name: "Taco", cost: 2, boost: 20))
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -382,6 +394,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         packageTableViewOutlet.dataSource = self
         packageTableViewOutlet.delegate = self
         
-        NotificationCenter.default.addObserver(self, selector: #selector(didPressBoostItemButton(notification:)), name: NSNotification.Name.init(rawValue: "ButtonPressed"), object: nil)
+    //    NotificationCenter.default.addObserver(self, selector: #selector(didPressBoostItemButton(notification:)), name: NSNotification.Name.init(rawValue: "ButtonPressed"), object: nil)
     }
 }

@@ -18,6 +18,8 @@ class BoostTableViewCell: UITableViewCell {
     @IBOutlet weak var itemBuyButton: UIButton!
     @IBOutlet weak var alphaView: UIView!
     
+    weak var vc : ViewController?
+    
     // MARK: Actions
 
     @IBAction func itemBuyButtonPressed(_ sender: UIButton) {
@@ -28,7 +30,8 @@ class BoostTableViewCell: UITableViewCell {
             index! += 4
         }
         let dict = ["row": index]
-        nc.post(name: Notification.Name("ButtonPressed"), object: itemBuyButton, userInfo: dict as [AnyHashable : Any] )
+       // nc.post(name: Notification.Name("ButtonPressed"), object: itemBuyButton, userInfo: dict as [AnyHashable : Any] )
+        vc?.didPressBoostItemButton(cell: self)
     }
     
     // MARK: Functions

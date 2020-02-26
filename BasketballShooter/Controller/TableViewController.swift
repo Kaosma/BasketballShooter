@@ -59,10 +59,11 @@ extension ViewController {
         switch tableView {
             case boostTableViewOutlet:
                 let cell = tableView.dequeueReusableCell(withIdentifier: boostCellId, for: indexPath) as! BoostTableViewCell
+                cell.vc = self
                 
                 var offSection = 0
                 if indexPath.section == 1 {
-                   offSection = 4
+                    offSection = itemList.count/2
                 }
                 
                 let item = itemList[indexPath.row + offSection]
@@ -73,10 +74,12 @@ extension ViewController {
                 cell.itemBuyButton.setImage(UIImage(named: name), for: .normal)
                 
                 switch item.category {
-                    case "Drink":
+                    case "Percentage":
                         cell.purchasedLabel.text = "+" + String(item.boost) + "%"
-                    case "Food":
+                    case "Ballvalue":
                         cell.purchasedLabel.text = "+" + String(item.boost) + "🏀"
+                    case "Speed":
+                        cell.purchasedLabel.text = "+" + String(item.boost) + "s"
                     default:
                         cell.purchasedLabel.text = ""
                 }
@@ -84,7 +87,6 @@ extension ViewController {
                 if !boostCellList.contains(cell) {
                     boostCellList.append(cell)
                 }
-                currentBoostTableViewCell = cell
                 return cell
             case packageTableViewOutlet:
                 let cell = tableView.dequeueReusableCell(withIdentifier: packageCellId) as! PackageTableViewCell

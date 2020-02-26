@@ -10,13 +10,15 @@ import Foundation
 import Firebase
 
 class BoostItem {
-    var category : String
+    let type : String
+    let category : String
     let name : String
     var cost : Int
     var level : Int
     let boost : Double
     
-    init(category: String, name: String, cost: Int, level: Int = 0, boost: Double) {
+    init(type: String, category: String, name: String, cost: Int, level: Int = 0, boost: Double) {
+        self.type = type
         self.category = category
         self.name = name
         self.cost = cost

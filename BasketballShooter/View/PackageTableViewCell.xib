@@ -46,6 +46,17 @@
                             <constraint firstAttribute="height" constant="70" id="ObZ-aC-em4"/>
                         </constraints>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tez-mS-OrL">
+                        <rect key="frame" x="162" y="38" width="40" height="27"/>
+                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="DFL-yg-jq4"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Farah" family="Farah" pointSize="15"/>
+                        <state key="normal" title="Buy">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" red="0.89019607840000003" green="0.96470588239999999" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
@@ -55,8 +66,10 @@
                     <constraint firstItem="Hsm-jX-rXv" firstAttribute="leading" secondItem="neo-8h-9vf" secondAttribute="leading" constant="20" id="Iya-My-7Jr"/>
                     <constraint firstAttribute="bottom" secondItem="Hsm-jX-rXv" secondAttribute="bottom" constant="10" id="S6p-tW-FFe"/>
                     <constraint firstAttribute="bottom" secondItem="H8S-lD-aid" secondAttribute="bottom" id="ckV-By-Kh8"/>
+                    <constraint firstAttribute="bottom" secondItem="Tez-mS-OrL" secondAttribute="bottom" constant="5" id="kez-oN-bcT"/>
                     <constraint firstAttribute="trailing" secondItem="H8S-lD-aid" secondAttribute="trailing" id="nNt-7A-SHW"/>
                     <constraint firstItem="CgU-OQ-zi2" firstAttribute="top" secondItem="neo-8h-9vf" secondAttribute="top" id="t5Z-Cu-YvN"/>
+                    <constraint firstItem="CgU-OQ-zi2" firstAttribute="leading" secondItem="Tez-mS-OrL" secondAttribute="trailing" constant="10" id="xoh-N7-Mby"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -65,7 +78,7 @@
                 <outlet property="itemBuyButton" destination="CgU-OQ-zi2" id="ull-Ua-epT"/>
                 <outlet property="itemLabel" destination="czy-nd-F1W" id="Fvw-Kj-Mim"/>
             </connections>
-            <point key="canvasLocation" x="388.80000000000001" y="-21.589205397301352"/>
+            <point key="canvasLocation" x="388.40579710144931" y="-22.098214285714285"/>
         </tableViewCell>
     </objects>
     <resources>
