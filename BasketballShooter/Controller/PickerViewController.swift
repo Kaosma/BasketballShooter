@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+// PickerView Extension
 extension ViewController {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -21,5 +22,6 @@ extension ViewController {
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         jerseyNumberLabel.text = pickerNumbers[row]
+        saveJerseyNumberSelected(jerseyNo: pickerNumbers[row])
     }
 }

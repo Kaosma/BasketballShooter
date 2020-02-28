@@ -67,6 +67,7 @@ extension ViewController {
                 }
                 
                 let item = itemList[indexPath.row + offSection]
+                item.level = BoostItemLevelList[indexPath.row]
                 cell.itemLabel.text = item.name
                 cell.costLabel.text = "Cost: " + String(item.cost)
                 cell.levelLabel.text = "Lv. " + String(item.level)
@@ -82,6 +83,10 @@ extension ViewController {
                         cell.purchasedLabel.text = "+" + String(item.boost) + "s"
                     default:
                         cell.purchasedLabel.text = ""
+                }
+                
+                if item.level == 5 {
+                    cell.purchasedLabel.alpha = 0.5
                 }
 
                 if !boostCellList.contains(cell) {

@@ -15,7 +15,7 @@ class BoostItem {
     let name : String
     var cost : Int
     var level : Int
-    let boost : Double
+    var boost : Double
     
     init(type: String, category: String, name: String, cost: Int, level: Int = 0, boost: Double) {
         self.type = type

@@ -23,13 +23,13 @@ class BoostTableViewCell: UITableViewCell {
     // MARK: Actions
 
     @IBAction func itemBuyButtonPressed(_ sender: UIButton) {
-        let nc = NotificationCenter.default
+        //let nc = NotificationCenter.default
         let tableView = superview as? UITableView
         var index = tableView?.indexPath(for: self)?[1]
         if tableView?.indexPath(for: self)?.section == 1 {
             index! += 4
         }
-        let dict = ["row": index]
+        //let dict = ["row": index]
        // nc.post(name: Notification.Name("ButtonPressed"), object: itemBuyButton, userInfo: dict as [AnyHashable : Any] )
         vc?.didPressBoostItemButton(cell: self)
     }

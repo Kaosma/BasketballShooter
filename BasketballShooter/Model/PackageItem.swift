@@ -34,7 +34,6 @@ class PackageItem {
         cost = snapshotValue["cost"] as! Int
         boost = snapshotValue["boost"] as! Double
     }
-    
     func toDict() -> [String : Any] {
         return ["type" : type,
                 "id" : id,

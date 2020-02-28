@@ -10,6 +10,9 @@
 		30C4317E836C363122339AFE /* Pods_BasketballShooter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78360E44AFD8E01B80791AB3 /* Pods_BasketballShooter.framework */; };
 		FB2F4883240556CB005C3996 /* ColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2F4882240556CB005C3996 /* ColorViewController.swift */; };
 		FB2F48852407297A005C3996 /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2F48842407297A005C3996 /* PickerViewController.swift */; };
+		FB2F488F24087D40005C3996 /* basketBallBounce.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB2F488E24087D40005C3996 /* basketBallBounce.mp3 */; };
+		FB2F489224087D61005C3996 /* basketBallSwish.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB2F489024087D60005C3996 /* basketBallSwish.mp3 */; };
+		FB2F489324087D61005C3996 /* basketBallMissRim.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FB2F489124087D61005C3996 /* basketBallMissRim.mp3 */; };
 		FB67EDC423EB2A1B00112989 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB67EDC323EB2A1B00112989 /* GoogleService-Info.plist */; };
 		FB7F4FFC23ED8CC200AE47DF /* PackageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7F4FFB23ED8CC200AE47DF /* PackageItem.swift */; };
 		FB7F4FFE23F6B00600AE47DF /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7F4FFD23F6B00600AE47DF /* HeaderCell.swift */; };
@@ -37,6 +40,9 @@
 		A8F3F758C0FAFC3122256F92 /* Pods-BasketballShooter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BasketballShooter.release.xcconfig"; path = "Target Support Files/Pods-BasketballShooter/Pods-BasketballShooter.release.xcconfig"; sourceTree = "<group>"; };
 		FB2F4882240556CB005C3996 /* ColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorViewController.swift; sourceTree = "<group>"; };
 		FB2F48842407297A005C3996 /* PickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
+		FB2F488E24087D40005C3996 /* basketBallBounce.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = basketBallBounce.mp3; sourceTree = "<group>"; };
+		FB2F489024087D60005C3996 /* basketBallSwish.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = basketBallSwish.mp3; sourceTree = "<group>"; };
+		FB2F489124087D61005C3996 /* basketBallMissRim.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = basketBallMissRim.mp3; sourceTree = "<group>"; };
 		FB67EDC323EB2A1B00112989 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FB7F4FFB23ED8CC200AE47DF /* PackageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageItem.swift; sourceTree = "<group>"; };
 		FB7F4FFD23F6B00600AE47DF /* HeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
@@ -87,6 +93,16 @@
 				78360E44AFD8E01B80791AB3 /* Pods_BasketballShooter.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FB2F488724087665005C3996 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				FB2F489124087D61005C3996 /* basketBallMissRim.mp3 */,
+				FB2F489024087D60005C3996 /* basketBallSwish.mp3 */,
+				FB2F488E24087D40005C3996 /* basketBallBounce.mp3 */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 		FB7F500323FBFD2300AE47DF /* Model */ = {
@@ -152,6 +168,7 @@
 				FB7F500323FBFD2300AE47DF /* Model */,
 				FB7F500423FBFE0400AE47DF /* View */,
 				FB7F500523FC006200AE47DF /* Controller */,
+				FB2F488724087665005C3996 /* Sounds */,
 				FBFDDA1F23C92B0A00CF8573 /* Assets.xcassets */,
 				FBFDDA2423C92B0A00CF8573 /* Info.plist */,
 				FB67EDC323EB2A1B00112989 /* GoogleService-Info.plist */,
@@ -222,7 +239,10 @@
 			files = (
 				FBFDDA2323C92B0A00CF8573 /* LaunchScreen.storyboard in Resources */,
 				FB95A04923D87E7800CBDCE4 /* BoostTableViewCell.xib in Resources */,
+				FB2F488F24087D40005C3996 /* basketBallBounce.mp3 in Resources */,
 				FB7F500223FBFCFF00AE47DF /* PackageTableViewCell.xib in Resources */,
+				FB2F489324087D61005C3996 /* basketBallMissRim.mp3 in Resources */,
+				FB2F489224087D61005C3996 /* basketBallSwish.mp3 in Resources */,
 				FB67EDC423EB2A1B00112989 /* GoogleService-Info.plist in Resources */,
 				FBFDDA2023C92B0A00CF8573 /* Assets.xcassets in Resources */,
 				FBFDDA1B23C92B0400CF8573 /* Main.storyboard in Resources */,

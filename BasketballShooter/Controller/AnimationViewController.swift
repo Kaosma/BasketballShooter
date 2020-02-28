@@ -91,6 +91,7 @@ extension ViewController {
     // Animation for made shot
     func makeAnimation() {
         alowTap = false
+        playSound(fileName: "basketBallSwish", delay: 1.098/speedFactor)
         UIView.animate(withDuration: 0.8/speedFactor, delay: 0.5/speedFactor, animations: {
             self.currentBall!.transform = CGAffineTransform(translationX: 0, y: -((self.currentBall?.frame.minY)!-self.hoopImageView.frame.minY)/1.3)
         }, completion: ballBounce(finished:))
@@ -100,6 +101,7 @@ extension ViewController {
     }
     // Ball transparency fade animation
     func switchBall(finished: Bool) {
+        playSound(fileName: "basketBallBounce", delay: 0)
         self.currentBall!.stopAnimating()
         self.ballArray.append(self.currentBall!)
         self.currentBall?.isHidden = true
@@ -109,16 +111,8 @@ extension ViewController {
         self.currentBall?.isHidden = false
         alowTap = true
     }
-//    func makeBallVisible(finished: Bool) {
-//        UIView.animate(withDuration: 0.05, animations: {
-//            self.currentBall!.alpha = 1.0
-//        })
-//    }
     // Getting the ball back to it's original spot .identity
     func ballBounce (finished: Bool) {
-//        UIView.animate(withDuration: 0.05, delay:0.1 , animations: {
-//            self.currentBall!.alpha = 0.0
-//        }, completion: makeBallVisible(finished:))
         UIView.animate(withDuration: 0.5/speedFactor, animations: {
             self.currentBall!.transform = .identity
         })
@@ -142,13 +136,14 @@ extension ViewController {
     }
     // Missanimation after a rimbounce or airball
     func rimBounceOff(finished: Bool) {
-        secondMissAnimation(duration: 0.45/speedFactor, delay: 0.001/speedFactor)
+        playSound(fileName: "basketBallMissRim", delay: 0)
+        secondMissAnimation(duration: 0.3/speedFactor, delay: 0.001/speedFactor)
     }
     func secondMissAnimation(duration: Double, delay: Double) {
         UIView.animate(withDuration: duration, delay: delay, animations: {
             self.currentBall!.transform = CGAffineTransform(translationX: CGFloat(2*self.xFactorCoordinate)*( self.currentBall?.frame.size.width)!, y: -self.hoopImageView.frame.maxY-(self.currentBall?.frame.size.height)!)
         }, completion: ballDropMiss(finished:))
-        UIView.animate(withDuration: 0.5/speedFactor, delay: 0.6/speedFactor, animations: {
+        UIView.animate(withDuration: 0.5/speedFactor, delay: 0.45/speedFactor, animations: {
             self.currentBall!.alpha = 0.0
         }, completion: switchBall(finished:))
     }
@@ -170,6 +165,7 @@ extension ViewController {
     func hideAlphaView(finished:Bool ) {
         updatePercentageLabel()
         updateBallValueLabel()
+        updateBoostPercentageValue()
         currentBoostTableViewCell?.alphaView.isHidden = true
         updateButtonImage(item: currentBoostItem!)
         currentBoostTableViewCell?.levelLabel.text = "Lv. " + String(currentBoostItem!.level)

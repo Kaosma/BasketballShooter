@@ -53,6 +53,14 @@ extension ViewController {
         let color = UIColor(hex: skinTones[skinToneLevel])
         button.backgroundColor = color
     }
+    // Updates the boost values exponentially
+    func updateBoostPercentageValue() {
+        for i in 0...2 {
+            let boostPower = pow(1.4, BoostItemLevelList[i])
+            itemList[i].boost = itemList[i].boost * Double(truncating: NSDecimalNumber(decimal: boostPower))
+            itemList[i].boost = round(itemList[i].boost*100)/100
+        }
+    }
     // Updates point per second
     @objc func updatePPS() {
         var pps : Int = 0

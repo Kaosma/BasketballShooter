@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import AVFoundation
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
@@ -37,9 +38,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var navigationViewList = [UIView]()
     var navigationButtonList = [UIButton]()
     var ppsList = [Int]()
+    var BoostItemLevelList = [Int]()
     var pickerNumbers = [String]()
     var ballArray = [UIImageView]()
     var shooterImages = [UIImage]()
+    var audioPlayer : AVAudioPlayer?
     
     // MARK: Constants
     let startingPercentage : Double = 50
@@ -49,6 +52,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let totalMissesKey = "totalMisses"
     let ballValueKey = "ballValue"
     let skinToneKey = "skinTone"
+    let speedFactorKey = "speedFactor"
+    let jerseyNumberKey = "jerseyNumber"
+    let levelKey = "BoostItemLevel"
     let boostCellId =  "BoostCellId"
     let packageCellId = "PackageCellId"
     let sections : [String] = ["Thunder Drinks", "Fire Foods"]
@@ -211,20 +217,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 pointsShowAnimation()
                 ppsList.append(ballValue)
             } else {
-                let randomMiss = Int(arc4random_uniform(3))
+                let randomMiss = Int(arc4random_uniform(2))
                 switch randomMiss {
                     case 0:
                         print("Leftmiss Bounce")
                         xFactorCoordinate = -1
                         firstMissAnimation()
                     case 1:
-                        print("Leftmiss Long")
-                        xFactorCoordinate = -1
-                        secondMissAnimation(duration: 0.8, delay: 0.5)
-                    case 2:
                         print("Rightmiss Bounce")
                         xFactorCoordinate = 1
                         firstMissAnimation()
+                    case 2:
+                        print("Leftmiss Long")
+                        xFactorCoordinate = -1
+                        secondMissAnimation(duration: 0.8, delay: 0.5)
                     case 3:
                         print("Rightmiss Long")
                         xFactorCoordinate = 1
@@ -241,8 +247,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             ballRotationAnimation()
         }
     }
-    
-    
     // Handles buying and buying animation
     public func didPressBoostItemButton(cell: BoostTableViewCell) {
         let indexPath = boostTableViewOutlet.indexPath(for: cell)
@@ -260,10 +264,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             currentBoostTableViewCell = cell
             currentBoostItem = itemList[index]
             itemList[index].level += 1
-            if itemList[index].level > 0 {
-                cell.alphaView.isHidden = false
-                boostBuyAnimation(object: cell.alphaView)
-            }
+            BoostItemLevelList[index] += 1
+            saveLevelSelected(level: BoostItemLevelList)
+            
+            cell.alphaView.isHidden = false
+            boostBuyAnimation(object: cell.alphaView)
+            
             scoreCounter = Int(scoreLabel.text!)! - itemList[index].cost
             
             switch itemList[index].category {
@@ -276,11 +282,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     savePercentageSelected(percentage: percentage)
                 case "Speed":
                     speedFactor += itemList[index].boost
+                    saveSpeedFactorSelected(speedFactor: speedFactor)
                 default:
                     break
             }
             updateScoreLabel()
-            print("Purchase made " + itemList[index].name + " " + String(itemList[index].level))
+            //print("Purchase made " + itemList[index].name + " " + String(itemList[index].level))
         }
     }
     
@@ -294,11 +301,31 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return false
         }
     }
-    
     // Enables or disables all interaction with Boostcells
     func userEnableCells(enable : Bool) {
         for boostCell in boostCellList {
             boostCell.itemBuyButton.isUserInteractionEnabled = enable
+        }
+    }
+    // Plays sound from different .mp3 files
+    func playSound(fileName: String, delay: Double) {
+        if !turnOnSound {
+            let url = Bundle.main.url(forResource: fileName, withExtension: "mp3")
+            
+            guard url != nil else {
+                return
+            }
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url!)
+                let deadLine = DispatchTime.now() + .milliseconds(Int(delay*1000))
+
+                DispatchQueue.main.asyncAfter(deadline: deadLine, execute: {
+                    self.audioPlayer?.play()
+                })
+            }
+            catch {
+                print("Soundfile Error")
+            }
         }
     }
     // Loads the packages from the database and appends them to the packagelist
@@ -336,6 +363,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         scoreCounter = saveScore()
         totalScoreCounter = saveTotalScore()
         skinToneLevel = saveSkinTone()
+        speedFactor = saveSpeedFactor()
+        jerseyNumberLabel.text = saveJerseyNumber()
+        BoostItemLevelList = saveLevel()
         currentBall = ball
         ballArray.append(ball2)
         ballArray.append(ball3)
@@ -381,6 +411,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         updatePercentageLabel()
         updateBallValueLabel()
         updateShooterAnimationImages()
+        updateBoostPercentageValue()
         boostView.isHidden = true
         boostView.isUserInteractionEnabled = false
         packageView.isHidden = true
