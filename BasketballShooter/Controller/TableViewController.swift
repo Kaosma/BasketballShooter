@@ -69,9 +69,9 @@ extension ViewController {
                 let item = itemList[indexPath.row + offSection]
                 item.level = BoostItemLevelList[indexPath.row]
                 cell.itemLabel.text = item.name
-                cell.costLabel.text = "Cost: " + String(item.cost)
-                cell.levelLabel.text = "Lv. " + String(item.level)
-                let name = item.name.replacingOccurrences(of: " ", with: "").lowercased()+"Level"+String(item.level)
+                cell.costLabel.text = "Cost: \(item.cost)"
+                cell.levelLabel.text = "Lv. \(item.level)"
+                let name = item.name.replacingOccurrences(of: " ", with: "").lowercased()+"Level\(item.level)"
                 cell.itemBuyButton.setImage(UIImage(named: name), for: .normal)
                 
                 switch item.category {
@@ -84,15 +84,16 @@ extension ViewController {
                     default:
                         cell.purchasedLabel.text = ""
                 }
-                
                 if item.level == 5 {
                     cell.purchasedLabel.alpha = 0.5
+                } else {
+                    cell.purchasedLabel.alpha = 1.0
                 }
-
                 if !boostCellList.contains(cell) {
                     boostCellList.append(cell)
                 }
                 return cell
+            
             case packageTableViewOutlet:
                 let cell = tableView.dequeueReusableCell(withIdentifier: packageCellId) as! PackageTableViewCell
                 let package = packageList[indexPath.row]

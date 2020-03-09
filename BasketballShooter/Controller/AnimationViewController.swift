@@ -162,14 +162,16 @@ extension ViewController {
     }
     
     // Hides the alphaView after the buying animation
-    func hideAlphaView(finished:Bool ) {
+    func hideAlphaView(finished:Bool) {
         updatePercentageLabel()
         updateBallValueLabel()
-        updateBoostPercentageValue()
+        updateBoostItemValues()
+        updateBoostItemLabelValues()
         currentBoostTableViewCell?.alphaView.isHidden = true
         updateButtonImage(item: currentBoostItem!)
         currentBoostTableViewCell?.levelLabel.text = "Lv. " + String(currentBoostItem!.level)
         userEnableCells(enable: true)
+        boostTableViewOutlet.isUserInteractionEnabled = true
     }
     // Animation showing how many points made
     func pointsShowAnimation(){

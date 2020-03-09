@@ -57,6 +57,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let levelKey = "BoostItemLevel"
     let boostCellId =  "BoostCellId"
     let packageCellId = "PackageCellId"
+    let percentageValues : [Double] = [1.01, 1.03, 1.05, 1.07, 1.1,
+                                       1.25, 1.3, 1.99, 2.49, 2.7,
+                                       3.0, 5.0, 7.0, 9.0, 11.0]
+    let ballValues : [Double] = [1.0, 1.0, 1.0, 1.0, 2.0,
+                                 1.0, 2.0, 3.0, 4.0, 5.0,
+                                 5.0, 10.0, 12.0, 15.0, 20.0]
     let sections : [String] = ["Thunder Drinks", "Fire Foods"]
     let skinTones : [String] = ["#ffdbac","#e0ac69","#c68642","#8d5524","#3d0c02","#260701"]
     let sectionImages : [UIImage] = [UIImage(named: "thunderDrink")!, UIImage(named: "fireFood")!]
@@ -187,16 +193,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         let yesAction = UIAlertAction(title: "Yes", style: .default) {action in
             self.percentage = self.startingPercentage
-            self.scoreCounter = 0
+            self.scoreCounter = 50
             self.missCounter = 0
             self.totalScoreCounter = 0
-            self.ballValue = 1
+            self.ballValue = 50
+            self.speedFactor = 1.0
+            self.BoostItemLevelList = [0,0,0,0,0,0,0,0]
             self.savePercentageSelected(percentage: self.percentage)
             self.saveBallValueSelected(ballValue: self.ballValue)
             self.saveScoreSelected(score: self.scoreCounter)
+            self.saveSpeedFactorSelected(speedFactor: self.speedFactor)
+            self.saveLevelSelected(level: self.BoostItemLevelList)
             self.updatePercentageLabel()
             self.updateBallValueLabel()
             self.updateScoreLabel()
+            self.updateBoostItemLabelValues()
+            self.boostTableViewOutlet.reloadData()
         }
         alert.addAction(cancelAction)
         alert.addAction(yesAction)
@@ -261,6 +273,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         index += offsection
         
         if (Int(scoreLabel.text!)! >= itemList[index].cost && itemList[index].level < 5) {
+            boostTableViewOutlet.isUserInteractionEnabled = false
             currentBoostTableViewCell = cell
             currentBoostItem = itemList[index]
             itemList[index].level += 1
@@ -287,7 +300,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     break
             }
             updateScoreLabel()
-            //print("Purchase made " + itemList[index].name + " " + String(itemList[index].level))
+            print("Purchase made " + itemList[index].name + " " + String(itemList[index].level))
         }
     }
     
@@ -377,14 +390,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         navigationButtonList.append(boostButton)
         navigationButtonList.append(settingsButton)
         navigationButtonList.append(packageButton)
-        itemList.append(BoostItem(type: "Drink", category: "Percentage", name: "Can", cost: 1, boost: 0.01))
-        itemList.append(BoostItem(type: "Drink", category: "Percentage", name: "Cup", cost: 1, boost: 0.02))
-        itemList.append(BoostItem(type: "Drink", category: "Percentage", name: "Bottle", cost: 1, boost: 0.05))
-        itemList.append(BoostItem(type: "Drink", category: "Speed", name: "Barrell", cost: 1, boost: 0.4))
-        itemList.append(BoostItem(type: "Food", category: "Ballvalue", name: "Nachos", cost: 2, boost: 1))
-        itemList.append(BoostItem(type: "Food", category: "Ballvalue", name: "Protein Bar", cost: 2,boost: 2))
-        itemList.append(BoostItem(type: "Food", category: "Ballvalue", name: "Hot Dog", cost: 2, boost: 10))
-        itemList.append(BoostItem(type: "Food", category: "Autoshoot", name: "Taco", cost: 2, boost: 20))
+        itemList.append(BoostItem(type: "Drink", category: "Percentage", name: "Can", startCost: 5, boost: 0.01))
+        itemList.append(BoostItem(type: "Drink", category: "Percentage", name: "Cup", startCost: 10, boost: 0.02))
+        itemList.append(BoostItem(type: "Drink", category: "Percentage", name: "Bottle", startCost: 20, boost: 0.05))
+        itemList.append(BoostItem(type: "Drink", category: "Speed", name: "Barrell", startCost: 100, boost: 0.4))
+        itemList.append(BoostItem(type: "Food", category: "Ballvalue", name: "Nachos", startCost: 5, boost: 1))
+        itemList.append(BoostItem(type: "Food", category: "Ballvalue", name: "Protein Bar", startCost: 10, boost: 2))
+        itemList.append(BoostItem(type: "Food", category: "Ballvalue", name: "Hot Dog", startCost: 20, boost: 10))
+        itemList.append(BoostItem(type: "Food", category: "AutoShoot", name: "Taco", startCost: 50, boost: 20))
         pickerNumbers.append("00")
         for i in 0...99 {
             pickerNumbers.append(String(i))
@@ -406,12 +419,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         settingsTitelView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
 
         //let team = PackageItem(type: "Team", name: "Washington Lizards", cost: 50, boost: 0)
-        //db.collection("packages").addDocument(data: team.toDict())
+        //db.collection("boostItems").addDocument(data: team.toDict())
         updateScoreLabel()
         updatePercentageLabel()
         updateBallValueLabel()
         updateShooterAnimationImages()
-        updateBoostPercentageValue()
+        updateBoostItemValues()
         boostView.isHidden = true
         boostView.isUserInteractionEnabled = false
         packageView.isHidden = true

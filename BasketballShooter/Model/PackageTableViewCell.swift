@@ -14,7 +14,6 @@ class PackageTableViewCell: UITableViewCell {
     @IBOutlet weak var itemLabel: UILabel!
     @IBOutlet weak var costLabel: UILabel!
     @IBOutlet weak var itemBuyButton: UIButton!
-    @IBOutlet weak var alphaView: UIView!
     
     @IBAction func itemBuyButtonPressed(_ sender: UIButton) {
     }

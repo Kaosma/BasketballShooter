@@ -15,42 +15,35 @@
                 <rect key="frame" x="0.0" y="0.0" width="282" height="70"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czy-nd-F1W" userLabel="itemLabel">
+                        <rect key="frame" x="10" y="10" width="43" height="19.5"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hsm-jX-rXv" userLabel="costLabel">
                         <rect key="frame" x="20" y="39" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czy-nd-F1W" userLabel="itemLabel">
-                        <rect key="frame" x="10" y="10" width="42.5" height="19.5"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CgU-OQ-zi2" userLabel="itemBuyButton">
-                        <rect key="frame" x="212" y="0.0" width="70" height="70"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CgU-OQ-zi2" userLabel="packageIcon">
+                        <rect key="frame" x="217" y="5" width="60" height="60"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="70" id="BFy-tk-kJn"/>
-                            <constraint firstAttribute="height" constant="70" identifier="itemBuyButtonHeightConstraint" id="mos-ZI-ouh"/>
+                            <constraint firstAttribute="height" constant="60" id="2WY-Db-tTI"/>
+                            <constraint firstAttribute="width" secondItem="CgU-OQ-zi2" secondAttribute="height" multiplier="1:1" id="7jI-En-vd9"/>
+                            <constraint firstAttribute="width" constant="60" id="Joe-dQ-Tqs"/>
                         </constraints>
                         <state key="normal" image="bottleLevel5"/>
                         <connections>
                             <action selector="itemBuyButtonPressed:" destination="Jje-ZL-PrP" eventType="touchUpInside" id="TGY-Il-feK"/>
                         </connections>
                     </button>
-                    <view hidden="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H8S-lD-aid" userLabel="alphaView">
-                        <rect key="frame" x="212" y="0.0" width="70" height="70"/>
-                        <color key="backgroundColor" red="0.89019607840000003" green="0.96470588239999999" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="70" id="Grc-zh-b3b"/>
-                            <constraint firstAttribute="height" constant="70" id="ObZ-aC-em4"/>
-                        </constraints>
-                    </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tez-mS-OrL">
-                        <rect key="frame" x="162" y="38" width="40" height="27"/>
+                        <rect key="frame" x="167" y="38" width="40" height="27"/>
                         <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="40" id="DFL-yg-jq4"/>
+                            <constraint firstAttribute="width" secondItem="Tez-mS-OrL" secondAttribute="height" multiplier="40:27" id="EU0-Ty-a1l"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Farah" family="Farah" pointSize="15"/>
                         <state key="normal" title="Buy">
@@ -60,20 +53,17 @@
                 </subviews>
                 <color key="backgroundColor" red="0.89019607840000003" green="0.96470588239999999" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
-                    <constraint firstItem="czy-nd-F1W" firstAttribute="top" secondItem="neo-8h-9vf" secondAttribute="top" constant="10" id="4BD-HD-JwK"/>
-                    <constraint firstAttribute="trailing" secondItem="CgU-OQ-zi2" secondAttribute="trailing" id="Acc-Ar-QMX"/>
-                    <constraint firstItem="czy-nd-F1W" firstAttribute="leading" secondItem="neo-8h-9vf" secondAttribute="leading" constant="10" id="Coj-JP-EpX"/>
-                    <constraint firstItem="Hsm-jX-rXv" firstAttribute="leading" secondItem="neo-8h-9vf" secondAttribute="leading" constant="20" id="Iya-My-7Jr"/>
-                    <constraint firstAttribute="bottom" secondItem="Hsm-jX-rXv" secondAttribute="bottom" constant="10" id="S6p-tW-FFe"/>
-                    <constraint firstAttribute="bottom" secondItem="H8S-lD-aid" secondAttribute="bottom" id="ckV-By-Kh8"/>
-                    <constraint firstAttribute="bottom" secondItem="Tez-mS-OrL" secondAttribute="bottom" constant="5" id="kez-oN-bcT"/>
-                    <constraint firstAttribute="trailing" secondItem="H8S-lD-aid" secondAttribute="trailing" id="nNt-7A-SHW"/>
-                    <constraint firstItem="CgU-OQ-zi2" firstAttribute="top" secondItem="neo-8h-9vf" secondAttribute="top" id="t5Z-Cu-YvN"/>
-                    <constraint firstItem="CgU-OQ-zi2" firstAttribute="leading" secondItem="Tez-mS-OrL" secondAttribute="trailing" constant="10" id="xoh-N7-Mby"/>
+                    <constraint firstItem="CgU-OQ-zi2" firstAttribute="leading" secondItem="Tez-mS-OrL" secondAttribute="trailing" constant="10" id="6CG-X0-KIB"/>
+                    <constraint firstItem="czy-nd-F1W" firstAttribute="top" secondItem="neo-8h-9vf" secondAttribute="top" constant="10" id="7Ms-Ag-8V2"/>
+                    <constraint firstItem="CgU-OQ-zi2" firstAttribute="centerY" secondItem="neo-8h-9vf" secondAttribute="centerY" id="CgL-tr-hFO"/>
+                    <constraint firstAttribute="trailing" secondItem="CgU-OQ-zi2" secondAttribute="trailing" constant="5" id="K46-pV-LNv"/>
+                    <constraint firstItem="Hsm-jX-rXv" firstAttribute="leading" secondItem="neo-8h-9vf" secondAttribute="leading" constant="20" id="eBA-On-zTV"/>
+                    <constraint firstItem="czy-nd-F1W" firstAttribute="leading" secondItem="neo-8h-9vf" secondAttribute="leading" constant="10" id="h9Q-wR-bVq"/>
+                    <constraint firstAttribute="bottom" secondItem="Hsm-jX-rXv" secondAttribute="bottom" constant="10" id="jzS-5D-yyI"/>
+                    <constraint firstAttribute="bottom" secondItem="Tez-mS-OrL" secondAttribute="bottom" constant="5" id="n1U-y0-whS"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="alphaView" destination="H8S-lD-aid" id="90U-8c-sOy"/>
                 <outlet property="costLabel" destination="Hsm-jX-rXv" id="mWR-SL-3xm"/>
                 <outlet property="itemBuyButton" destination="CgU-OQ-zi2" id="ull-Ua-epT"/>
                 <outlet property="itemLabel" destination="czy-nd-F1W" id="Fvw-Kj-Mim"/>

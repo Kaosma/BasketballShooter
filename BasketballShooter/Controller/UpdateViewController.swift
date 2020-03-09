@@ -53,12 +53,44 @@ extension ViewController {
         let color = UIColor(hex: skinTones[skinToneLevel])
         button.backgroundColor = color
     }
+    func updateBoostItemValues() {
+        for index in 0...itemList.count-1 {
+            let item = itemList[index]
+            let level = BoostItemLevelList[index]
+            let boostPower = pow(1.5, level)
+            item.cost = Int(Double(item.startCost) * Double(truncating: NSDecimalNumber(decimal: boostPower)))
+            let indexDiff = index % 4
+            if item.level < 5 {
+                switch item.category {
+                    case "Percentage":
+                        item.boost = percentageValues[5*index+item.level]
+                    case "Ballvalue":
+                        item.boost = ballValues[5*indexDiff+item.level]
+                    default:
+                        break
+                }
+            }
+        }
+    }
     // Updates the boost values exponentially
-    func updateBoostPercentageValue() {
-        for i in 0...2 {
-            let boostPower = pow(1.4, BoostItemLevelList[i])
-            itemList[i].boost = itemList[i].boost * Double(truncating: NSDecimalNumber(decimal: boostPower))
-            itemList[i].boost = round(itemList[i].boost*100)/100
+    func updateBoostItemLabelValues() {
+        updateBoostItemValues()
+        let cell = currentBoostTableViewCell
+        let item = currentBoostItem
+        switch item?.category {
+            case "Percentage":
+                item?.boost = round(item!.boost*100)/100
+                cell?.purchasedLabel.text = "+" + String(item!.boost) + "%"
+            case "Ballvalue":
+                cell?.purchasedLabel.text = "+" + String(item!.boost) + "🏀"
+            case "Speed":
+                cell?.purchasedLabel.text = "+" + String(item!.boost) + "s"
+            default:
+                cell?.purchasedLabel.text = ""
+        }
+        cell?.costLabel.text = "Cost: \(item!.cost)"
+        if item?.level == 5 {
+            cell?.purchasedLabel.alpha = 0.5
         }
     }
     // Updates point per second
