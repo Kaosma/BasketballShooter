@@ -17,9 +17,9 @@ extension ViewController {
         switch tableView {
             case boostTableViewOutlet:
                 if section == 0 {
-                    return 4 // antal drinks
+                    return 4 // number of drinks
                 } else{
-                    return 4 // antal foods
+                    return 4 // number of foods
                 }
             case packageTableViewOutlet:
                 return packageList.count
@@ -67,7 +67,7 @@ extension ViewController {
                 }
                 
                 let item = itemList[indexPath.row + offSection]
-                item.level = BoostItemLevelList[indexPath.row]
+                item.level = BoostItemLevelList[indexPath.row+offSection]
                 cell.itemLabel.text = item.name
                 cell.costLabel.text = "Cost: \(item.cost)"
                 cell.levelLabel.text = "Lv. \(item.level)"
@@ -101,6 +101,7 @@ extension ViewController {
                 cell.costLabel.text = "Cost: \(package.cost)"
                 let name = package.name.replacingOccurrences(of: " ", with: "")
                 cell.itemBuyButton.setImage(UIImage(named: name), for: .normal)
+                
                 return cell
         default:
             return UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cell")

@@ -10,14 +10,19 @@ import Foundation
 import Firebase
 
 class BoostItem {
-    let type : String
-    let category : String
-    let name : String
-    let startCost : Int
+    
+    // MARK: Variables
     var cost : Int
     var level : Int
     var boost : Double
     
+    // MARK: Constants
+    let type : String
+    let category : String
+    let name : String
+    let startCost : Int
+    
+    // MARK: initaializer
     init(type: String, category: String, name: String, startCost: Int, level: Int = 0, boost: Double) {
         self.type = type
         self.category = category
@@ -27,6 +32,7 @@ class BoostItem {
         self.level = level
         self.boost = boost
     }
+    
     /*
     // Constructor with firestore input and creating object
     init(snapshot: QueryDocumentSnapshot) {

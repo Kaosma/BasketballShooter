@@ -5,6 +5,9 @@
 //  Created by Erik Ugarte on 2020-01-10.
 //  Copyright © 2020 Creative League. All rights reserved.
 //
+//  Code structure: Class{ Variable, Constant, Outlet, Action, Function, Other, Main }
+//  Declaration Order for Constants/Variables: String, Int, Double, Bool, List, Optional, Other
+//  Declaration Order for Outlets: Label, Button, ImageView, View, Other
 
 import UIKit
 import CoreData
@@ -13,13 +16,10 @@ import Firebase
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
         //let db = Firestore.firestore()
-        
         return true
     }
 

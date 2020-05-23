@@ -29,9 +29,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var lastMade : Bool = false
     var turnOnSound : Bool = false
     var jerseyVectorUp : Bool = false
-    var currentBall : UIImageView?
-    var currentBoostTableViewCell : BoostTableViewCell? = nil
-    var currentBoostItem : BoostItem? = nil
     var itemList = [BoostItem]()
     var packageList = [PackageItem]()
     var boostCellList = [BoostTableViewCell]()
@@ -43,9 +40,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var ballArray = [UIImageView]()
     var shooterImages = [UIImage]()
     var audioPlayer : AVAudioPlayer?
+    var currentBall : UIImageView?
+    var currentBoostTableViewCell : BoostTableViewCell? = nil
+    var currentBoostItem : BoostItem? = nil
     
     // MARK: Constants
-    let startingPercentage : Double = 50
     let percentageKey = "percentage"
     let scoreKey = "score"
     let totalScoreKey = "totalScore"
@@ -57,6 +56,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let levelKey = "BoostItemLevel"
     let boostCellId =  "BoostCellId"
     let packageCellId = "PackageCellId"
+    let startingPercentage : Double = 50
     let percentageValues : [Double] = [1.01, 1.03, 1.05, 1.07, 1.1,
                                        1.25, 1.3, 1.99, 2.49, 2.7,
                                        3.0, 5.0, 7.0, 9.0, 11.0]
@@ -261,9 +261,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     // Handles buying and buying animation
     public func didPressBoostItemButton(cell: BoostTableViewCell) {
+        var offsection : Int = 0
         let indexPath = boostTableViewOutlet.indexPath(for: cell)
         
-        var offsection : Int = 0
         if indexPath?.section == 1 {
             offsection = 4
         }
@@ -302,6 +302,41 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             updateScoreLabel()
             print("Purchase made " + itemList[index].name + " " + String(itemList[index].level))
         }
+        /*
+        if let scoreText = scoreLabel.text {
+            if let score = Int(scoreText) {
+                if (score >= itemList[index].cost && itemList[index].level < 5) {
+                    boostTableViewOutlet.isUserInteractionEnabled = false
+                    currentBoostTableViewCell = cell
+                    currentBoostItem = itemList[index]
+                    itemList[index].level += 1
+                    BoostItemLevelList[index] += 1
+                    saveLevelSelected(level: BoostItemLevelList)
+                    
+                    cell.alphaView.isHidden = false
+                    boostBuyAnimation(object: cell.alphaView)
+                    
+                    scoreCounter = Int(scoreLabel.text!)! - itemList[index].cost
+                    
+                    switch itemList[index].category {
+                        case "Ballvalue":
+                            ballValue += Int(itemList[index].boost)
+                            saveBallValueSelected(ballValue: ballValue)
+                        case "Percentage":
+                            percentage += itemList[index].boost
+                            percentage = Double(round(percentage*100)/100)
+                            savePercentageSelected(percentage: percentage)
+                        case "Speed":
+                            speedFactor += itemList[index].boost
+                            saveSpeedFactorSelected(speedFactor: speedFactor)
+                        default:
+                            break
+                    }
+                    updateScoreLabel()
+                    print("Purchase made " + itemList[index].name + " " + String(itemList[index].level))
+                }
+            }
+        }*/
     }
     
     // MARK: Other Functions
@@ -397,7 +432,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         itemList.append(BoostItem(type: "Food", category: "Ballvalue", name: "Nachos", startCost: 5, boost: 1))
         itemList.append(BoostItem(type: "Food", category: "Ballvalue", name: "Protein Bar", startCost: 10, boost: 2))
         itemList.append(BoostItem(type: "Food", category: "Ballvalue", name: "Hot Dog", startCost: 20, boost: 10))
-        itemList.append(BoostItem(type: "Food", category: "AutoShoot", name: "Taco", startCost: 50, boost: 20))
+        itemList.append(BoostItem(type: "Food", category: "Autoshoot", name: "Taco", startCost: 50, boost: 20))
         pickerNumbers.append("00")
         for i in 0...99 {
             pickerNumbers.append(String(i))
@@ -447,6 +482,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         numberPickerViewOutlet.dataSource = self
         numberPickerViewOutlet.delegate = self
         
-    //    NotificationCenter.default.addObserver(self, selector: #selector(didPressBoostItemButton(notification:)), name: NSNotification.Name.init(rawValue: "ButtonPressed"), object: nil)
+    //  NotificationCenter.default.addObserver(self, selector: #selector(didPressBoostItemButton(notification:)), name: NSNotification.Name.init(rawValue: "ButtonPressed"), object: nil)
     }
 }

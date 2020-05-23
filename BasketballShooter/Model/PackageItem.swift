@@ -10,12 +10,17 @@ import Foundation
 import Firebase
 
 class PackageItem {
+    
+    // MARK: Variables
     var type : String
+    var cost : Int
+    
+    // MARK: Constants
     let name : String
     let id : String
-    var cost : Int
     let boost : Double
     
+    // MARK: initializers
     init(type: String, name: String, id: String, cost: Int, level: Int = 0, boost: Double) {
         self.type = type
         self.name = name
@@ -24,7 +29,6 @@ class PackageItem {
         self.boost = boost
         
     }
-    
     // Constructor with firestore input and creating object
     init(snapshot: QueryDocumentSnapshot) {
         let snapshotValue = snapshot.data() as [String : Any]
@@ -34,6 +38,8 @@ class PackageItem {
         cost = snapshotValue["cost"] as! Int
         boost = snapshotValue["boost"] as! Double
     }
+    
+    // MARK: Functions
     func toDict() -> [String : Any] {
         return ["type" : type,
                 "id" : id,

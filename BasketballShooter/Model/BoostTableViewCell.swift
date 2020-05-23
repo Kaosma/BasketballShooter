@@ -21,28 +21,32 @@ class BoostTableViewCell: UITableViewCell {
     weak var vc : ViewController?
     
     // MARK: Actions
-
     @IBAction func itemBuyButtonPressed(_ sender: UIButton) {
-        //let nc = NotificationCenter.default
         let tableView = superview as? UITableView
         var index = tableView?.indexPath(for: self)?[1]
         if tableView?.indexPath(for: self)?.section == 1 {
             index! += 4
         }
-        //let dict = ["row": index]
-       // nc.post(name: Notification.Name("ButtonPressed"), object: itemBuyButton, userInfo: dict as [AnyHashable : Any] )
         vc?.didPressBoostItemButton(cell: self)
+        /*
+        if let tableView = superview as? UITableView {
+            if var index = tableView.indexPath(for: self) {
+                if index.section == 1 {
+                    index[1] += 4
+                }
+                vc?.didPressBoostItemButton(cell: self)
+            }
+        }*/
+        //let dict = ["row": index]
+        // nc.post(name: Notification.Name("ButtonPressed"), object: itemBuyButton, userInfo: dict as [AnyHashable : Any] )
     }
     
     // MARK: Functions
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
         // Configure the view for the selected state
     }
 }

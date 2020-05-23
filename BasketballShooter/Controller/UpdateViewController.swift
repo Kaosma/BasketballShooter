@@ -92,6 +92,23 @@ extension ViewController {
         if item?.level == 5 {
             cell?.purchasedLabel.alpha = 0.5
         }
+        /*if let item = currentBoostItem {
+            switch item.category {
+                case "Percentage":
+                    item.boost = round(item!.boost*100)/100
+                    cell?.purchasedLabel.text = "+" + String(item.boost) + "%"
+                case "Ballvalue":
+                    cell?.purchasedLabel.text = "+" + String(item.boost) + "🏀"
+                case "Speed":
+                    cell?.purchasedLabel.text = "+" + String(item.boost) + "s"
+                default:
+                    cell?.purchasedLabel.text = ""
+            }
+            cell?.costLabel.text = "Cost: \(item.cost)"
+            if item.level == 5 {
+                cell?.purchasedLabel.alpha = 0.5
+            }
+        }*/
     }
     // Updates point per second
     @objc func updatePPS() {

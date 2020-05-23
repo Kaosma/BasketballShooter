@@ -10,10 +10,9 @@ import Foundation
 import UIKit
 
 extension ViewController {
-    
     // MARK: Animation Functions
     // Navigation animation for the navigationbuttons
-    func navigationAnimation(button : UIButton, view : UIView){
+    func navigationAnimation(button: UIButton, view: UIView){
         if button.alpha == 0.5 {
             for anyView in navigationViewList {
                 anyView.isHidden = true
@@ -87,17 +86,33 @@ extension ViewController {
         currentBall!.animationImages = ballImages
         currentBall!.animationDuration = 1.8/speedFactor
         currentBall!.startAnimating()
+        
+        /*if let ball = currentBall {
+            ball.animationImages = ballImages
+            ball.animationDuration = 1.8/speedFactor
+            ball.startAnimating()
+        }*/
     }
     // Animation for made shot
     func makeAnimation() {
         alowTap = false
         playSound(fileName: "basketBallSwish", delay: 1.098/speedFactor)
+
         UIView.animate(withDuration: 0.8/speedFactor, delay: 0.5/speedFactor, animations: {
             self.currentBall!.transform = CGAffineTransform(translationX: 0, y: -((self.currentBall?.frame.minY)!-self.hoopImageView.frame.minY)/1.3)
         }, completion: ballBounce(finished:))
         UIView.animate(withDuration: 0.5/speedFactor, delay: 1.7/speedFactor, animations: {
             self.currentBall!.alpha = 0.0
         }, completion: switchBall(finished:))
+        
+        /*if let ball = self.currentBall {
+            UIView.animate(withDuration: 0.8/speedFactor, delay: 0.5/speedFactor, animations: {
+                ball.transform = CGAffineTransform(translationX: 0, y: -((self.currentBall?.frame.minY)!-self.hoopImageView.frame.minY)/1.3)
+            }, completion: ballBounce(finished:))
+            UIView.animate(withDuration: 0.5/speedFactor, delay: 1.7/speedFactor, animations: {
+                ball.alpha = 0.0
+            }, completion: switchBall(finished:))
+        }*/
     }
     // Ball transparency fade animation
     func switchBall(finished: Bool) {
